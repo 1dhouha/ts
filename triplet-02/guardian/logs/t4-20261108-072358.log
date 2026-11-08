@@ -1,0 +1,443 @@
+{"timestamp": "2026-10-16T10:00:00+00:00", "layer": "guardian", "event": "scenario_start", "scenario": "t4", "name": "Camera dropout is not an attack"}
+{"timestamp": "2026-10-16T10:00:00+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00000", "device_id": "WL-01", "value": 40.37, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:00+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00000", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:00+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00000", "device_id": "WL-02", "value": 40.73, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:00+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00000", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:00+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00000", "device_id": "WL-03", "value": 40.89, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:00+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00000", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:00+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00000", "device_id": "WL-04", "value": 41.33, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:00+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00000", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:00+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00000", "device_id": "WL-05", "value": 40.72, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:00+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00000", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:00+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-CAM-01-00000", "device_id": "CAM-01", "value": 34.22, "unit": "%"}
+{"timestamp": "2026-10-16T10:00:00+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-CAM-01-00000", "device_id": "CAM-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:01+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00001", "device_id": "WL-01", "value": 38.59, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:01+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00001", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:01+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00001", "device_id": "WL-02", "value": 39.9, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:01+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00001", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:01+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00001", "device_id": "WL-03", "value": 41.33, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:01+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00001", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:01+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00001", "device_id": "WL-04", "value": 40.45, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:01+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00001", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:01+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00001", "device_id": "WL-05", "value": 41.2, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:01+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00001", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:01+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-CAM-01-00001", "device_id": "CAM-01", "value": 26.13, "unit": "%"}
+{"timestamp": "2026-10-16T10:00:01+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-CAM-01-00001", "device_id": "CAM-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:02+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00002", "device_id": "WL-01", "value": 39.91, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:02+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00002", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:02+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00002", "device_id": "WL-02", "value": 39.24, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:02+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00002", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:02+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00002", "device_id": "WL-03", "value": 40.13, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:02+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00002", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:02+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00002", "device_id": "WL-04", "value": 40.22, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:02+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00002", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:02+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00002", "device_id": "WL-05", "value": 38.54, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:02+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00002", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:02+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-CAM-01-00002", "device_id": "CAM-01", "value": 27.17, "unit": "%"}
+{"timestamp": "2026-10-16T10:00:02+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-CAM-01-00002", "device_id": "CAM-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:03+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00003", "device_id": "WL-01", "value": 39.34, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:03+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00003", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:03+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00003", "device_id": "WL-02", "value": 41.25, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:03+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00003", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:03+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00003", "device_id": "WL-03", "value": 40.8, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:03+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00003", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:03+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00003", "device_id": "WL-04", "value": 38.98, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:03+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00003", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:03+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00003", "device_id": "WL-05", "value": 40.89, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:03+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00003", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:03+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-CAM-01-00003", "device_id": "CAM-01", "value": 26.39, "unit": "%"}
+{"timestamp": "2026-10-16T10:00:03+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-CAM-01-00003", "device_id": "CAM-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:04+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00004", "device_id": "WL-01", "value": 40.35, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:04+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00004", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:04+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00004", "device_id": "WL-02", "value": 38.88, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:04+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00004", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:04+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00004", "device_id": "WL-03", "value": 38.51, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:04+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00004", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:04+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00004", "device_id": "WL-04", "value": 41.11, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:04+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00004", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:04+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00004", "device_id": "WL-05", "value": 39.13, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:04+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00004", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:04+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-CAM-01-00004", "device_id": "CAM-01", "value": 27.15, "unit": "%"}
+{"timestamp": "2026-10-16T10:00:04+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-CAM-01-00004", "device_id": "CAM-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:05+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00005", "device_id": "WL-01", "value": 41.45, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:05+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00005", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:05+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00005", "device_id": "WL-02", "value": 41.12, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:05+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00005", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:05+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00005", "device_id": "WL-03", "value": 39.37, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:05+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00005", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:05+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00005", "device_id": "WL-04", "value": 41.38, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:05+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00005", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:05+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00005", "device_id": "WL-05", "value": 40.12, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:05+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00005", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:05+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-CAM-01-00005", "device_id": "CAM-01", "value": 31.78, "unit": "%"}
+{"timestamp": "2026-10-16T10:00:05+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-CAM-01-00005", "device_id": "CAM-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:06+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00006", "device_id": "WL-01", "value": 39.11, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:06+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00006", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:06+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00006", "device_id": "WL-02", "value": 41.32, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:06+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00006", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:06+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00006", "device_id": "WL-03", "value": 40.57, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:06+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00006", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:06+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00006", "device_id": "WL-04", "value": 41.4, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:06+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00006", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:06+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00006", "device_id": "WL-05", "value": 41.18, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:06+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00006", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:06+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-CAM-01-00006", "device_id": "CAM-01", "value": 27.99, "unit": "%"}
+{"timestamp": "2026-10-16T10:00:06+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-CAM-01-00006", "device_id": "CAM-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:07+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00007", "device_id": "WL-01", "value": 39.58, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:07+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00007", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:07+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00007", "device_id": "WL-02", "value": 39.0, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:07+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00007", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:07+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00007", "device_id": "WL-03", "value": 38.94, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:07+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00007", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:07+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00007", "device_id": "WL-04", "value": 38.7, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:07+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00007", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:07+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00007", "device_id": "WL-05", "value": 39.4, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:07+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00007", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:07+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-CAM-01-00007", "device_id": "CAM-01", "value": 31.03, "unit": "%"}
+{"timestamp": "2026-10-16T10:00:07+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-CAM-01-00007", "device_id": "CAM-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:08+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00008", "device_id": "WL-01", "value": 38.51, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:08+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00008", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:08+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00008", "device_id": "WL-02", "value": 40.53, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:08+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00008", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:08+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00008", "device_id": "WL-03", "value": 39.51, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:08+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00008", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:08+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00008", "device_id": "WL-04", "value": 39.43, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:08+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00008", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:08+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00008", "device_id": "WL-05", "value": 40.96, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:08+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00008", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:08+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-CAM-01-00008", "device_id": "CAM-01", "value": 29.81, "unit": "%"}
+{"timestamp": "2026-10-16T10:00:08+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-CAM-01-00008", "device_id": "CAM-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:09+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00009", "device_id": "WL-01", "value": 39.45, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:09+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00009", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:09+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00009", "device_id": "WL-02", "value": 39.94, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:09+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00009", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:09+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00009", "device_id": "WL-03", "value": 40.61, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:09+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00009", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:09+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00009", "device_id": "WL-04", "value": 38.67, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:09+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00009", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:09+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00009", "device_id": "WL-05", "value": 41.43, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:09+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00009", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:09+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-CAM-01-00009", "device_id": "CAM-01", "value": 25.23, "unit": "%"}
+{"timestamp": "2026-10-16T10:00:09+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-CAM-01-00009", "device_id": "CAM-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:10+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00010", "device_id": "WL-01", "value": 40.75, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:10+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00010", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:10+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00010", "device_id": "WL-02", "value": 41.03, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:10+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00010", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:10+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00010", "device_id": "WL-03", "value": 38.55, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:10+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00010", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:10+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00010", "device_id": "WL-04", "value": 40.86, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:10+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00010", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:10+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00010", "device_id": "WL-05", "value": 39.6, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:10+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00010", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:10+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-CAM-01-00010", "device_id": "CAM-01", "value": 30.79, "unit": "%"}
+{"timestamp": "2026-10-16T10:00:10+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-CAM-01-00010", "device_id": "CAM-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:11+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00011", "device_id": "WL-01", "value": 38.53, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:11+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00011", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:11+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00011", "device_id": "WL-02", "value": 38.64, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:11+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00011", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:11+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00011", "device_id": "WL-03", "value": 39.04, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:11+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00011", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:11+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00011", "device_id": "WL-04", "value": 41.37, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:11+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00011", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:11+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00011", "device_id": "WL-05", "value": 39.09, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:11+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00011", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:11+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-CAM-01-00011", "device_id": "CAM-01", "value": 32.56, "unit": "%"}
+{"timestamp": "2026-10-16T10:00:11+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-CAM-01-00011", "device_id": "CAM-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:12+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00012", "device_id": "WL-01", "value": 41.29, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:12+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00012", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:12+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00012", "device_id": "WL-02", "value": 41.33, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:12+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00012", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:12+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00012", "device_id": "WL-03", "value": 39.53, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:12+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00012", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:12+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00012", "device_id": "WL-04", "value": 39.56, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:12+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00012", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:12+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00012", "device_id": "WL-05", "value": 40.07, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:12+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00012", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:12+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-CAM-01-00012", "device_id": "CAM-01", "value": 32.76, "unit": "%"}
+{"timestamp": "2026-10-16T10:00:12+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-CAM-01-00012", "device_id": "CAM-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:13+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00013", "device_id": "WL-01", "value": 38.82, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:13+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00013", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:13+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00013", "device_id": "WL-02", "value": 40.75, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:13+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00013", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:13+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00013", "device_id": "WL-03", "value": 40.89, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:13+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00013", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:13+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00013", "device_id": "WL-04", "value": 41.08, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:13+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00013", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:13+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00013", "device_id": "WL-05", "value": 38.61, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:13+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00013", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:13+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-CAM-01-00013", "device_id": "CAM-01", "value": 34.46, "unit": "%"}
+{"timestamp": "2026-10-16T10:00:13+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-CAM-01-00013", "device_id": "CAM-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:14+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00014", "device_id": "WL-01", "value": 38.77, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:14+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00014", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:14+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00014", "device_id": "WL-02", "value": 39.52, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:14+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00014", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:14+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00014", "device_id": "WL-03", "value": 40.33, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:14+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00014", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:14+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00014", "device_id": "WL-04", "value": 41.25, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:14+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00014", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:14+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00014", "device_id": "WL-05", "value": 39.52, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:14+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00014", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:14+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-CAM-01-00014", "device_id": "CAM-01", "value": 34.24, "unit": "%"}
+{"timestamp": "2026-10-16T10:00:14+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-CAM-01-00014", "device_id": "CAM-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:15+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00015", "device_id": "WL-01", "value": 40.14, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:15+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00015", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:15+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00015", "device_id": "WL-02", "value": 39.44, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:15+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00015", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:15+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00015", "device_id": "WL-03", "value": 39.45, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:15+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00015", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:15+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00015", "device_id": "WL-04", "value": 39.03, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:15+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00015", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:15+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00015", "device_id": "WL-05", "value": 38.73, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:15+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00015", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:15+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-CAM-01-00015", "device_id": "CAM-01", "value": 26.49, "unit": "%"}
+{"timestamp": "2026-10-16T10:00:15+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-CAM-01-00015", "device_id": "CAM-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:16+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00016", "device_id": "WL-01", "value": 40.57, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:16+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00016", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:16+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00016", "device_id": "WL-02", "value": 41.49, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:16+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00016", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:16+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00016", "device_id": "WL-03", "value": 38.98, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:16+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00016", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:16+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00016", "device_id": "WL-04", "value": 38.65, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:16+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00016", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:16+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00016", "device_id": "WL-05", "value": 41.46, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:16+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00016", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:16+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-CAM-01-00016", "device_id": "CAM-01", "value": 30.34, "unit": "%"}
+{"timestamp": "2026-10-16T10:00:16+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-CAM-01-00016", "device_id": "CAM-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:17+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00017", "device_id": "WL-01", "value": 39.72, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:17+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00017", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:17+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00017", "device_id": "WL-02", "value": 39.21, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:17+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00017", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:17+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00017", "device_id": "WL-03", "value": 40.28, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:17+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00017", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:17+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00017", "device_id": "WL-04", "value": 40.98, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:17+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00017", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:17+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00017", "device_id": "WL-05", "value": 39.87, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:17+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00017", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:17+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-CAM-01-00017", "device_id": "CAM-01", "value": 29.22, "unit": "%"}
+{"timestamp": "2026-10-16T10:00:17+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-CAM-01-00017", "device_id": "CAM-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:18+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00018", "device_id": "WL-01", "value": 38.67, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:18+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00018", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:18+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00018", "device_id": "WL-02", "value": 41.25, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:18+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00018", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:18+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00018", "device_id": "WL-03", "value": 38.6, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:18+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00018", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:18+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00018", "device_id": "WL-04", "value": 39.98, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:18+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00018", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:18+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00018", "device_id": "WL-05", "value": 41.02, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:18+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00018", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:18+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-CAM-01-00018", "device_id": "CAM-01", "value": 26.31, "unit": "%"}
+{"timestamp": "2026-10-16T10:00:18+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-CAM-01-00018", "device_id": "CAM-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:19+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00019", "device_id": "WL-01", "value": 40.69, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:19+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00019", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:19+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00019", "device_id": "WL-02", "value": 41.35, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:19+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00019", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:19+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00019", "device_id": "WL-03", "value": 40.39, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:19+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00019", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:19+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00019", "device_id": "WL-04", "value": 40.86, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:19+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00019", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:19+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00019", "device_id": "WL-05", "value": 38.82, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:19+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00019", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:19+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-CAM-01-00019", "device_id": "CAM-01", "value": 29.35, "unit": "%"}
+{"timestamp": "2026-10-16T10:00:19+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-CAM-01-00019", "device_id": "CAM-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:20+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00020", "device_id": "WL-01", "value": 38.95, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:20+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00020", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:20+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00020", "device_id": "WL-02", "value": 41.03, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:20+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00020", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:20+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00020", "device_id": "WL-03", "value": 39.38, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:20+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00020", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:20+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00020", "device_id": "WL-04", "value": 39.86, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:20+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00020", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:20+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00020", "device_id": "WL-05", "value": 41.5, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:20+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00020", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:21+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00021", "device_id": "WL-01", "value": 41.06, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:21+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00021", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:21+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00021", "device_id": "WL-02", "value": 41.43, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:21+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00021", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:21+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00021", "device_id": "WL-03", "value": 39.86, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:21+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00021", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:21+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00021", "device_id": "WL-04", "value": 39.96, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:21+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00021", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:21+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00021", "device_id": "WL-05", "value": 40.69, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:21+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00021", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:22+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00022", "device_id": "WL-01", "value": 39.94, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:22+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00022", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:22+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00022", "device_id": "WL-02", "value": 39.37, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:22+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00022", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:22+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00022", "device_id": "WL-03", "value": 39.71, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:22+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00022", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:22+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00022", "device_id": "WL-04", "value": 38.94, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:22+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00022", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:22+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00022", "device_id": "WL-05", "value": 39.63, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:22+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00022", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:23+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00023", "device_id": "WL-01", "value": 41.47, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:23+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00023", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:23+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00023", "device_id": "WL-02", "value": 41.38, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:23+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00023", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:23+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00023", "device_id": "WL-03", "value": 40.38, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:23+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00023", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:23+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00023", "device_id": "WL-04", "value": 40.0, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:23+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00023", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:23+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00023", "device_id": "WL-05", "value": 39.52, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:23+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00023", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:24+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00024", "device_id": "WL-01", "value": 38.77, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:24+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00024", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:24+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00024", "device_id": "WL-02", "value": 39.32, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:24+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00024", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:24+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00024", "device_id": "WL-03", "value": 40.85, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:24+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00024", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:24+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00024", "device_id": "WL-04", "value": 41.1, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:24+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00024", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:24+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00024", "device_id": "WL-05", "value": 39.58, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:24+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00024", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:25+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00025", "device_id": "WL-01", "value": 40.86, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:25+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00025", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:25+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00025", "device_id": "WL-02", "value": 40.82, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:25+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00025", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:25+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00025", "device_id": "WL-03", "value": 40.58, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:25+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00025", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:25+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00025", "device_id": "WL-04", "value": 40.49, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:25+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00025", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:25+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00025", "device_id": "WL-05", "value": 40.78, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:25+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00025", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:26+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00026", "device_id": "WL-01", "value": 39.59, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:26+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00026", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:26+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00026", "device_id": "WL-02", "value": 40.61, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:26+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00026", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:26+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00026", "device_id": "WL-03", "value": 39.34, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:26+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00026", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:26+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00026", "device_id": "WL-04", "value": 39.96, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:26+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00026", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:26+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00026", "device_id": "WL-05", "value": 40.81, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:26+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00026", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:27+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00027", "device_id": "WL-01", "value": 40.57, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:27+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00027", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:27+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00027", "device_id": "WL-02", "value": 39.38, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:27+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00027", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:27+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00027", "device_id": "WL-03", "value": 41.34, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:27+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00027", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:27+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00027", "device_id": "WL-04", "value": 40.45, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:27+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00027", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:27+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00027", "device_id": "WL-05", "value": 40.24, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:27+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00027", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:28+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00028", "device_id": "WL-01", "value": 38.53, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:28+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00028", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:28+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00028", "device_id": "WL-02", "value": 40.14, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:28+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00028", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:28+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00028", "device_id": "WL-03", "value": 39.25, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:28+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00028", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:28+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00028", "device_id": "WL-04", "value": 40.51, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:28+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00028", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:28+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00028", "device_id": "WL-05", "value": 39.89, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:28+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00028", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:29+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00029", "device_id": "WL-01", "value": 40.95, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:29+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00029", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:29+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00029", "device_id": "WL-02", "value": 40.44, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:29+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00029", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:29+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00029", "device_id": "WL-03", "value": 40.89, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:29+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00029", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:29+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00029", "device_id": "WL-04", "value": 39.54, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:29+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00029", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:29+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00029", "device_id": "WL-05", "value": 40.43, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:29+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00029", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:30+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00030", "device_id": "WL-01", "value": 40.71, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:30+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00030", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:30+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00030", "device_id": "WL-02", "value": 40.98, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:30+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00030", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:30+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00030", "device_id": "WL-03", "value": 39.55, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:30+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00030", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:30+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00030", "device_id": "WL-04", "value": 41.03, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:30+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00030", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:30+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00030", "device_id": "WL-05", "value": 41.11, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:30+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00030", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:31+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00031", "device_id": "WL-01", "value": 40.57, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:31+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00031", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:31+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00031", "device_id": "WL-02", "value": 41.43, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:31+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00031", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:31+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00031", "device_id": "WL-03", "value": 41.37, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:31+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00031", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:31+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00031", "device_id": "WL-04", "value": 40.05, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:31+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00031", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:31+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00031", "device_id": "WL-05", "value": 40.09, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:31+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00031", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:32+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00032", "device_id": "WL-01", "value": 39.0, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:32+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00032", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:32+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00032", "device_id": "WL-02", "value": 41.01, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:32+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00032", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:32+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00032", "device_id": "WL-03", "value": 41.31, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:32+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00032", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:32+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00032", "device_id": "WL-04", "value": 39.93, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:32+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00032", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:32+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00032", "device_id": "WL-05", "value": 40.57, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:32+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00032", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:33+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00033", "device_id": "WL-01", "value": 40.66, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:33+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00033", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:33+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00033", "device_id": "WL-02", "value": 40.69, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:33+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00033", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:33+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00033", "device_id": "WL-03", "value": 39.02, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:33+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00033", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:33+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00033", "device_id": "WL-04", "value": 40.84, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:33+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00033", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:33+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00033", "device_id": "WL-05", "value": 40.24, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:33+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00033", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:34+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00034", "device_id": "WL-01", "value": 40.5, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:34+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00034", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:34+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00034", "device_id": "WL-02", "value": 39.76, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:34+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00034", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:34+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00034", "device_id": "WL-03", "value": 40.37, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:34+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00034", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:34+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00034", "device_id": "WL-04", "value": 40.82, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:34+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00034", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:34+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00034", "device_id": "WL-05", "value": 40.41, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:34+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00034", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:35+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00035", "device_id": "WL-01", "value": 40.66, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:35+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00035", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:35+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00035", "device_id": "WL-02", "value": 38.58, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:35+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00035", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:35+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00035", "device_id": "WL-03", "value": 38.98, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:35+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00035", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:35+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00035", "device_id": "WL-04", "value": 39.82, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:35+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00035", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:35+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00035", "device_id": "WL-05", "value": 40.45, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:35+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00035", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:36+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00036", "device_id": "WL-01", "value": 39.16, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:36+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00036", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:36+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00036", "device_id": "WL-02", "value": 40.56, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:36+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00036", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:36+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00036", "device_id": "WL-03", "value": 40.39, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:36+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00036", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:36+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00036", "device_id": "WL-04", "value": 38.63, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:36+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00036", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:36+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00036", "device_id": "WL-05", "value": 39.91, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:36+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00036", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:37+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00037", "device_id": "WL-01", "value": 39.18, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:37+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00037", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:37+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00037", "device_id": "WL-02", "value": 38.66, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:37+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00037", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:37+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00037", "device_id": "WL-03", "value": 38.9, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:37+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00037", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:37+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00037", "device_id": "WL-04", "value": 39.45, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:37+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00037", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:37+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00037", "device_id": "WL-05", "value": 39.04, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:37+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00037", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:38+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00038", "device_id": "WL-01", "value": 39.08, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:38+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00038", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:38+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00038", "device_id": "WL-02", "value": 38.61, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:38+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00038", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:38+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00038", "device_id": "WL-03", "value": 39.9, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:38+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00038", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:38+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00038", "device_id": "WL-04", "value": 39.64, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:38+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00038", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:38+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00038", "device_id": "WL-05", "value": 40.34, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:38+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00038", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:39+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-01-00039", "device_id": "WL-01", "value": 40.27, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:39+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-01-00039", "device_id": "WL-01", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:39+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-02-00039", "device_id": "WL-02", "value": 39.21, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:39+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-02-00039", "device_id": "WL-02", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:39+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-03-00039", "device_id": "WL-03", "value": 41.21, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:39+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-03-00039", "device_id": "WL-03", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:39+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-04-00039", "device_id": "WL-04", "value": 38.5, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:39+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-04-00039", "device_id": "WL-04", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:39+00:00", "layer": "twin", "event": "reading", "observation_id": "OBS-WL-05-00039", "device_id": "WL-05", "value": 39.72, "unit": "cm"}
+{"timestamp": "2026-10-16T10:00:39+00:00", "layer": "guardian", "event": "verdict", "observation_id": "OBS-WL-05-00039", "device_id": "WL-05", "verdict": "TRUSTED", "trust_score": 1.0, "reason_codes": [], "action": "NONE"}
+{"timestamp": "2026-10-16T10:00:39+00:00", "layer": "guardian", "event": "device_stale", "device_id": "CAM-01", "silent_for_s": 20.0, "action": "MONITOR", "note": "availability failure, not treated as an attack"}
+{"timestamp": "2026-10-16T10:00:39+00:00", "layer": "guardian", "event": "scenario_end", "scenario": "t4"}

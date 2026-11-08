@@ -225,7 +225,7 @@ Each Guardian scenario has one trigger command, run from the `guardian/` folder 
 | G12 | Fake flood at the port (Twin T5) | PASS (`guardian/logs/`) |
 | G13 | Real flash flood (Twin SCN-02) | PASS (`guardian/logs/`) |
 
-## G1 Â· Calm day
+## G1 · Calm day
 
 | Field | Value |
 |---|---|
@@ -239,7 +239,7 @@ Each Guardian scenario has one trigger command, run from the `guardian/` folder 
 | Expected: Brain | Does not react. |
 | How to verify | No UNTRUSTED and no containment_call in the timeline; guardian/logs/t1-*.log |
 
-## G2 Â· Fake flood, sensor frozen
+## G2 · Fake flood, sensor frozen
 
 | Field | Value |
 |---|---|
@@ -253,7 +253,7 @@ Each Guardian scenario has one trigger command, run from the `guardian/` folder 
 | Expected: Brain | (see G5, G6) |
 | How to verify | device_quarantined for WL-03 in the log; 0 other UNTRUSTED |
 
-## G3 Â· Fake flood, noisy spoof
+## G3 · Fake flood, noisy spoof
 
 | Field | Value |
 |---|---|
@@ -267,7 +267,7 @@ Each Guardian scenario has one trigger command, run from the `guardian/` folder 
 | Expected: Brain | n/a |
 | How to verify | Reason code in the verdict; one quarantine call |
 
-## G4 Â· Camera dropout is not an attack
+## G4 · Camera dropout is not an attack
 
 | Field | Value |
 |---|---|
@@ -281,7 +281,7 @@ Each Guardian scenario has one trigger command, run from the `guardian/` folder 
 | Expected: Brain | n/a |
 | How to verify | device_stale event; /devices/CAM-01/trust shows stale true, quarantined false |
 
-## G5 Â· Fire, compromised air-quality monitor
+## G5 · Fire, compromised air-quality monitor
 
 | Field | Value |
 |---|---|
@@ -295,7 +295,7 @@ Each Guardian scenario has one trigger command, run from the `guardian/` folder 
 | Expected: Brain | n/a |
 | How to verify | One quarantine_device call for AQ-03 |
 
-## G6 Â· Replayed readings
+## G6 · Replayed readings
 
 | Field | Value |
 |---|---|
@@ -309,7 +309,7 @@ Each Guardian scenario has one trigger command, run from the `guardian/` folder 
 | Expected: Brain | n/a |
 | How to verify | 5 UNTRUSTED replay verdicts; WL-02 trust_score 1.0 |
 
-## G7 Â· Brain wants a quarantined device
+## G7 · Brain wants a quarantined device
 
 | Field | Value |
 |---|---|
@@ -323,7 +323,7 @@ Each Guardian scenario has one trigger command, run from the `guardian/` folder 
 | Expected: Brain | Excludes WL-03, opens the valve on two trusted sensors, rejects WL-03, accepts WL-02. |
 | How to verify | brain_decision events: REJECT_DEVICE WL-03, USE_DEVICE WL-02 |
 
-## G8 Â· Guardian unreachable
+## G8 · Guardian unreachable
 
 | Field | Value |
 |---|---|
@@ -337,7 +337,7 @@ Each Guardian scenario has one trigger command, run from the `guardian/` folder 
 | Expected: Brain | No verdict counts as UNTRUSTED: HOLD, then RESUME; valve opens only after recovery (+35 s). |
 | How to verify | HOLD, RESUME, OPEN_VALVE in order in the log |
 
-## G9 Â· Real incident and attack together
+## G9 · Real incident and attack together
 
 | Field | Value |
 |---|---|
@@ -351,7 +351,7 @@ Each Guardian scenario has one trigger command, run from the `guardian/` folder 
 | Expected: Brain | Opens the valve at +26 s on trusted evidence; ignores replayed messages. |
 | How to verify | OPEN_VALVE, one quarantine_device, replays ignored |
 
-## G10 Â· Message flood
+## G10 · Message flood
 
 | Field | Value |
 |---|---|
@@ -365,7 +365,7 @@ Each Guardian scenario has one trigger command, run from the `guardian/` folder 
 | Expected: Brain | n/a |
 | How to verify | flood_detected event; 0 containment calls |
 
-## G11 Â· Fake-device injection
+## G11 · Fake-device injection
 
 | Field | Value |
 |---|---|
@@ -379,7 +379,7 @@ Each Guardian scenario has one trigger command, run from the `guardian/` folder 
 | Expected: Brain | n/a |
 | How to verify | UNKNOWN_DEVICE verdicts; 0 UNTRUSTED on WL-01..05 |
 
-## G12 Â· Fake flood at the port (Twin T5)
+## G12 · Fake flood at the port (Twin T5)
 
 | Field | Value |
 |---|---|
@@ -393,7 +393,7 @@ Each Guardian scenario has one trigger command, run from the `guardian/` folder 
 | Expected: Brain | Does not open the valve on the fake reading, and records why. |
 | How to verify | One isolate call for PRT-WLV-01; 0 other UNTRUSTED; guardian/logs/t13-*.log |
 
-## G13 Â· Real flash flood (Twin SCN-02)
+## G13 · Real flash flood (Twin SCN-02)
 
 | Field | Value |
 |---|---|

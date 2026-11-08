@@ -21,6 +21,14 @@ python scenarios/run.py --all                                           # from t
 ```
 On Windows, double-click `brain/SETUP_AND_RUN.cmd`, then `RUN_ALL_SCENARIOS.cmd`. With Docker: `docker compose up brain`.
 
+## Quick start: Guardian alone (R1)
+```bash
+cd guardian && pip install -r requirements.txt && python demo.py       # http://127.0.0.1:8002/city
+python -m scenarios.run all                                             # 15 scenarios, logs in guardian/logs/
+pytest -q                                                               # 122 tests
+```
+With Docker: `docker compose up guardian`. Details: `guardian/README.md`, `guardian/INTERFACE.md`, `guardian/SECURITY.md` (22 attacks) and the Guardian rows G1 to G13 in `TESTBOOK.md`.
+
 ## The three Phase 1 rules
 | Rule | Where |
 |---|---|
@@ -38,7 +46,7 @@ triplet-02/
 ├── twin/      Twin layer
 ├── brain/     City Brain: README, INTERFACE.md, src/, mocks/, tests/
 ├── guardian/  Guardian layer: README, INTERFACE.md, src/, mocks/, tests/, scenarios/, logs/
-└── docs/      report-brain.pdf, diagrams/
+└── docs/      report-brain.pdf, report-guardian.pdf (to add), diagrams/
 ```
 
 ## Merging
