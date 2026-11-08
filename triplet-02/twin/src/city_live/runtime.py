@@ -16,10 +16,10 @@ from .records import (Action, EPOCH, Event, LiveError, VERSION, identifier, inte
                       numeric, require, timestamp, utc_epoch)
 from .scenarios import PRESETS, effect_for, validate
 from .sensors import SensorBank
-from .sensor_physics import SensorPhysics, advance as advance_physics, measurements as physics_measurements
-from .b_scenarios import ScenarioRunner
+from .b_scenarios import ScenarioRunner, scenario_catalog
 from .demand import TrafficDemand
 from .operator import OperatorControls
+from .sensor_physics import SensorPhysics, advance as advance_sensor_physics, measurements as sensor_measurements
 
 
 def serialized(method):
@@ -71,6 +71,12 @@ class LiveCity(OperatorControls):
         self.public = PublicReader(self._store)
         self._sensors = SensorBank(seed, self._epoch)
         self._reset_adapters()
+        # Adapter state is rebuilt on process startup, while the persisted
+        # CityCore replay may resume at a later tick. Keep the illustrative
+        # sensor model's clock aligned with that restored run before start().
+        if self._persistence is not None:
+            restored_tick = self._snapshot().context.tick
+            self._sensor_physics = replace(self._sensor_physics, tick=restored_tick)
         if self._persistence is not None:
             try:
                 if self._persistence.active_run_id() is None:
@@ -94,8 +100,8 @@ class LiveCity(OperatorControls):
         self._effect_counter, self._private_seq = 0, 0
         self._quarantined_devices = {}
         self._traffic = TrafficDemand(self._seed)
+        self._sensor_physics = SensorPhysics()
         self._sensors.reset()
-        self._physics = SensorPhysics()
         self._store.reset(self._run_id)
         if hasattr(self, '_scenario_runner'):
             self._scenario_runner.reset()
@@ -118,13 +124,15 @@ class LiveCity(OperatorControls):
                       details.get('action_id'))
         self._events = (*self._events, event)[-self._history_limit:]
 
-    def _effect(self, effect, *, persist=True):
+    def _effect(self, effect, *, persist=True, correlation_id=None):
         context = self._snapshot().context
         source = 'B_SCENARIO' if effect['tag'] in DRIVERS else 'B_ACTUATOR'
         effect_id = f'live-{self._effect_counter + 1:010d}'
         request = {'contract_version': CONTRACT_VERSION, 'run_id': self._run_id,
                    'effect_id': effect_id, 'expected_revision': context.revision,
-                   'source': source, 'correlation_id': effect_id, 'effect': effect}
+                   'source': source,
+                   'correlation_id': effect_id if correlation_id is None else correlation_id,
+                   'effect': effect}
         handle = self._core.scenarios if source == 'B_SCENARIO' else self._core.actuators
         receipt = require(handle.apply_effect(request))
         self._effect_counter += 1
@@ -229,8 +237,11 @@ class LiveCity(OperatorControls):
         departures = {road: max(0, old.queue_vehicles + old.arrival_rate_veh_s
             - committed.physical_state.roads[road].queue_vehicles)
             for road, old in before.physical_state.roads.items()}
-        self._physics = advance_physics(self._physics, committed, self._epoch)
-        expired = self._sensors.capture(committed, departures, physics_measurements(self._physics))
+        self._sensor_physics = advance_sensor_physics(
+            self._sensor_physics, committed, self._epoch
+        )
+        model_values = sensor_measurements(self._sensor_physics)
+        expired = self._sensors.capture(committed, departures, model_values)
         for sensor_id in expired:
             self._event('FAULT_CLEARED', {'sensor_id': sensor_id, 'automatic': True})
         previous = self._sensors.latest
@@ -461,6 +472,11 @@ class LiveCity(OperatorControls):
                 'status': status, 'diagnostics': self.diagnostics(),
                 'comparisons': plain(tuple(self._sensors.latest.values())),
                 'readings': self.public.observations(), 'sensors': self.sensors(),
+                'actuators': self.actuator_inventory(),
+                'security': {'quarantined_devices': plain(tuple(
+                    self._quarantined_devices.values()
+                ))},
+                'scenario_catalog': scenario_catalog(),
                 'actions': self.actions(), 'events': self.events()['events'],
                 'scenario': self._scenario_runner.status()}
 

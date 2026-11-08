@@ -16,7 +16,7 @@ from city_live.records import LiveError
 
 class FakeSensors:
     def __init__(self):
-        self.present = {'PRT-WLV-01', 'DTN-TRF-01', 'IND-TMP-01', 'IND-TMP-02'}
+        self.present = {'PRT-WLV-01', 'PRT-WLV-02', 'DTN-TRF-01', 'IND-TMP-01', 'IND-TMP-02'}
         self.inputs = {}
         self.calls = []
         self.inject_error = None
@@ -129,8 +129,8 @@ class ScenarioRunnerTests(unittest.TestCase):
     def test_start_sets_scenario_specific_truth_sampling_and_fixture_data(self):
         t5 = self.runner.start('t5')
         self.assertEqual(t5.scenario_id, 'T5')
-        self.assertEqual(self.city._sensors.inputs['PRT-WLV-01'], 40.0)
-        self.assertIn(('force_sample', 'PRT-WLV-01', 11), self.city._sensors.calls)
+        self.assertEqual(self.city._sensors.inputs['PRT-WLV-02'], 40.0)
+        self.assertIn(('force_sample', 'PRT-WLV-02', 11), self.city._sensors.calls)
 
         self.runner.done = True
         scn2 = self.runner.start('scn-02')
@@ -180,17 +180,17 @@ class ScenarioRunnerTests(unittest.TestCase):
     def test_t5_after_scenario_clear_and_finish_boundary(self):
         self.runner.start('t5')
         self.runner.advance(15)
-        self.assertTrue(any(call[:3] == ('inject', 'PRT-WLV-01', 'FALSE_READING')
+        self.assertTrue(any(call[:3] == ('inject', 'PRT-WLV-02', 'FALSE_READING')
                             for call in self.city._sensors.calls))
         self.runner.advance(15)
         self.assertEqual(len([call for call in self.city._sensors.calls
-                              if call[0] == 'inject' and call[1] == 'PRT-WLV-01']), 1)
+                              if call[0] == 'inject' and call[1] == 'PRT-WLV-02']), 1)
 
         self.runner.finish(54)
         self.assertFalse(self.runner.done)
         self.runner.finish(55)
         self.assertTrue(self.runner.done)
-        self.assertIn(('clear', 'PRT-WLV-01', True), self.city._sensors.calls)
+        self.assertIn(('clear', 'PRT-WLV-02', True), self.city._sensors.calls)
         self.assertIn(('clear_scenario_inputs', 'T5'), self.city._sensors.calls)
         count = len(self.city._sensors.calls)
         self.runner.finish(100)

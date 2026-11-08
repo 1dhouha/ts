@@ -37,6 +37,7 @@ class OperatorControls:
                 'access': plain(snapshot.access), 'active_faults': plain(self._sensors.faults),
                 'active_disturbances': disturbances(snapshot.physical_state),
                 'traffic_profile': self._traffic.profile,
+                'sensor_model': plain(self._sensor_physics),
                 'water_levels': {'basin_m': snapshot.physical_state.water.basin_level_m,
                                  'surface_m': snapshot.physical_state.water.surface_depth_m}}
 
@@ -51,6 +52,39 @@ class OperatorControls:
     @operator_call
     def sensors(self):
         return plain(self._sensors.registry)
+
+    @operator_call
+    def actuator_inventory(self):
+        physical = plain(self._snapshot().physical_state)
+        inventory = []
+        for actuator in load_catalog().actuators:
+            family = actuator.family
+            target = actuator.target_id
+            state = None
+            if actuator.supported and target is not None:
+                state_group = {
+                    'pump': 'pump',
+                    'valve': 'valve',
+                    'signal': 'signals',
+                    'feeder': 'feeders',
+                    'responder': 'responders',
+                }.get(family)
+                if state_group is not None:
+                    group = physical[state_group]
+                    state = group if family in ('pump', 'valve') else group.get(target)
+            inventory.append({
+                'device_id': actuator.device_id,
+                'zone_id': actuator.zone_id,
+                'core_zone_id': actuator.core_zone_id,
+                'type': actuator.type,
+                'family': family,
+                'target_id': target,
+                'supported': actuator.supported,
+                'aliases': list(actuator.aliases),
+                'commands': list(actuator.commands),
+                'simulated_state': state,
+            })
+        return plain(tuple(inventory))
 
     @operator_call
     def sensor_compare(self, sensor_id):
@@ -185,12 +219,22 @@ class OperatorControls:
             except (sqlite3.Error, OSError, RuntimeError, ValueError) as error:
                 raise LiveError('PERSISTENCE_FAILURE') from error
 
-        receipt = self._effect(effect, persist=durable is None)
+        receipt = self._effect(
+            effect,
+            persist=durable is None,
+            correlation_id=command_id if correlation_id is None else correlation_id,
+        )
         result = {
             'command_id': command_id,
             'device_id': device_id,
             'command': command,
             'status': 'APPLIED',
+            'requested_effect': effect,
+            'effective_effect': effect,
+            'execution_status': 'EXECUTED',
+            'execution_reason': 'CITYCORE_EFFECT_COMMITTED',
+            'city_core_updated': True,
+            'correlation_id': receipt.correlation_id,
             'effective_revision': receipt.context.revision,
             'effect_id': receipt.effect_id,
         }

@@ -1,7 +1,8 @@
-# City Brain layer 
+# City Brain layer (triplet 07)
 
 This layer sees what the city's sensors report and asks the Guardian whether each reading can be trusted. It then decides what to do and tells the Twin's actuators to do it: pumps, valves, traffic signals, power feeders and emergency units. **No actuator command is ever sent without a TRUSTED Guardian verdict**, apart from emergency calls, which an operator confirms.
 
+It is based on `yassinselmi-ai/city-brain` and adapted to the Twin contract (`twin-interface-0.1`) and the Guardian contract (v0.4). It shares the Twin's catalog of 16 sensors and its map coordinates.
 
 ## Run it alone (R1)
 One program on one port. The built-in Twin and Guardian simulators run inside it at `/sim/twin` and `/sim/guardian`, so it needs no partner, database or Redis.
@@ -40,3 +41,9 @@ From the repo root, `python scenarios/run.py --scenario t5` runs one scenario an
 | `tests/` | 74 tests (contracts, scenarios end to end, air model, vault, shield, validation, timeline) |
 
 `python -m pytest -q` runs the suite. With `TWIN_REPO=<Twin checkout>` it adds byte-for-byte catalog checks and checks every command against the Twin's own code.
+
+## Documents
+- `INTERFACE.md`: what the layer sends and receives, examples, configuration and authentication.
+- `INTEGRATION.md`: settings for pointing the layer at the real Twin and Guardian. **Not done yet**: we merge only when the team decides.
+- `../docs/report-brain.pdf`: report Part 2 (The City Brain), plus the Brain's parts of Part 0 and Part 4.
+- `docs/legacy/`: notes from the original repository, kept for history.

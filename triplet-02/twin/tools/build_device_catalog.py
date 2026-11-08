@@ -116,10 +116,15 @@ def actuator_rows(seed, overlay, zones, core=False):
                 "supported": bool(item.get("supported", True)),
                 "physical_id": item.get("physical_id"),
                 "aliases": list(item.get("aliases", [])),
+                "sensor_ids": list(item.get("sensor_ids", [])),
                 "backup_ids": [],
                 "commands": COMMANDS[family],
             })
         return rows
+    sensors_by_target = {
+        item["target_id"]: item.get("sensor_ids", [])
+        for item in overlay["core_actuators"]
+    }
     for device in seed["devices"]:
         if device["kind"] != "actuator":
             continue
@@ -139,6 +144,10 @@ def actuator_rows(seed, overlay, zones, core=False):
             "supported": bool(binding["supported"]),
             "physical_id": binding.get("physical_id"),
             "aliases": list(binding.get("aliases", [])),
+            "sensor_ids": list(
+                sensors_by_target.get(binding.get("target_id"), [])
+                if binding["supported"] else ()
+            ),
             "backup_ids": list(device.get("backup_ids", [])),
             "commands": COMMANDS[family],
         })
@@ -161,6 +170,10 @@ def validate(sensors, actuators):
     for row in actuators:
         if row["supported"] and row["target_id"] is None:
             raise ValueError(f"Supported actuator has no target: {row['device_id']}")
+        if len(row["sensor_ids"]) != len(set(row["sensor_ids"])):
+            raise ValueError(f"Duplicate causal sensor: {row['device_id']}")
+        if set(row["sensor_ids"]) - {sensor["sensor_id"] for sensor in sensors}:
+            raise ValueError(f"Unknown causal sensor: {row['device_id']}")
 
 
 def main():

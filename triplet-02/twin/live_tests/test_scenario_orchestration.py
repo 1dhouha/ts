@@ -49,13 +49,15 @@ class ScenarioOrchestrationTests(unittest.TestCase):
     def test_scn01_spoof_is_detected_and_blocks_unsafe_effect(self):
         scenario = self.start('t5', ticks=5)
 
-        reading = self.city._sensors.latest['PRT-WLV-01']
+        reading = self.city._sensors.latest['PRT-WLV-02']
         self.assertEqual(reading['actual_value'], 40.0)
         self.assertEqual(reading['reported_value'], 180.0)
+        backup = self.city._sensors.latest['PRT-WLV-01']
+        self.assertEqual(backup['reported_value'], 40.0)
         revision = self.city.status()['revision']
 
         response = self.command(
-            'PRT-PMP-01',
+            'PRT-PMP-02',
             'set_speed',
             {'speed_pct': 80},
             'scenario-fake-flood-command',
@@ -66,6 +68,7 @@ class ScenarioOrchestrationTests(unittest.TestCase):
         self.assertEqual(self.city.status()['revision'], revision)
         self.assertTrue(any(
             row['details']['event_type'] == 'GUARDIAN_PENDING'
+            and row['details']['device_id'] == 'PRT-WLV-02'
             for row in self.timeline()
             if row['type'] == 'SCENARIO_LIFECYCLE'
         ))
@@ -75,6 +78,9 @@ class ScenarioOrchestrationTests(unittest.TestCase):
         reading = self.city._sensors.latest['PRT-WLV-01']
         self.assertEqual(reading['actual_value'], 110.0)
         self.assertEqual(reading['reported_value'], 110.0)
+        backup = self.city._sensors.latest['PRT-WLV-02']
+        self.assertEqual(backup['actual_value'], 110.0)
+        self.assertEqual(backup['reported_value'], 110.0)
 
         frame = self.city.capture_dashboard_frame()
         self.assertEqual(frame['scenario']['scenario_id'], 'SCN-02')
@@ -124,7 +130,29 @@ class ScenarioOrchestrationTests(unittest.TestCase):
             for event in self.events.get_latest(limit=100, role='operator')
         ))
 
-    def test_scn03_requires_validated_backup_sensor_for_command(self):
+    def test_ordinary_brain_correlation_id_is_not_treated_as_scenario_context(self):
+        result = self.facade.send_actuator_command(
+            'scenario-test-brain',
+            'V-12',
+            'set_opening',
+            {'open_pct': 22},
+            'ordinary-correlated-brain-command',
+            {
+                'run_id': self.city.status()['run_id'],
+                'correlation_id': 'brain-observation-correlation-01',
+            },
+        )
+
+        self.assertTrue(result['ok'], result)
+        self.assertEqual(
+            result['data']['correlation_id'], 'brain-observation-correlation-01'
+        )
+        self.assertEqual(
+            self.city._snapshot().physical_state.valve.effective_opening_fraction,
+            0.22,
+        )
+
+    def test_scn03_rejects_signal_command_without_linked_traffic_backup(self):
         scenario = self.start('scn-03', ticks=2)
         traffic = self.city._sensors.latest['DTN-TRF-01']
         dead = self.city._sensors.latest['IND-TMP-01']
@@ -137,21 +165,29 @@ class ScenarioOrchestrationTests(unittest.TestCase):
         revision = self.city.status()['revision']
 
         rejected = self.command(
-            'IND-VLV-01', 'set_opening', {'open_pct': 25},
+            'DTN-TLT-01', 'set_mode', {'mode': 'priority'},
             'scenario-no-backup-command', scenario,
         )
         self.assertFalse(rejected['ok'])
+        self.assertEqual(rejected['error']['code'], 'INVALID_STATE')
+        self.assertEqual(
+            rejected['error']['details']['reason'], 'SCENARIO_GUARDIAN_PENDING'
+        )
         self.assertEqual(self.city.status()['revision'], revision)
 
-        accepted = self.command(
-            'IND-VLV-01', 'set_opening', {'open_pct': 25},
-            'scenario-valid-backup-command', scenario,
+        unrelated_backup = self.command(
+            'DTN-TLT-01', 'set_mode', {'mode': 'priority'},
+            'scenario-unrelated-industrial-backup', scenario,
             source_sensor_id='IND-TMP-02',
         )
-        self.assertTrue(accepted['ok'])
-        self.assertEqual(self.city.status()['revision'], revision + 1)
+        self.assertFalse(unrelated_backup['ok'])
+        self.assertEqual(unrelated_backup['error']['code'], 'INVALID_STATE')
+        self.assertEqual(
+            unrelated_backup['error']['details']['reason'], 'SCENARIO_GUARDIAN_PENDING'
+        )
+        self.assertEqual(self.city.status()['revision'], revision)
 
-    def test_scn04_guardian_isolation_vetoes_primary_and_allows_existing_backup(self):
+    def test_scn04_guardian_isolation_vetoes_shared_target_backup(self):
         scenario = self.start('scn-04', ticks=1)
         blocked = self.command(
             'PRT-PMP-01', 'set_speed', {'speed_pct': 25},

@@ -56,6 +56,8 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')selectEntity(null);}
 function render() {
   performance.clearMeasures('city-frame-render');performance.mark('city-render-start');
   element('connection').textContent = mode ? (store.stale ? `STALE / ${error || 'waiting'}` : 'CONNECTED') : 'DISCONNECTED';
+  document.body.classList.toggle('connected',Boolean(mode&&!store.stale));
+  document.body.classList.toggle('stale',store.stale);
   element('visibility').textContent = store.frame?.visibility || 'No frame loaded.';
   element('identity').textContent = store.frame ? `Run ${store.frame.run_id} · frame ${store.frame.frame_seq}` : 'Waiting for connection.';
   controls.render();sensors.render();history.accept(store.frame);timeline.render(store.frame);
@@ -64,6 +66,9 @@ function render() {
   renderMetrics(store.frame);renderReports(store.frame);cityMap.renderFrame(store.frame,{stale:store.stale});cityMap.selectEntity(store.selection);describeSelection(store.frame,store.selection,cityMap.layout);
   if(cityMap.layout){const signature=cityMap.layout.devices.map(d=>d.id).join('|');if(signature!==element('asset-list').dataset.inventory){element('asset-list').dataset.inventory=signature;element('search').dispatchEvent(new Event('input'));}}
   element('frame').textContent = store.frame ? JSON.stringify(store.frame, null, 2) : 'No data.';
+  window.dispatchEvent(new CustomEvent('twin-dashboard-frame', {
+    detail: {frame: store.frame, stale: store.stale}
+  }));
   performance.measure('city-frame-render','city-render-start');performance.clearMarks('city-render-start');
 }
 
@@ -91,6 +96,20 @@ function connect(nextMode) {
   render();
   poll();
 }
+
+function disconnectView() {
+  ++authIntent;
+  ++loop;
+  mode = null;
+  store.clear();
+  render();
+}
+
+window.addEventListener('twin-dashboard-connect', event => {
+  const nextMode = event.detail?.mode;
+  if (nextMode === 'operator' || nextMode === 'report') connect(nextMode);
+});
+window.addEventListener('twin-dashboard-disconnect', disconnectView);
 
 element('login').addEventListener('submit', async event => {
   event.preventDefault();
@@ -124,11 +143,7 @@ element('report').addEventListener('click', () => {
   connect('report');
 });
 element('logout').addEventListener('click', async () => {
-  ++authIntent;
-  ++loop;
-  mode = null;
-  store.clear();
-  render();
+  disconnectView();
   element('auth-state').textContent = 'Sign-out pending.';
   if (authBusy) return; // The obsolete login owns its follow-up revocation.
   setAuthBusy(true);

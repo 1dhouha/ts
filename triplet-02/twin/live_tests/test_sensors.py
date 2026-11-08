@@ -59,6 +59,81 @@ class SensorTests(unittest.TestCase):
         for field in ('actual_value', 'delta', 'fault', 'FALSE_READING', 'fault_id'):
             self.assertNotIn(field, json.dumps(self.city.public.observations()))
 
+    def test_all_faults_change_reporting_only_after_sensorbank_capture(self):
+        cases = (
+            ('FALSE_READING', {'value': 120}, 'OK'),
+            ('STUCK', {}, 'OK'),
+            ('DRIFT', {'rate': 1}, 'OK'),
+            ('NOISE', {'amplitude': 2}, 'OK'),
+            ('DELAYED', {'lag_ticks': 1}, 'DEGRADED'),
+            ('DROPOUT', {'duration_ticks': 6}, 'OFFLINE'),
+            ('DEAD', {}, 'FAILED'),
+        )
+        for kind, params, expected_status in cases:
+            with self.subTest(fault=kind):
+                control = LiveCity(f'fault-control-{kind}', seed=1406)
+                faulted = LiveCity(f'faulted-{kind}', seed=1406)
+                repeated = LiveCity(f'repeated-{kind}', seed=1406)
+                for city in (control, faulted, repeated):
+                    self.addCleanup(city.close)
+                    for _ in range(5):
+                        city.step()
+                    city.incident('heavy_rain')
+                for city in (faulted, repeated):
+                    city.sensor_fault('PRT-WLV-01', kind, params)
+
+                for _ in range(5):
+                    for city in (control, faulted, repeated):
+                        city.step()
+
+                control_reading = control.sensor_compare('PRT-WLV-01')
+                fault_reading = faulted.sensor_compare('PRT-WLV-01')
+                repeated_reading = repeated.sensor_compare('PRT-WLV-01')
+
+                # Capture occurs from committed model state before fault
+                # transformation. The complete actual-value histories match.
+                control_history = control._sensors.buffers['PRT-WLV-01']
+                self.assertEqual(faulted._sensors.buffers['PRT-WLV-01'], control_history)
+                self.assertEqual(repeated._sensors.buffers['PRT-WLV-01'], control_history)
+                self.assertEqual(
+                    faulted._snapshot().physical_state,
+                    control._snapshot().physical_state,
+                )
+                self.assertEqual(
+                    repeated._snapshot().physical_state,
+                    control._snapshot().physical_state,
+                )
+                self.assertEqual(fault_reading['status'], expected_status)
+                self.assertEqual(fault_reading['fault'], kind)
+
+                if kind == 'FALSE_READING':
+                    self.assertEqual(fault_reading['actual_value'], control_reading['actual_value'])
+                    self.assertEqual(fault_reading['reported_value'], 120)
+                elif kind == 'STUCK':
+                    self.assertEqual(fault_reading['actual_value'], control_reading['actual_value'])
+                    self.assertEqual(fault_reading['reported_value'], 50)
+                    self.assertGreater(fault_reading['actual_value'], 50)
+                elif kind == 'DRIFT':
+                    self.assertEqual(fault_reading['actual_value'], control_reading['actual_value'])
+                    self.assertEqual(fault_reading['reported_value'],
+                                     fault_reading['actual_value'] + 5)
+                elif kind == 'NOISE':
+                    self.assertEqual(fault_reading['actual_value'], control_reading['actual_value'])
+                    self.assertLessEqual(abs(fault_reading['delta']), 2)
+                    self.assertEqual(fault_reading['reported_value'],
+                                     repeated_reading['reported_value'])
+                elif kind == 'DELAYED':
+                    self.assertEqual(fault_reading['sim_tick'], 9)
+                    expected_actual = round(dict(control_history)[9], 2)
+                    self.assertEqual(fault_reading['actual_value'], expected_actual)
+                    self.assertEqual(fault_reading['reported_value'], expected_actual)
+                elif kind == 'DROPOUT':
+                    self.assertEqual(fault_reading['actual_value'], control_reading['actual_value'])
+                    self.assertIsNone(fault_reading['reported_value'])
+                elif kind == 'DEAD':
+                    self.assertEqual(fault_reading['actual_value'], control_reading['actual_value'])
+                    self.assertIsNone(fault_reading['reported_value'])
+
     def test_stuck_drift_noise_and_clear(self):
         self.sample()
         self.city.sensor_fault('PRT-WLV-01', 'STUCK', {})

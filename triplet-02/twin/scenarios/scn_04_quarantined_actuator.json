@@ -1,14 +1,14 @@
 {
   "ID": "SCN-04",
-  "Name": "Guardian containment prevents unsafe Brain dispatch",
+  "Name": "Wait for Guardian-owned actuator isolation",
   "Layers involved": ["Brain", "Guardian", "Twin"],
-  "Description": "Guardian quarantines a compromised port pump while the Brain requests an operational start command.",
+  "Description": "The Twin emits a local pending marker and waits for Guardian to make its own isolation decision. The Twin does not call or send a request to Guardian.",
   "Trigger": "python scenarios/run.py --scenario scn-04",
-  "Expected: Twin": "Rejects the command to PRT-PMP-01 with FAILED and GUARDIAN_RESTRICTED; it does not claim that the command ran.",
-  "Expected: Guardian": "Quarantines PRT-PMP-01 before Brain dispatch.",
-  "Expected: Brain": "Checks the restriction, records the rejection, queries compatible backups, and dispatches START to available PRT-PMP-02.",
-  "How to verify": "Follow the quarantine, rejected command, compatible-device lookup, and backup command lifecycle in logs/scn-04-*.log.",
-  "duration_ticks": 1,
+  "Expected: Twin": "Emits a local GUARDIAN_PENDING marker only; it makes no outbound Guardian call. A Brain command to PRT-PMP-01 is rejected with SCENARIO_GUARDIAN_PENDING until Guardian independently isolates the actuator.",
+  "Expected: Guardian": "Guardian continues its normal sensor polling and makes isolation decisions from its own sensor evidence. It does not receive or act on the Twin's scenario marker. This scenario provides no sensor evidence that currently maps to the pump, so autonomous pump isolation is not demonstrated.",
+  "Expected: Brain": "This trigger creates no sensor incident, so the live Brain makes no autonomous decision or command. If a Brain command is separately submitted before Guardian isolation, Twin rejects it fail-closed. PRT-PMP-02 shares CityCore target P-03 and is not an independent fallback.",
+  "How to verify": "Start the full Compose stack and launch SCN-04 from the Twin dashboard. Verify Twin sends no outbound request to Guardian, Guardian continues its normal sensor polling, and Brain commands fail closed while isolation is pending. Do not count this scenario as proving autonomous pump isolation. PRT-PMP-02 shares the same physical target, so no safe actuator fallback is claimed.",
+  "duration_ticks": 30,
   "triggers": [
     {
       "sim_tick": 1,

@@ -8,7 +8,7 @@
   "Expected: Guardian": "No Guardian decision is fabricated. The local Guardian role boundary is blocked during the injected outage; quarantine remains unchanged.",
   "Expected: Brain": "No Brain decision is fabricated. The local Brain role boundary is blocked during the injected outage; commands submitted while unavailable are rejected rather than queued.",
   "How to verify": "Follow PARTNER_CHANNEL_AVAILABLE, PARTNER_CHANNEL_UNAVAILABLE, PARTNER_CHANNEL_RECOVERED, PARTNER_REQUEST_BLOCKED, and the post-recovery command events under one correlation_id in the SCN-06 event history and evidence report.",
-  "duration_ticks": 1,
+  "duration_ticks": 10,
   "triggers": [
     {
       "sim_tick": 1,

@@ -124,6 +124,30 @@ class UnifiedAsgiAppTests(unittest.TestCase):
                 self.assertEqual(response.status_code, 200, response.text)
                 self.assertIn("secure", response.headers["set-cookie"].casefold())
 
+    def test_dashboard_scenario_trigger_uses_the_rest_city_owner(self):
+        with TestClient(self.app) as client:
+            origin = "http://testserver"
+            login = client.post(
+                "/api/session",
+                json={"secret": os.environ["TWIN_DASHBOARD_SECRET"]},
+                headers={"Origin": origin},
+            )
+            self.assertEqual(login.status_code, 200, login.text)
+
+            triggered = client.post(
+                "/api/operator/scenario",
+                json={"scenario_id": "t5"},
+                headers={"Origin": origin},
+            )
+            self.assertEqual(triggered.status_code, 200, triggered.text)
+            self.assertEqual(triggered.json()["data"]["scenario_id"], "T5")
+
+            operator = client.get("/api/operator/frame")
+            self.assertEqual(operator.status_code, 200, operator.text)
+            self.assertEqual(
+                operator.json()["data"]["scenario"]["scenario_id"], "T5"
+            )
+
     def test_openapi_describes_rest_query_and_json_body_parameters(self):
         schema = self.app.openapi()
         sensors = schema["paths"]["/api/v1/sensors"]["get"]

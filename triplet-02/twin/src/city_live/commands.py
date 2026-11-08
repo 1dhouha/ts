@@ -27,7 +27,7 @@ def build_command_effect(device_id, command, params):
             speed = numeric(params["speed_pct"], 0, 100) / 100.0
         else:
             raise LiveError("UNSUPPORTED_COMMAND")
-        return {"tag": "pump_enable", "target_id": target_id, "enabled": speed > 0}
+        return {"tag": "pump_speed", "target_id": target_id, "speed_fraction": speed}
 
     if actuator.family == "valve":
         if cmd != "set_opening":

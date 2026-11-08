@@ -1,14 +1,14 @@
 {
   "ID": "SCN-02",
-  "Name": "Harbor basin surge and emergency valve dispatch",
+  "Name": "Seeded Harbour-level fixture and pump-command check",
   "Layers involved": ["Twin", "Guardian", "City Brain"],
-  "Description": "Real rain accumulation causes the harbor basin water level to rise rapidly from 40 cm to 110 cm. The telemetry is authentic.",
+  "Description": "A deterministic fixture seeds both redundant harbour-level sensors to 110 cm long enough for Guardian and Brain to poll, judge, and respond. This is not authentic field telemetry.",
   "Trigger": "python scenarios/run.py --scenario scn-02",
-  "Expected: Twin": "PRT-WLV-01 reports the authentic 110.0 cm value (actual_value == reported_value). The runner records a PENDING marker before dispatch; the real ActuatorEngine advances RUNNING to COMPLETED and returns an effect that this runner does not apply to city_core.",
-  "Expected: Guardian": "The scenario adapter validates the matching actual/reported values and returns TRUSTED.",
-  "Expected: Brain": "Confirms TRUSTED, recognizes the flood threshold breach, and dispatches START to the linked port pump PRT-PMP-01.",
-  "How to verify": "Follow the correlation_id through the reading, TRUSTED verdict, OPEN_DISCHARGE decision, and actuator RUNNING/COMPLETED events in logs/scn-02-*.log. The runner uses the Twin actuator engine; Guardian and Brain are explicit scenario adapters.",
-  "duration_ticks": 2,
+  "Expected: Twin": "At tick 1, SensorBank samples 110.0 cm for PRT-WLV-01 and its registered redundant sensor PRT-WLV-02. The seeded observations remain available for a 40-tick review window. The fixture does not apply rain or mutate CityCore B-01.",
+  "Expected: Guardian": "The normal Guardian poller receives both new readings. The matching pair corroborates the rise; verdicts remain the authority for whether Brain may act.",
+  "Expected: Brain": "The normal Brain poller detects the sustained harbour flood, requests the Guardian verdict, and sends a pump command only after a trusted verdict. Twin checks and applies the command through its existing safety contract.",
+  "How to verify": "Start the Compose stack, launch SCN-02 in the Twin dashboard, then compare the same sensor observation in the Guardian and Brain timelines. A Brain command must show APPLIED in the Twin action history; otherwise inspect the Guardian verdict and Brain decision reason.",
+  "duration_ticks": 40,
   "triggers": [
     {
       "sim_tick": 1,
@@ -19,11 +19,22 @@
         "to_cm": 110.0,
         "cause": "real_rain_accumulation"
       }
+    },
+    {
+      "sim_tick": 1,
+      "action": "SET_GROUND_TRUTH",
+      "target_device_id": "PRT-WLV-02",
+      "parameters": {
+        "from_cm": 40.0,
+        "to_cm": 110.0,
+        "cause": "corroborating_harbour_level_fixture"
+      }
     }
   ],
   "fixture": {
     "seed": 1406,
     "sensor_id": "PRT-WLV-01",
+    "backup_sensor_id": "PRT-WLV-02",
     "ground_truth_value": 110.0,
     "actuator_id": "PRT-PMP-01",
     "command": "START",

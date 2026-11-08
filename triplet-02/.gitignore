@@ -9,6 +9,6 @@ venv/
 
 # runtime data (offline vault, journal, signing key): never commit
 brain/data/
-data/
+/data/
 logs/.runs/
 *.egg-info/

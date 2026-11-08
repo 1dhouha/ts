@@ -14,6 +14,37 @@ class FrameTests(unittest.TestCase):
         self.assertTrue(callable(getattr(self.city, 'capture_dashboard_frame', None)),
                         'LiveCity must supply a coherent owner capture')
 
+    def test_operator_frame_includes_simulated_actuator_inventory_and_quarantine(self):
+        frame = self.city.capture_dashboard_frame()
+        pump = next(row for row in frame['actuators'] if row['device_id'] == 'PRT-PMP-01')
+        unsupported = next(row for row in frame['actuators'] if row['device_id'] == 'RES-TLT-01')
+        self.assertEqual(pump['target_id'], 'P-03')
+        self.assertTrue(pump['supported'])
+        self.assertEqual(pump['simulated_state']['effective_enabled'], False)
+        self.assertFalse(unsupported['supported'])
+        self.assertIsNone(unsupported['simulated_state'])
+        self.assertEqual(frame['security']['quarantined_devices'], [])
+
+    def test_quarantine_metadata_is_only_in_private_operator_frame(self):
+        from city_dashboard.frames import read_reported_frame
+        self.city.quarantine_device('PRT-PMP-01', 'test isolation')
+        private = self.city.capture_dashboard_frame()
+        reported = read_reported_frame(self.city.public)
+        self.assertEqual(private['security']['quarantined_devices'][0]['device_id'], 'PRT-PMP-01')
+        self.assertNotIn('security', reported)
+        self.assertNotIn('PRT-PMP-01', str(reported))
+
+    def test_scenario_catalog_is_visible_without_exposing_private_run_state(self):
+        from city_dashboard.frames import read_reported_frame
+        private = self.city.capture_dashboard_frame()
+        reported = read_reported_frame(self.city.public)
+        expected = {'SCN-02', 'SCN-03', 'SCN-04', 'SCN-05', 'SCN-06', 'T5'}
+        self.assertEqual({row['scenario_id'] for row in reported['scenario_catalog']}, expected)
+        self.assertEqual(private['scenario_catalog'], reported['scenario_catalog'])
+        self.assertTrue(all(row['name'] and row['description'] for row in reported['scenario_catalog']))
+        for key in ('scenario', 'diagnostics', 'actuators', 'comparisons'):
+            self.assertNotIn(key, reported)
+
     def test_detached_frame_and_monotone_identity_across_reset(self):
         from city_dashboard.frames import capture_operator_frame
         a = capture_operator_frame(self.city)

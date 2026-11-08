@@ -4,11 +4,11 @@
   "Layers involved": ["Twin", "Guardian", "City Brain"],
   "Description": "A downtown traffic counter freezes during rush hour while an industrial temperature sensor abruptly dies.",
   "Trigger": "python scenarios/run.py --scenario scn-03",
-  "Expected: Twin": "DTN-TRF-01 holds its pre-fault traffic value and IND-TMP-01 reports null with status FAILED. A STUCK fault reports status OK in the current Twin contract; Guardian independently detects the lack of variance.",
-  "Expected: Guardian": "The scenario adapter detects repeated frozen values and the missing temperature packet in the same simulation step, marks both streams UNTRUSTED, and quarantines both sensors.",
-  "Expected: Brain": "Ignores both quarantined streams and reads the compatible backup IND-TMP-02 for its fallback decision.",
-  "How to verify": "Inspect both Twin readings, the Guardian isolation events, and the Brain backup-feed event in logs/scn-03-*.log. Guardian/Brain decisions are emitted by deterministic scenario adapters.",
-  "duration_ticks": 3,
+  "Expected: Twin": "DTN-TRF-01 holds its pre-fault reported value (48) with status OK while its private actual input is 55; IND-TMP-01 reports null with status FAILED; registered backup IND-TMP-02 reports 70. A Brain-role priority command to the supported linked signal DTN-TLT-01 is rejected with SCENARIO_GUARDIAN_PENDING because DTN-TRF-01 is untrusted and has no registered backup. Supplying unrelated industrial sensor IND-TMP-02 does not clear the traffic safety gate. CityCore revision and actuator state do not change.",
+  "Expected: Guardian": "The Twin emits a pending marker for an untrusted sensor-linked command. No Guardian service or autonomous Guardian verdict is run by this scenario; real Guardian behavior is NOT VERIFIED.",
+  "Expected: Brain": "No Brain service or autonomous Brain decision is run by this scenario. Controlled local Brain-role calls targeting DTN-TLT-01 are rejected because the linked frozen traffic sensor has no registered backup; the unrelated IND-TMP-02 reading cannot authorize the command. No actuator fallback is claimed. Real Brain behavior is NOT VERIFIED.",
+  "How to verify": "Run live_tests.test_scenario_orchestration.ScenarioOrchestrationTests.test_scn03_rejects_signal_command_without_linked_traffic_backup and tools/run_scenario_campaign.py. Inspect the SCN-03 scenario campaign JSON, Twin events, and audit log. The campaign commands are controlled local TwinFacade calls, not real partner responses.",
+  "duration_ticks": 40,
   "triggers": [
     {
       "sim_tick": 2,
