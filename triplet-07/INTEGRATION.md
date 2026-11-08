@@ -1,6 +1,6 @@
 # Integration · how the three layers connect
 
-> **Status: not merged.** Each layer runs alone. This page is the plan for merge day. Nothing below is active until the team decides.
+> **Status: all three layers are in this repo.** Each layer still runs alone by default. This page explains how to connect them.
 
 ## Data flow
 | Step | From → To | Protocol | Message |
@@ -29,6 +29,17 @@ TWIN_TOKEN_BRAIN=<Twin's brain-role token>
 GUARDIAN_URL=http://<guardian-host>:8002   GUARDIAN_MODE=lookup
 GUARDIAN_TOKEN_BRAIN=<Guardian read token>  GUARDIAN_TIMELINE_TOKEN=<Guardian timeline token>
 ```
+## Guardian side (must match the Brain)
+```env
+GUARDIAN_PROFILE=twin
+TWIN_URL=http://<twin-host>:8000
+TWIN_TOKEN_GUARDIAN=<Twin's guardian-role token>
+GUARDIAN_TOKEN=<admin token>
+GUARDIAN_TOKEN_BRAIN=<same value as the Brain's GUARDIAN_TOKEN_BRAIN>
+GUARDIAN_TOKEN_TIMELINE=<same value as the Brain's GUARDIAN_TIMELINE_TOKEN>
+```
+The names differ on purpose: the Brain calls its timeline token `GUARDIAN_TIMELINE_TOKEN` and the Guardian calls it `GUARDIAN_TOKEN_TIMELINE`. **The value must be identical on both sides.** All four Guardian tokens must differ from each other, or the Guardian refuses to start.
+
 Details and the Twin prerequisite (its sensor-physics fix) are in `brain/INTEGRATION.md`.
 
 ## Merge-day checklist
