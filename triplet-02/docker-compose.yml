@@ -1,6 +1,6 @@
 # Phase 1: each layer runs alone. `docker compose up brain` starts the City Brain with its
 # built-in Twin and Guardian simulators (R1): http://localhost:8300/city
-# The twin and guardian services stay commented out until the team decides to merge.
+# The Guardian service also starts alone on port 8002; the Twin stays commented out until merge day.
 services:
   brain:
     build: ./brain
@@ -12,8 +12,6 @@ services:
     volumes: [brain-data:/app/data]      # offline vault survives restarts
     restart: unless-stopped
 
-  # twin:                                # merge day: the Twin team's image
-
   guardian:
     build: ./guardian
     ports: ["8002:8002"]
@@ -21,13 +19,12 @@ services:
       GUARDIAN_TOKEN: ${GUARDIAN_TOKEN:-demo-guardian-token-change-me-0123456789}
     volumes: [guardian-logs:/app/logs]
     restart: unless-stopped
+
+  # twin:                                # merge day: the Twin team's image
   #   build: ./twin
   #   ports: ["8765:8765", "8000:8000"]
-  # guardian:                            # merge day: the Guardian team's image
-  #   build: ./guardian
-  #   ports: ["8002:8002"]
-  #   environment: {GUARDIAN_PROFILE: twin}
-  # ...then set on brain: SIMULATOR=false, TWIN_URL=http://twin:8000, GUARDIAN_URL=http://guardian:8002
+  # To connect the layers (see INTEGRATION.md), set on guardian: GUARDIAN_PROFILE=twin,
+  # and on brain: SIMULATOR=false, TWIN_URL=http://twin:8000, GUARDIAN_URL=http://guardian:8002
 
 volumes:
   brain-data:
