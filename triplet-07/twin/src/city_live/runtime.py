@@ -16,6 +16,7 @@ from .records import (Action, EPOCH, Event, LiveError, VERSION, identifier, inte
                       numeric, require, timestamp, utc_epoch)
 from .scenarios import PRESETS, effect_for, validate
 from .sensors import SensorBank
+from .sensor_physics import SensorPhysics, advance as advance_physics, measurements as physics_measurements
 from .b_scenarios import ScenarioRunner
 from .demand import TrafficDemand
 from .operator import OperatorControls
@@ -94,6 +95,7 @@ class LiveCity(OperatorControls):
         self._quarantined_devices = {}
         self._traffic = TrafficDemand(self._seed)
         self._sensors.reset()
+        self._physics = SensorPhysics()
         self._store.reset(self._run_id)
         if hasattr(self, '_scenario_runner'):
             self._scenario_runner.reset()
@@ -227,7 +229,8 @@ class LiveCity(OperatorControls):
         departures = {road: max(0, old.queue_vehicles + old.arrival_rate_veh_s
             - committed.physical_state.roads[road].queue_vehicles)
             for road, old in before.physical_state.roads.items()}
-        expired = self._sensors.capture(committed, departures)
+        self._physics = advance_physics(self._physics, committed, self._epoch)
+        expired = self._sensors.capture(committed, departures, physics_measurements(self._physics))
         for sensor_id in expired:
             self._event('FAULT_CLEARED', {'sensor_id': sensor_id, 'automatic': True})
         previous = self._sensors.latest
