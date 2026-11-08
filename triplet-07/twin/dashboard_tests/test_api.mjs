@@ -1,0 +1,21 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+const file=new URL('../src/city_dashboard/web/api.js',import.meta.url);
+try { await fs.access(file); } catch { assert.fail('D02 needs a bounded browser transport'); }
+const {requestJSON}=await import(file);
+let seen;
+globalThis.fetch=async (path,options)=>{seen={path,options}; return {ok:true,json:async()=>({ok:true,data:{run_id:'a'}})};};
+assert.deepEqual(await requestJSON('/api/report/frame'),{run_id:'a'});
+assert.equal(seen.options.cache,'no-store');
+assert.equal(seen.options.credentials,'same-origin');
+assert.equal(seen.options.redirect,'error');
+await requestJSON('/api/session',{secret:'temporary-test-only'});
+assert.equal(seen.options.method,'POST');
+assert.equal(seen.options.headers['Content-Type'],'application/json');
+globalThis.fetch=async()=>({ok:false,json:async()=>({ok:false,error:{code:'NOT_AUTHORIZED'}})});
+await assert.rejects(requestJSON('/api/operator/frame'),/NOT_AUTHORIZED/);
+globalThis.fetch=async()=>({ok:true,json:async()=>({ok:false})});
+await assert.rejects(requestJSON('/api/report/frame'),/INVALID_RESPONSE/);
+globalThis.fetch=async (_path,{signal})=>new Promise((_resolve,reject)=>signal.addEventListener('abort',()=>reject(new Error('aborted'))));
+await assert.rejects(requestJSON('/api/report/frame',undefined,10),/aborted/);
+console.log('browser transport: cache, credentials, POST, errors and timeout checks passed');

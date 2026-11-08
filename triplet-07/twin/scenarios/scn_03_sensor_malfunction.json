@@ -1,0 +1,38 @@
+{
+  "ID": "SCN-03",
+  "Name": "Sensor death and frozen traffic telemetry",
+  "Layers involved": ["Twin", "Guardian", "City Brain"],
+  "Description": "A downtown traffic counter freezes during rush hour while an industrial temperature sensor abruptly dies.",
+  "Trigger": "python scenarios/run.py --scenario scn-03",
+  "Expected: Twin": "DTN-TRF-01 holds its pre-fault traffic value and IND-TMP-01 reports null with status FAILED. A STUCK fault reports status OK in the current Twin contract; Guardian independently detects the lack of variance.",
+  "Expected: Guardian": "The scenario adapter detects repeated frozen values and the missing temperature packet in the same simulation step, marks both streams UNTRUSTED, and quarantines both sensors.",
+  "Expected: Brain": "Ignores both quarantined streams and reads the compatible backup IND-TMP-02 for its fallback decision.",
+  "How to verify": "Inspect both Twin readings, the Guardian isolation events, and the Brain backup-feed event in logs/scn-03-*.log. Guardian/Brain decisions are emitted by deterministic scenario adapters.",
+  "duration_ticks": 3,
+  "triggers": [
+    {
+      "sim_tick": 2,
+      "action": "INJECT_FAULT",
+      "target_device_id": "DTN-TRF-01",
+      "fault_type": "STUCK",
+      "parameters": {}
+    },
+    {
+      "sim_tick": 2,
+      "action": "INJECT_FAULT",
+      "target_device_id": "IND-TMP-01",
+      "fault_type": "DEAD",
+      "parameters": {}
+    }
+  ],
+  "fixture": {
+    "seed": 1407,
+    "traffic_sensor_id": "DTN-TRF-01",
+    "traffic_before_fault": 48.0,
+    "traffic_actual_during_fault": 55.0,
+    "dead_sensor_id": "IND-TMP-01",
+    "dead_sensor_actual": 71.0,
+    "backup_sensor_id": "IND-TMP-02",
+    "backup_actual": 70.0
+  }
+}

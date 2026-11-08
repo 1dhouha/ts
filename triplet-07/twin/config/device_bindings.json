@@ -1,0 +1,50 @@
+{
+  "version": "b-device-bindings-1",
+  "zones": {
+    "PRT": "Z-RIVER",
+    "IND": "Z-INDUSTRIAL",
+    "DTN": "Z-DOWNTOWN",
+    "RES": "Z-RESIDENTIAL",
+    "HSP": "Z-HEALTH"
+  },
+  "sensors": {
+    "PRT-WLV-01": {"source": "model:harbour_level", "interval": 5, "supported": true, "scenario_only": false},
+    "PRT-WLV-02": {"source": "model:harbour_level", "interval": 5, "supported": true, "scenario_only": false},
+    "PRT-FLW-01": {"source": "model:harbour_flow", "interval": 5, "supported": true, "scenario_only": false},
+    "PRT-PRS-01": {"source": "model:harbour_pressure", "interval": 5, "supported": true, "scenario_only": false},
+    "IND-TMP-01": {"source": "model:process_temperature", "interval": 10, "supported": true, "scenario_only": false},
+    "IND-TMP-02": {"source": "model:process_temperature", "interval": 10, "supported": true, "scenario_only": false},
+    "IND-PRS-01": {"source": "model:coolant_pressure", "interval": 10, "supported": true, "scenario_only": false},
+    "IND-FLW-01": {"source": "model:coolant_flow", "interval": 10, "supported": true, "scenario_only": false},
+    "DTN-TRF-01": {"source": "departures:R-LOW", "interval": 10, "supported": true, "scenario_only": false},
+    "DTN-TRF-02": {"source": "departures:R-DOWN", "interval": 10, "supported": true, "scenario_only": false},
+    "DTN-WLV-01": {"source": "model:drain_level", "interval": 5, "supported": true, "scenario_only": false},
+    "DTN-TMP-01": {"source": "model:ambient_temperature", "interval": 60, "supported": true, "scenario_only": false},
+    "RES-WLV-01": {"source": "model:reservoir_level", "interval": 10, "supported": true, "scenario_only": false},
+    "RES-PRS-01": {"source": "model:network_pressure", "interval": 10, "supported": true, "scenario_only": false},
+    "RES-FLW-01": {"source": "model:network_flow", "interval": 10, "supported": true, "scenario_only": false},
+    "RES-TRF-01": {"source": "departures:R-LINK", "interval": 10, "supported": true, "scenario_only": false}
+  },
+  "actuators": {
+    "PRT-PMP-01": {"family": "pump", "effect_tag": "pump_enable", "target_id": "P-03", "physical_id": "P-03", "supported": true},
+    "PRT-PMP-02": {"family": "pump", "effect_tag": "pump_enable", "target_id": "P-03", "physical_id": "P-03", "supported": true},
+    "IND-VLV-01": {"family": "valve", "effect_tag": "valve_position", "target_id": "V-12", "physical_id": "V-12", "supported": true},
+    "DTN-VLV-01": {"family": "valve", "effect_tag": "valve_position", "target_id": "V-12", "physical_id": "V-12", "supported": true},
+    "RES-VLV-01": {"family": "valve", "effect_tag": "valve_position", "target_id": "V-12", "physical_id": "V-12", "supported": true},
+    "DTN-TLT-01": {"family": "signal", "effect_tag": "signal_mode", "target_id": "J-D1", "physical_id": "J-D1", "supported": true},
+    "DTN-TLT-02": {"family": "signal", "effect_tag": "signal_mode", "target_id": "J-D2", "physical_id": "J-D2", "supported": true},
+    "RES-TLT-01": {"family": "signal", "effect_tag": "signal_mode", "target_id": null, "physical_id": null, "supported": false}
+  },
+  "core_actuators": [
+    {"device_id": "V-12", "zone_id": "PRT", "type": "Valve", "family": "valve", "effect_tag": "valve_position", "target_id": "V-12", "physical_id": "V-12", "aliases": ["A-VALVE-01"]},
+    {"device_id": "P-03", "zone_id": "PRT", "type": "Pump", "family": "pump", "effect_tag": "pump_enable", "target_id": "P-03", "physical_id": "P-03", "aliases": ["A-PUMP-01"]},
+    {"device_id": "J-D1", "zone_id": "DTN", "type": "Traffic Light", "family": "signal", "effect_tag": "signal_mode", "target_id": "J-D1", "physical_id": "J-D1", "aliases": ["A-SIG-01"]},
+    {"device_id": "J-D2", "zone_id": "DTN", "type": "Traffic Light", "family": "signal", "effect_tag": "signal_mode", "target_id": "J-D2", "physical_id": "J-D2", "aliases": ["A-SIG-02"]},
+    {"device_id": "F-ESS", "zone_id": "HSP", "type": "Feeder", "family": "feeder", "effect_tag": "feeder_position", "target_id": "F-ESS", "physical_id": "F-ESS", "aliases": ["A-SW-ESS"]},
+    {"device_id": "F-URBAN", "zone_id": "DTN", "type": "Feeder", "family": "feeder", "effect_tag": "feeder_position", "target_id": "F-URBAN", "physical_id": "F-URBAN", "aliases": ["A-SW-URBAN"]},
+    {"device_id": "F-IND", "zone_id": "IND", "type": "Feeder", "family": "feeder", "effect_tag": "feeder_position", "target_id": "F-IND", "physical_id": "F-IND", "aliases": ["A-SW-IND"]},
+    {"device_id": "AMB-01", "zone_id": "HSP", "type": "Ambulance", "family": "responder", "effect_tag": "reserve_responder", "target_id": "AMB-01", "physical_id": "AMB-01", "aliases": ["A-DISPATCH-01"]},
+    {"device_id": "AMB-02", "zone_id": "HSP", "type": "Ambulance", "family": "responder", "effect_tag": "reserve_responder", "target_id": "AMB-02", "physical_id": "AMB-02", "aliases": []},
+    {"device_id": "POL-01", "zone_id": "HSP", "type": "Police", "family": "responder", "effect_tag": "reserve_responder", "target_id": "POL-01", "physical_id": "POL-01", "aliases": []}
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "profile": "pa-power-phase05-0.1-provisional",
+  "contract_version": "pa-internal-0.2-draft",
+  "visibility": "Private A/B power checkpoint, never C ordinary partner output",
+  "units": "kW instantaneous demand/load, not energy kWh",
+  "semantics": "Snapshot.power is immutable and derived; requested demand persists without supply; no automatic trip or water-flow claim",
+  "agreement": "Supervisor-approved provisional; real B/C conformance unverified",
+  "cases": [
+    {
+      "name": "powered motor enabled",
+      "pump_enabled": true,
+      "effect": null,
+      "expected": {"pump_running": true, "hospital_powered": true, "plant_active": true, "ess_delivered_kw": 60.0, "total_delivered_kw": 240.2}
+    },
+    {
+      "name": "industrial branch opened",
+      "pump_enabled": true,
+      "effect": {"contract_version": "pa-internal-0.2-draft", "run_id": "r-test", "effect_id": "isolate-industrial", "expected_revision": 0, "source": "B_ACTUATOR", "correlation_id": null, "effect": {"tag": "feeder_position", "target_id": "F-IND", "closed": false}},
+      "expected": {"pump_running": true, "hospital_powered": true, "plant_active": false, "ess_delivered_kw": 60.0, "total_delivered_kw": 140.2}
+    },
+    {
+      "name": "essential branch opened",
+      "pump_enabled": true,
+      "effect": {"contract_version": "pa-internal-0.2-draft", "run_id": "r-test", "effect_id": "essential-off", "expected_revision": 0, "source": "B_ACTUATOR", "correlation_id": null, "effect": {"tag": "feeder_position", "target_id": "F-ESS", "closed": false}},
+      "expected": {"pump_running": false, "hospital_powered": false, "plant_active": true, "ess_delivered_kw": 0.0, "total_delivered_kw": 180.2}
+    },
+    {
+      "name": "upstream source unavailable, switches remain closed",
+      "pump_enabled": true,
+      "effect": {"contract_version": "pa-internal-0.2-draft", "run_id": "r-test", "effect_id": "source-off", "expected_revision": 0, "source": "B_SCENARIO", "correlation_id": null, "effect": {"tag": "source_driver", "available": false}},
+      "expected": {"pump_running": false, "hospital_powered": false, "plant_active": false, "ess_delivered_kw": 0.0, "total_delivered_kw": 0.0}
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "ID": "SCN-04",
+  "Name": "Guardian containment prevents unsafe Brain dispatch",
+  "Layers involved": ["Brain", "Guardian", "Twin"],
+  "Description": "Guardian quarantines a compromised port pump while the Brain requests an operational start command.",
+  "Trigger": "python scenarios/run.py --scenario scn-04",
+  "Expected: Twin": "Rejects the command to PRT-PMP-01 with FAILED and GUARDIAN_RESTRICTED; it does not claim that the command ran.",
+  "Expected: Guardian": "Quarantines PRT-PMP-01 before Brain dispatch.",
+  "Expected: Brain": "Checks the restriction, records the rejection, queries compatible backups, and dispatches START to available PRT-PMP-02.",
+  "How to verify": "Follow the quarantine, rejected command, compatible-device lookup, and backup command lifecycle in logs/scn-04-*.log.",
+  "duration_ticks": 1,
+  "triggers": [
+    {
+      "sim_tick": 1,
+      "action": "QUARANTINE",
+      "target_device_id": "PRT-PMP-01",
+      "reason": "integrity_check_failed"
+    }
+  ],
+  "fixture": {
+    "seed": 1408,
+    "actuator_id": "PRT-PMP-01",
+    "backup_actuator_id": "PRT-PMP-02",
+    "command": "START"
+  }
+}

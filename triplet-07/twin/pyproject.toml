@@ -1,0 +1,13 @@
+[project]
+name = "person-a-city-core"
+version = "0.1.0"
+requires-python = ">=3.12"
+description = "Provisional local city core with validated effects, power and water balance"
+dependencies = [
+    "fastapi>=0.116,<1",
+    "mcp>=1.16,<2",
+    "uvicorn>=0.35,<1",
+]
+
+[tool.city_core_tests]
+minimum_module_line_coverage = 80

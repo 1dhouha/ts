@@ -1,0 +1,30 @@
+# Test Book: Guardian scenarios (Phase 1, R2)
+
+Every scenario starts with **one command or one button** and leaves a log file in `logs/`.
+Command: `PYTHONPATH=src:. python -m scenarios.run <id>` (or `all`). Button: open `http://localhost:8002/timeline`.
+Readings come at 1 per second per sensor from the mock Twin; delays are simulated seconds from fault onset.
+These are the Guardian team's scenarios. Partners add theirs, and the triplet's `TESTBOOK.md` merges them.
+
+| ID | Name | Layers | Trigger | Expected: Twin | Expected: Guardian | Expected: Brain | How to verify |
+|---|---|---|---|---|---|---|---|
+| T1 | Calm day, no incident | Twin, Guardian | `run t1` | Streams 5 water sensors around 40 cm | 300 readings, all TRUSTED, no containment | Does not react | Timeline: no `UNTRUSTED`, no `containment_call`; `logs/t1-*.log` |
+| T2 | Fake flood, sensor stuck at 30 cm | Twin, Guardian, City Brain | `run t2` | A real flood lifts 4 sensors past 180 cm; WL-03 is frozen at 30 cm | WL-03 UNTRUSTED at +6 s (FROZEN_VALUE), quarantined; the real flood sensors never flagged | (T7/T9 show the Brain side) | `device_quarantined` WL-03 in the log; 0 other UNTRUSTED |
+| T2b | Fake flood, noisy spoof | Twin, Guardian | `run t2b` | Same, but WL-03 reports about 30 cm with noise to look alive | WL-03 UNTRUSTED at +8 s by CROSS_SENSOR_CONTRADICTION (not frozen) | n/a | Reason code in the verdict; quarantine once |
+| T3 | Frozen power-load meter | Twin, Guardian | `run t3` | PL-01 freezes at 52 kW | UNTRUSTED at +6 s (FROZEN_VALUE), quarantine | n/a | `FROZEN_VALUE` in the log |
+| T4 | Camera dropout is not an attack | Twin, Guardian | `run t4` | CAM-01 stops answering at 20 s | CAM-01 flagged STALE (monitor), trust unchanged, **no quarantine**; water sensors unaffected | n/a | `device_stale` event; `GET /devices/CAM-01/trust` shows `stale: true, quarantined: false` |
+| T5 | Fire, compromised air-quality monitor | Twin, Guardian | `run t5` | Fire lifts AQI to 260 on 3 monitors; AQ-03 keeps reporting about 40 | AQ-03 UNTRUSTED at +7 s (CROSS_SENSOR_CONTRADICTION), quarantine; other monitors never flagged | n/a | One `quarantine_device` call for AQ-03 |
+| T6 | Replayed readings | Twin, Guardian | `run t6` | An attacker re-sends 5 old WL-02 messages | The 5 replays rejected on arrival (REPLAY_OR_OUT_OF_ORDER); WL-02's trust stays 1.0; no containment | n/a | 5 UNTRUSTED replay verdicts, `trust_score` of WL-02 = 1.0 |
+| T7 | Brain wants a quarantined device | Twin, Guardian, City Brain | `run t7` | As T2b | Quarantines WL-03; answers the Brain's trust lookup | Excludes WL-03's readings, opens the valve on two trusted sensors, **rejects WL-03, accepts WL-02** | `brain_decision` events: `REJECT_DEVICE` WL-03, `USE_DEVICE` WL-02 |
+| T8 | Guardian unreachable mid-incident | Twin, Guardian, City Brain | `run t8` | As T2b | Unreachable from the Brain between 20 s and 35 s | No verdict counts as UNTRUSTED: `HOLD` (GUARDIAN_UNAVAILABLE), then `RESUME`, valve opens only after recovery (+35 s) | HOLD, RESUME, OPEN_VALVE in order |
+| T9 | Real incident and attack at the same time | All | `run t9` | Real flood + noisy spoof on WL-03 + replay burst on WL-02 | WL-03 quarantined (+8 s), 5 replays rejected, WL-02 trust unchanged | Opens the valve at +26 s on trusted evidence; ignores replayed messages | OPEN_VALVE, one `quarantine_device`, 5 `IGNORE_MESSAGE`-class verdicts |
+| T10 | Message flood from one device | Twin, Guardian | `run t10` | WL-02 (or someone using its id) sends 150 messages within one second | First flood message refused at +0.1 s (`MESSAGE_FLOOD`), `flood_detected` logged once; WL-02 trust stays 1.0 and it is **not** quarantined (a forged id must not frame a healthy sensor); the other 4 sensors unaffected | n/a | `flood_detected` event, 0 containment calls, WL-02 `trust_score` 1.0 |
+| T11 | Fake-device injection during a real flood | Twin, Guardian | `run t11` | Real flood at 150 cm. 30 fake sensors join the zone, behave honestly, then ramp down together to 20 cm to outvote the 5 real sensors | All 810 fake readings refused (`UNKNOWN_DEVICE`, registry strict); real sensors never flagged, 0 quarantines. With an open registry the same attack gets all 5 real sensors flagged (proved in `tests/test_security.py`) | n/a | `UNKNOWN_DEVICE` verdicts, 0 `UNTRUSTED` on WL-01..05 |
+| T12 | Future-timestamp poisoning | Twin, Guardian | `run t12` | One message for WL-03 claims a timestamp one day ahead | Refused on arrival (`FUTURE_TIMESTAMP`); WL-03 keeps being TRUSTED. Without the check every later WL-03 reading would be rejected as a replay (proved in tests) | n/a | One `FUTURE_TIMESTAMP` verdict, 0 other `UNTRUSTED` |
+| T13 | Twin contract: fake flood at the port (the Twin team's T5) | Twin, Guardian | `run t13` | Through the Twin's REST shape: from tick 5 `PRT-WLV-01` reports about 180 cm while its backup `PRT-WLV-02` reports 40 cm | First fake reading UNTRUSTED at once (`BACKUP_DISAGREEMENT`), `PRT-WLV-01` quarantined at +5 s via `POST /api/v1/isolate`; the honest backup and the other 14 sensors never flagged | Must not open the valve on the fake reading (their expectation) | One `isolate` call for `PRT-WLV-01`, 0 other `UNTRUSTED` |
+| T14 | Twin contract: real flash flood is not an attack (the Twin team's SCN-02) | Twin, Guardian | `run t14` | Both redundant port sensors climb from 40 to 110 cm together | All readings TRUSTED: the healthy backup confirms the surge, so the fast rise is not flagged; no containment | Opens the valve on trusted evidence | 0 `UNTRUSTED`, 0 containment calls |
+
+Notes
+- Zero false positives on the healthy sensors in every scenario above (checked by the automated tests).
+- After a flood, up to one limiter window (1 s) of normal readings from the same device may also be refused: known trade-off of a sliding window.
+- All numbers come from the mock Twin. Re-measure with the real partners and replace them (report Part 3).
+- Expected-Brain columns use our mock City Brain. The real Brain's behaviour is to be confirmed with that team.

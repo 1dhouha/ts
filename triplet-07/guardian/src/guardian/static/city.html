@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guardian · Cortex</title>
+<style>
+:root{--void:#07061a;--glass:rgba(20,18,58,.62);--edge:rgba(160,150,255,.16);--ink:#ecebff;--dim:#9a97c9;--faint:#5d5a8e;
+ --mint:#46f2c4;--coral:#ff5d7a;--amber:#ffb547;--violet:#8f7bff;--ice:#9fe3ff;--rose:#ff8fd1;
+ --disp:'Unbounded','Segoe UI',system-ui,sans-serif;--body:'Space Grotesk','Segoe UI',system-ui,sans-serif;--mono:'JetBrains Mono',Consolas,ui-monospace,monospace}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--void);color:var(--ink);font:14px/1.45 var(--body);overflow:hidden}
+#field{position:fixed;inset:0;z-index:0}
+.app{position:relative;z-index:1;display:grid;grid-template-rows:auto 1fr;height:100vh}
+.band{display:flex;align-items:center;gap:22px;padding:14px 24px 10px;flex-wrap:wrap}
+.brand h1{margin:0;font:800 22px/1 var(--disp);letter-spacing:.06em;background:linear-gradient(92deg,var(--ice),var(--violet) 55%,var(--rose));-webkit-background-clip:text;background-clip:text;color:transparent}
+.brand small{display:block;font:500 10.5px/1.6 var(--mono);color:var(--dim);letter-spacing:.18em;margin-top:4px}
+.brand a{color:var(--ice);text-decoration:none}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-left:auto}
+.badge{display:flex;align-items:center;gap:7px;padding:6px 11px;border-radius:999px;background:var(--glass);border:1px solid var(--edge);font:500 11.5px var(--mono);color:var(--dim);backdrop-filter:blur(10px)}
+.badge b{color:var(--ink)}
+.led{width:8px;height:8px;border-radius:50%;background:var(--faint)}
+.led.ok{background:var(--mint);box-shadow:0 0 10px var(--mint)}.led.bad{background:var(--coral);box-shadow:0 0 10px var(--coral)}.led.warn{background:var(--amber);box-shadow:0 0 10px var(--amber)}
+.main{display:grid;grid-template-columns:minmax(0,1.62fr) minmax(340px,1fr);gap:16px;padding:0 24px 18px;min-height:0}
+@media (max-width:980px){html,body{overflow:auto}.app{height:auto}.main{grid-template-columns:1fr}.stage{height:70vh}}
+.stage{position:relative;display:flex;flex-direction:column;border-radius:26px;overflow:hidden;background:radial-gradient(120% 90% at 30% 20%,#141244 0%,#090820 70%);border:1px solid var(--edge);box-shadow:0 30px 80px rgba(0,0,0,.45);min-height:420px}
+#map{position:relative;flex:1;min-height:0}#map svg{position:absolute;inset:0;width:100%;height:100%}
+.tag{position:absolute;left:22px;top:18px;font:600 11px var(--mono);letter-spacing:.2em;color:var(--dim);z-index:3}.tag b{color:var(--ice)}
+.legend{position:absolute;right:20px;top:16px;display:flex;gap:12px;z-index:3;font:500 11px var(--mono);color:var(--dim)}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px}
+#banner{position:absolute;left:50%;top:44px;transform:translateX(-50%);z-index:5;font:600 13px var(--mono);padding:9px 18px;border-radius:14px;background:rgba(14,12,44,.88);border:1.5px solid var(--c,var(--amber));color:var(--ink);box-shadow:0 0 24px color-mix(in srgb,var(--c,var(--amber)) 45%,transparent);opacity:0;transition:.35s;pointer-events:none;white-space:nowrap}
+#banner.on{opacity:1}
+.dock{position:relative;display:flex;align-items:center;gap:3px;padding:8px 10px;border-top:1px solid var(--edge);background:rgba(14,12,44,.8);z-index:4;flex-wrap:wrap;justify-content:center}
+.dock .sep{width:1px;height:24px;background:var(--edge);margin:0 6px}
+.chip{border:1px solid transparent;background:rgba(255,255,255,.04);color:var(--ink);font:500 11.5px var(--body);padding:5px 7px;border-radius:10px;cursor:pointer;transition:.18s}
+.chip:hover:not(:disabled){background:rgba(143,123,255,.18);border-color:rgba(143,123,255,.45)}.chip:disabled{opacity:.35;cursor:not-allowed}
+.chip.danger{color:#ffb3c0}
+select.chip{background:rgba(255,255,255,.06);color:var(--ink)}select.chip option{background:#14123a}
+.side{display:flex;flex-direction:column;gap:12px;overflow:auto;padding-right:4px;min-height:0}
+.side::-webkit-scrollbar{width:6px}.side::-webkit-scrollbar-thumb{background:#2b2766;border-radius:6px}
+.card{background:var(--glass);border:1px solid var(--edge);border-radius:20px;padding:14px 16px;backdrop-filter:blur(14px)}
+.card h2{margin:0 0 10px;font:600 11px var(--disp);letter-spacing:.18em;color:var(--dim);display:flex;justify-content:space-between}
+.card h2 span:last-child{font:500 11px var(--mono);letter-spacing:0;color:var(--faint)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.kpi{background:rgba(255,255,255,.03);border-radius:14px;padding:10px 12px}
+.kpi b{display:block;font:600 22px var(--disp)}.kpi span{font:500 10px var(--mono);color:var(--dim);letter-spacing:.1em;text-transform:uppercase}
+.stream{display:flex;flex-direction:column;gap:8px;max-height:330px;overflow:auto}
+.thought{position:relative;padding:10px 12px 10px 16px;border-radius:14px;background:rgba(255,255,255,.035)}
+.thought.new{animation:rise .45s ease}
+.thought::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:3px;border-radius:3px;background:var(--c,var(--violet));box-shadow:0 0 12px var(--c,var(--violet))}
+.thought .h{display:flex;gap:8px;align-items:baseline}.thought .h b{font:600 13.5px var(--body)}
+.thought .h time{margin-left:auto;font:400 11px var(--mono);color:var(--faint)}
+.thought .s{font:400 12px var(--body);color:var(--dim);margin-top:3px}
+.pill{display:inline-block;font:600 10px var(--mono);padding:2px 7px;border-radius:999px;background:rgba(255,255,255,.07);color:var(--ice);margin:5px 4px 0 0}
+.empty{color:var(--dim);font-size:13px}
+table{width:100%;border-collapse:collapse;font-size:13px}td{padding:4px 0;border-bottom:1px solid var(--edge)}td:first-child{color:var(--dim);width:38%}
+.st{display:inline-block;font:600 10px var(--mono);padding:2px 8px;border-radius:999px;border:1px solid currentColor;margin-left:6px}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes breathe{0%,100%{opacity:.55;transform:scale(1)}50%{opacity:1;transform:scale(1.18)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes fade{to{opacity:0}}
+.halo.flag{animation:breathe 1.1s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.orbit{animation:spin 6s linear infinite;transform-box:fill-box;transform-origin:center}
+.syn{stroke-dasharray:1;stroke-dashoffset:1;animation:draw .9s ease-out forwards,fade .8s 1.6s forwards}
+</style></head><body>
+<canvas id="field"></canvas>
+<div class="app">
+ <div class="band"><div class="brand"><h1>GUARDIAN CORTEX</h1><small>IS THIS DATA TELLING THE TRUTH? · <a href="/timeline" id="tl">EVENT TIMELINE</a></small></div>
+  <div class="badges"><span class="badge"><i class="led" id="led"></i><span id="runtxt">idle</span></span><span class="badge">T+ <b id="clock">0.0s</b></span><span class="badge" id="c-unk" style="display:none">unregistered <b id="n-unk">0</b></span></div></div>
+ <div class="main">
+  <div class="stage"><div class="tag">CITY <b>CORTEX</b> · <span id="sub">ILLUSTRATIVE, NOT GEOGRAPHIC</span></div>
+   <div class="legend"><span><i style="background:var(--mint)"></i>trusted</span><span><i style="background:var(--amber)"></i>refused</span><span><i style="background:var(--coral)"></i>quarantined</span><span><i style="background:var(--violet)"></i>brain decision</span></div>
+   <div id="banner"></div><div id="map"></div>
+   <div class="dock"><span id="btns"></span><span class="sep"></span><select class="chip" id="speed" title="speed"><option value="5">5×</option><option value="10" selected>10×</option><option value="30">30×</option></select><button class="chip danger" id="clear">Reset</button></div></div>
+  <div class="side">
+   <div class="card"><div class="kpis"><div class="kpi"><b id="k-read">0</b><span>readings</span></div><div class="kpi"><b id="k-ref" style="color:var(--amber)">0</b><span>refused</span></div><div class="kpi"><b id="k-q" style="color:var(--coral)">0</b><span>quarantined</span></div><div class="kpi"><b id="k-b" style="color:var(--violet)">0</b><span>brain acts</span></div></div></div>
+   <div class="card"><h2><span>THOUGHT STREAM</span><span id="tcount"></span></h2><div class="stream" id="stream"><div class="empty">Quiet city. Start a scenario from the dock.</div></div></div>
+   <div class="card"><h2><span>SELECTED SENSOR</span></h2><div id="detail" class="empty">Click a sensor on the map.</div></div>
+  </div></div></div>
+<script>
+const NS='http://www.w3.org/2000/svg',$=id=>document.getElementById(id);
+const token=new URLSearchParams(location.search).get('token'),H=token?{Authorization:'Bearer '+token}:{};
+if(token)$('tl').href='/timeline?token='+encodeURIComponent(token);
+const el=(t,a={},p)=>{const n=document.createElementNS(NS,t);for(const[k,v]of Object.entries(a))n.setAttribute(k,v);if(p)p.append(n);return n};
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const C={mint:'#46f2c4',coral:'#ff5d7a',amber:'#ffb547',violet:'#8f7bff',grey:'#5d5a8e'};
+// Where each sensor sits on the City Brain's map (1536x1024). Add one line here for a new sensor.
+const POS={
+ 'WL-01':[380,800,'Z-RIVER'],'WL-02':[540,780,'Z-RIVER'],'WL-03':[700,790,'Z-RIVER'],'WL-04':[860,830,'Z-RIVER'],'WL-05':[1020,830,'Z-RIVER'],
+ 'PL-01':[1200,330,'Z-INDUSTRIAL'],'CAM-01':[810,535,'Z-DOWNTOWN'],
+ 'AQ-01':[1090,330,'Z-INDUSTRIAL'],'AQ-02':[1230,290,'Z-INDUSTRIAL'],'AQ-03':[1320,400,'Z-INDUSTRIAL'],'AQ-04':[1210,520,'Z-INDUSTRIAL'],
+ 'PRT-WLV-01':[500,820,'Z-RIVER'],'PRT-WLV-02':[590,855,'Z-RIVER'],'PRT-FLW-01':[800,870,'Z-RIVER'],'PRT-PRS-01':[900,800,'Z-RIVER'],
+ 'IND-TMP-01':[1120,260,'Z-INDUSTRIAL'],'IND-TMP-02':[1190,300,'Z-INDUSTRIAL'],'IND-PRS-01':[1290,360,'Z-INDUSTRIAL'],'IND-FLW-01':[1340,470,'Z-INDUSTRIAL'],
+ 'DTN-TRF-01':[700,600,'Z-DOWNTOWN'],'DTN-TRF-02':[900,520,'Z-DOWNTOWN'],'DTN-WLV-01':[800,670,'Z-DOWNTOWN'],'DTN-TMP-01':[640,480,'Z-DOWNTOWN'],
+ 'RES-WLV-01':[260,610,'Z-RESIDENTIAL'],'RES-PRS-01':[420,470,'Z-RESIDENTIAL'],'RES-FLW-01':[330,520,'Z-RESIDENTIAL'],'RES-TRF-01':[420,630,'Z-RESIDENTIAL']};
+const BRAIN=[768,82];
+const WHY={FROZEN_VALUE:'value is stuck while its neighbours moved',CROSS_SENSOR_CONTRADICTION:'disagrees with the sensors around it',IMPLAUSIBLE_RATE:'changed faster than the real world can',BACKUP_DISAGREEMENT:'disagrees with its backup sensor',SLOW_DRIFT:'drifting away from its peers in small steps',OUT_OF_RANGE:'outside what this sensor can physically read',REPLAY_OR_OUT_OF_ORDER:'an old message was sent again',FUTURE_TIMESTAMP:'timestamp is from the future',MESSAGE_FLOOD:'far too many messages from one device',DEVICE_QUARANTINED:'device is already isolated',UNKNOWN_DEVICE:'device is not in the registry',SENSOR_FAILED:'sensor reports a failure'};
+const why=r=>(r||[]).map(c=>WHY[c]||c.toLowerCase().replace(/_/g,' ')).join('; ');
+let svg,L={},nodes={},dev={},unk=new Set(),sel=null,last=0,nThought=0,t0=null,K={read:0,ref:0,q:0,brain:0},bannerT;
+const get=id=>dev[id]??(dev[id]={value:null,unit:'',verdict:null,trust:null,quar:false,stale:false,reasons:[],hist:[],flag:false,brainUntil:0});
+const state=d=>!d||d.value==null?'none':d.quar?'bad':d.stale?'none':d.verdict==='UNTRUSTED'?'warn':'ok';
+const COL={none:C.grey,ok:C.mint,warn:C.amber,bad:C.coral};
+
+async function init(){
+  starfield();
+  const src=await fetch('/city/map.svg').then(r=>r.text());
+  svg=new DOMParser().parseFromString(src,'image/svg+xml').documentElement;
+  svg.removeAttribute('width');svg.removeAttribute('height');svg.setAttribute('preserveAspectRatio','xMidYMid meet');$('map').replaceChildren(svg);
+  const defs=el('defs',{},svg);
+  const f=el('filter',{id:'glow',x:'-50%',y:'-50%',width:'200%',height:'200%'},defs);el('feGaussianBlur',{stdDeviation:5,result:'b'},f);const m=el('feMerge',{},f);el('feMergeNode',{in:'b'},m);el('feMergeNode',{in:'SourceGraphic'},m);
+  for(const[k,c]of Object.entries(C)){const g=el('radialGradient',{id:'h-'+k},defs);el('stop',{offset:0,'stop-color':c,'stop-opacity':.65},g);el('stop',{offset:1,'stop-color':c,'stop-opacity':0},g)}
+  for(const n of['halos','syn','nodes','tags'])L[n]=el('g',{},svg);
+  // the City Brain node at the top of the map
+  const b=el('g',{},L.nodes);el('circle',{cx:BRAIN[0],cy:BRAIN[1],r:44,fill:'url(#h-violet)'},b);
+  el('circle',{cx:BRAIN[0],cy:BRAIN[1],r:11,fill:C.violet,filter:'url(#glow)',stroke:'#fff','stroke-width':2},b);
+  const bt=el('text',{x:BRAIN[0],y:BRAIN[1]-22,fill:'#d9d2ff','font-size':16,'text-anchor':'middle','letter-spacing':2},b);bt.textContent='CITY BRAIN';
+  for(const[id,[x,y]]of Object.entries(POS)){
+    const halo=el('circle',{cx:x,cy:y,r:46,fill:'url(#h-grey)',opacity:0,class:'halo'},L.halos);
+    const g=el('g',{style:'cursor:pointer'},L.nodes);
+    const orbit=el('circle',{cx:x,cy:y,r:19,fill:'none',stroke:C.coral,'stroke-width':2.5,'stroke-dasharray':'5 5',opacity:0,class:'orbit'},g);
+    const ring=el('circle',{cx:x,cy:y,r:12,fill:'none',stroke:C.violet,'stroke-width':3,opacity:0},g);
+    const n=el('circle',{cx:x,cy:y,r:6,fill:C.grey,filter:'url(#glow)'},g);
+    el('circle',{cx:x,cy:y,r:20,fill:'transparent'},g);   // easier to click
+    const tx=el('text',{x,y:y+26,fill:'#ecebff','font-size':13,'text-anchor':'middle','paint-order':'stroke',stroke:'#07061a','stroke-width':4},L.tags);
+    el('title',{},g).textContent=id;g.addEventListener('click',()=>{sel=id;draw()});
+    nodes[id]={halo,orbit,ring,n,tx,x,y};
+  }
+  const sc=await fetch('/scenarios',{headers:H});
+  if(sc.ok)for(const s of await sc.json()){const b=document.createElement('button');b.className='chip';b.textContent=s.id.toUpperCase();b.title=s.name;
+    b.onclick=async()=>{const r=await fetch('/scenarios/'+s.id+'/run?speed='+$('speed').value,{method:'POST',headers:H});if(r.status===409)banner('a scenario is still running',C.amber)};$('btns').append(b)}
+  poll();setInterval(poll,400);setInterval(draw,400);
+}
+function starfield(){const c=$('field'),x=c.getContext('2d');const fit=()=>{c.width=innerWidth*devicePixelRatio;c.height=innerHeight*devicePixelRatio;
+  x.clearRect(0,0,c.width,c.height);for(let i=0;i<90;i++){x.fillStyle='rgba(236,235,255,'+(.1+Math.random()*.3)+')';x.beginPath();x.arc(Math.random()*c.width,Math.random()*c.height,(.4+Math.random()*1.2)*devicePixelRatio,0,7);x.fill()}};fit();addEventListener('resize',fit)}
+function banner(t,col){const b=$('banner');b.textContent=t;b.style.setProperty('--c',col||C.amber);b.classList.add('on');clearTimeout(bannerT);bannerT=setTimeout(()=>b.classList.remove('on'),5000)}
+function thought(title,sub,col,ts,pills){nThought++;const d=document.createElement('div');d.className='thought new';d.style.setProperty('--c',col);
+  d.innerHTML=`<div class="h"><b>${esc(title)}</b><time>${esc((ts||'').slice(11,19))}</time></div>${sub?`<div class="s">${esc(sub)}</div>`:''}${(pills||[]).map(p=>`<span class="pill">${esc(p)}</span>`).join('')}`;
+  const s=$('stream');if(s.querySelector('.empty'))s.innerHTML='';s.prepend(d);while(s.children.length>40)s.lastChild.remove();$('tcount').textContent=nThought+' thoughts'}
+function synapse(id){const n=nodes[id];if(!n)return;const mx=(n.x+BRAIN[0])/2+(n.x<BRAIN[0]?-1:1)*80,my=Math.min(n.y,BRAIN[1])-70;
+  const d=`M${n.x},${n.y} Q${mx},${my} ${BRAIN[0]},${BRAIN[1]}`;
+  const p=el('path',{d,fill:'none',stroke:C.violet,'stroke-width':3.2,'stroke-linecap':'round',filter:'url(#glow)',pathLength:1,class:'syn'},L.syn);
+  const sp=el('circle',{r:7,fill:'#fff',filter:'url(#glow)'},L.syn);const a=el('animateMotion',{dur:'.9s',path:d,fill:'freeze'},sp);a.beginElement&&a.beginElement();
+  setTimeout(()=>{p.remove();sp.remove()},2600)}
+function handle(e){
+  const id=e.device_id,ts=e.timestamp,st=e.sim_time||e.timestamp;
+  switch(e.event){
+   case'scenario_start':dev={};unk=new Set();K={read:0,ref:0,q:0,brain:0};$('stream').innerHTML='<div class="empty">Quiet city.</div>';nThought=0;t0=Date.parse(st);
+     thought('Scenario '+e.scenario.toUpperCase(),e.name||'',C.violet,ts);banner('▶ '+(e.name||e.scenario),C.violet);break;
+   case'reading':{K.read++;if(t0==null)t0=Date.parse(st);$('clock').textContent=((Date.parse(st)-t0)/1000).toFixed(1)+'s';
+     if(!POS[id]){unk.add(id);break}const d=get(id);d.value=e.value;d.unit=e.unit||'';d.stale=false;d.hist.push(e.value);if(d.hist.length>60)d.hist.shift();break}
+   case'verdict':{if(e.verdict==='UNTRUSTED')K.ref++;if(!POS[id])break;const d=get(id);d.verdict=e.verdict;d.trust=e.trust_score;d.reasons=e.reason_codes||[];
+     if(e.verdict==='UNTRUSTED'&&!d.flag){d.flag=true;thought(id+' refused',why(d.reasons),C.amber,ts,d.reasons);banner(id+' · reading refused',C.amber)}
+     if(e.verdict==='TRUSTED')d.flag=false;break}
+   case'device_quarantined':{K.q++;if(POS[id]){const d=get(id);d.quar=true;d.trust=e.trust_score}
+     thought(id+' quarantined','trust fell to '+e.trust_score+'; the City Brain is told to ignore it',C.coral,ts);banner('⛔ '+id+' · quarantined',C.coral);break}
+   case'device_stale':{if(POS[id])get(id).stale=true;thought(id+' went silent','availability fault, not treated as an attack',C.faint||C.grey,ts);break}
+   case'brain_decision':{K.brain++;if(POS[id]){get(id).brainUntil=Date.now()+4000;synapse(id)}
+     thought('Brain: '+e.action,id?'about '+id:'',C.violet,ts,e.reason_codes);banner('◉ City Brain · '+e.action+(id?' · '+id:''),C.violet);break}
+   case'flood_detected':thought('Message flood from '+id,'Guardian rate-limits it without lowering the device\'s trust',C.amber,ts);break;
+   case'containment_call':thought('Containment: '+e.tool,(e.device_id||'')+(e.ok===false?' · Twin unreachable, queued for retry':' · sent to the Twin'),e.ok===false?C.amber:C.mint,ts);break;
+   case'scenario_end':thought('Scenario ended','',C.mint,ts);banner('■ scenario ended',C.mint);break;
+  }
+}
+async function poll(){
+  try{const r=await fetch('/timeline/events?since='+last,{headers:H});
+    if(r.status===401){banner('unauthorized: add ?token=… to the address',C.coral);return}
+    const j=await r.json();for(const e of j.events)handle(e);if(j.events.length){last=j.last_id;draw()}
+    document.querySelectorAll('#btns button').forEach(b=>b.disabled=!!j.running);
+    $('runtxt').textContent=j.running?'running '+j.running.toUpperCase():'idle';$('led').className='led'+(j.running?' warn':' ok');
+  }catch(_){$('runtxt').textContent='no connection';$('led').className='led bad'}
+}
+function draw(){
+  const now=Date.now();
+  for(const[id,n]of Object.entries(nodes)){const d=dev[id],s=state(d),has=s!=='none'||(d&&d.value!=null);
+    const col=s==='none'?'grey':s==='ok'?'mint':s==='warn'?'amber':'coral';
+    n.n.setAttribute('fill',COL[s]);n.n.setAttribute('r',sel===id?9:has?7:4.5);n.n.setAttribute('opacity',has||sel===id?1:.4);
+    n.halo.setAttribute('fill','url(#h-'+col+')');n.halo.setAttribute('opacity',has?1:0);n.halo.setAttribute('class','halo'+(s==='warn'||s==='bad'?' flag':''));
+    n.orbit.setAttribute('opacity',d&&d.quar?1:0);
+    n.ring.setAttribute('opacity',d&&d.brainUntil>now?1:0);
+    const val=d&&d.value!=null?`${(+d.value).toFixed(Math.abs(d.value)>=100?0:1)}${d.unit?' '+d.unit:''}`:'';n.tx.textContent=(sel===id||s==='warn'||s==='bad')?`${id} ${val}`.trim():val;
+  }
+  $('k-read').textContent=K.read;$('k-ref').textContent=K.ref;$('k-q').textContent=K.q;$('k-b').textContent=K.brain;
+  $('c-unk').style.display=unk.size?'':'none';$('n-unk').textContent=unk.size;detail();
+}
+function detail(){
+  const box=$('detail');if(!sel){box.className='empty';box.innerHTML='Click a sensor on the map.';return}
+  const d=dev[sel];box.className='';if(!d){box.innerHTML=`<b>${esc(sel)}</b><div class="empty">no data yet. Run a scenario.</div>`;return}
+  const S=d.quar?['QUARANTINED',C.coral]:d.stale?['SILENT',C.grey]:d.verdict==='UNTRUSTED'?['REFUSED',C.amber]:['TRUSTED',C.mint];
+  const h=d.hist,mn=Math.min(...h),mx=Math.max(...h),rg=(mx-mn)||1;
+  const pts=h.map((v,i)=>`${(i/Math.max(h.length-1,1)*280).toFixed(1)},${(50-(v-mn)/rg*46).toFixed(1)}`).join(' ');
+  box.innerHTML=`<b>${esc(sel)}</b> · ${esc(POS[sel][2])}<span class="st" style="color:${S[1]}">${S[0]}</span>
+   <table><tr><td>last value</td><td>${d.value??'—'} ${esc(d.unit)}</td></tr><tr><td>trust score</td><td>${d.trust??'—'}</td></tr><tr><td>why</td><td>${d.reasons.length?esc(why(d.reasons)):'—'}</td></tr></table>
+   <svg viewBox="0 0 280 54" style="width:100%;margin-top:8px"><polyline points="${pts}" fill="none" stroke="${S[1]}" stroke-width="2" style="filter:drop-shadow(0 0 4px ${S[1]})"/></svg>
+   <div class="empty" style="font-size:12px">last ${h.length} readings · ${mn} to ${mx}</div>`;
+}
+$('clear').onclick=async()=>{await fetch('/timeline/events',{method:'DELETE',headers:H});dev={};unk=new Set();last=0;sel=null;t0=null;K={read:0,ref:0,q:0,brain:0};nThought=0;$('stream').innerHTML='<div class="empty">Quiet city. Start a scenario from the dock.</div>';$('tcount').textContent='';$('clock').textContent='0.0s';draw()};
+init();
+</script></body></html>

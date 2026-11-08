@@ -1,0 +1,46 @@
+{
+  "contract_version": "pa-internal-0.2-draft",
+  "model_version": "pa-model-0.2-draft",
+  "visibility": "PRIVATE_A_B_EVALUATOR_ONLY",
+  "agreement": "Supervisor-approved provisional; actual B/C compatibility UNVERIFIED",
+  "sensor_families": {
+    "traffic_camera": {"a_path": "physical_state.roads and snapshot.traffic", "b_consumer": "B camera observations; Q-13 format open", "c_handoff": "C callable reported camera readings", "status": "A_SUPPORT_IMPLEMENTED_BC_UNVERIFIED"},
+    "water_level": {"a_path": "physical_state.water and snapshot.water/flood", "b_consumer": "B level probes/noise/faults", "c_handoff": "C callable reported water readings", "status": "A_SUPPORT_IMPLEMENTED_BC_UNVERIFIED"},
+    "power_load": {"a_path": "snapshot.power", "b_consumer": "B meters/feedback", "c_handoff": "C callable reported load readings", "status": "A_SUPPORT_IMPLEMENTED_BC_UNVERIFIED"},
+    "air_quality": {"a_path": "physical_state.air; PM2.5 ug/m3", "b_consumer": "B air monitors/noise/faults", "c_handoff": "C callable reported concentration readings", "status": "A_SUPPORT_IMPLEMENTED_BC_UNVERIFIED"},
+    "emergency_call": {"a_path": "actual circumstances/topology/responders/access; no call state", "b_consumer": "B emergency-call event generation", "c_handoff": "C callable reported emergency feed", "status": "A_SUPPORT_IMPLEMENTED_BC_UNVERIFIED"}
+  },
+  "actuator_families": {
+    "dispatch": {"a_path": "reserve_responder/release_responder and physical travel", "b_consumer": "B service/unit selection handling, command delays/faults/reports", "c_handoff": "C authenticated evidence-bound dispatch tool; Brain response policy", "status": "A_SUPPORT_IMPLEMENTED_BC_UNVERIFIED"},
+    "traffic_signal": {"a_path": "signal_mode and shared scalar capacity", "b_consumer": "B legal clearance/controller behavior", "c_handoff": "C authenticated signal action and outcome", "status": "A_SUPPORT_IMPLEMENTED_BC_UNVERIFIED"},
+    "water_valve": {"a_path": "valve_position and actual inlet/water balance", "b_consumer": "B valve movement/stuck faults/feedback", "c_handoff": "C authenticated valve action and outcome", "status": "A_SUPPORT_IMPLEMENTED_BC_UNVERIFIED"},
+    "grid_switch": {"a_path": "feeder_position and actual branch supply", "b_consumer": "B switch movement/failure/feedback", "c_handoff": "C authenticated grid action and outcome", "status": "A_SUPPORT_IMPLEMENTED_BC_UNVERIFIED"},
+    "device_isolation_quarantine": {"a_path": "stable logical device IDs/read_topology; no A containment effect", "b_consumer": "B device restriction/delayed-operation enforcement", "c_handoff": "C authenticated Guardian restriction enforcement; Q-17 correction/release policy open", "status": "B_C_ONLY_PENDING_POLICY"}
+  },
+  "cases": [
+    {
+      "name": "normal_with_reserved_ambulance",
+      "initial": {},
+      "effects": [{"contract_version":"pa-internal-0.2-draft","run_id":"r-test","effect_id":"dispatch-1","expected_revision":0,"source":"B_ACTUATOR","correlation_id":"flow-1","effect":{"tag":"reserve_responder","target_id":"AMB-01","mission_ref":"m-1","destination_node_id":"J-D1","route_road_ids":["R-LOW"]}}],
+      "expected": {"traffic_low_queue":9.7,"water_surface_m3":0,"power_delivered_kw":230.2,"air_industrial_ug_m3":10.2,"emergency_access":true,"available_units":2}
+    },
+    {
+      "name": "flooded_approaches_with_valid_extreme_concentration",
+      "initial": {"water":{"basin_volume_m3":6000,"surface_volume_m3":1000},"air":{"Z-INDUSTRIAL":{"pm25_ug_m3":1000,"external_source_ug_m3_s":100}}},
+      "effects": [],
+      "expected": {"traffic_low_queue":10.2,"water_surface_m3":1000,"power_delivered_kw":230.2,"air_industrial_ug_m3":1090.3980198019802,"emergency_access":false,"available_units":3}
+    },
+    {
+      "name": "upstream_supply_absent",
+      "initial": {},
+      "effects": [{"contract_version":"pa-internal-0.2-draft","run_id":"r-test","effect_id":"supply-1","expected_revision":0,"source":"B_SCENARIO","correlation_id":"flow-2","effect":{"tag":"source_driver","available":false}}],
+      "expected": {"traffic_low_queue":10.2,"water_surface_m3":0,"power_delivered_kw":0,"air_industrial_ug_m3":10,"emergency_access":false,"available_units":3}
+    },
+    {
+      "name": "industrial_branch_open_zero_initial_pm25",
+      "initial": {"feeders":{"F-IND":{"effective_closed":false}},"air":{"Z-INDUSTRIAL":{"pm25_ug_m3":0}}},
+      "effects": [],
+      "expected": {"traffic_low_queue":9.7,"water_surface_m3":0,"power_delivered_kw":130.2,"air_industrial_ug_m3":0.0990099009900991,"emergency_access":true,"available_units":3}
+    }
+  ]
+}

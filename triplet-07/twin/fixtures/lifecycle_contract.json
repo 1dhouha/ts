@@ -1,0 +1,11 @@
+{
+  "contract_version": "pa-internal-0.2-draft",
+  "status": "supervisor-approved provisional; B/C agreement unverified",
+  "step_ms": 1000,
+  "admin_capabilities": ["initialize", "advance_one", "reset", "read_private_transitions"],
+  "metadata_capabilities": ["read_metadata", "read_topology", "make_evidence_token"],
+  "evidence_token_fields": ["context", "correlation_id", "token_id"],
+  "step_input_fields": ["run_id", "expected_revision", "duration_ms"],
+  "reset_scope": "A authority only; B/C must reset their own run-scoped work",
+  "domain_rules": "no-op in Phase03"
+}

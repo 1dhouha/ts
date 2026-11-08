@@ -1,0 +1,35 @@
+{
+  "ID": "SCN-02",
+  "Name": "Harbor basin surge and emergency valve dispatch",
+  "Layers involved": ["Twin", "Guardian", "City Brain"],
+  "Description": "Real rain accumulation causes the harbor basin water level to rise rapidly from 40 cm to 110 cm. The telemetry is authentic.",
+  "Trigger": "python scenarios/run.py --scenario scn-02",
+  "Expected: Twin": "PRT-WLV-01 reports the authentic 110.0 cm value (actual_value == reported_value). The runner records a PENDING marker before dispatch; the real ActuatorEngine advances RUNNING to COMPLETED and returns an effect that this runner does not apply to city_core.",
+  "Expected: Guardian": "The scenario adapter validates the matching actual/reported values and returns TRUSTED.",
+  "Expected: Brain": "Confirms TRUSTED, recognizes the flood threshold breach, and dispatches START to the linked port pump PRT-PMP-01.",
+  "How to verify": "Follow the correlation_id through the reading, TRUSTED verdict, OPEN_DISCHARGE decision, and actuator RUNNING/COMPLETED events in logs/scn-02-*.log. The runner uses the Twin actuator engine; Guardian and Brain are explicit scenario adapters.",
+  "duration_ticks": 2,
+  "triggers": [
+    {
+      "sim_tick": 1,
+      "action": "SET_GROUND_TRUTH",
+      "target_device_id": "PRT-WLV-01",
+      "parameters": {
+        "from_cm": 40.0,
+        "to_cm": 110.0,
+        "cause": "real_rain_accumulation"
+      }
+    }
+  ],
+  "fixture": {
+    "seed": 1406,
+    "sensor_id": "PRT-WLV-01",
+    "ground_truth_value": 110.0,
+    "actuator_id": "PRT-PMP-01",
+    "command": "START",
+    "params": {
+      "duration_ticks": 2,
+      "operation": "open_discharge"
+    }
+  }
+}

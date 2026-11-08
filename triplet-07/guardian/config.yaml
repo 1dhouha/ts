@@ -1,0 +1,85 @@
+# Guardian configuration. Partner addresses and tokens live here (or in env), never in code.
+partners:
+  twin_url: "http://localhost:8001"     # Twin base URL (MCP or HTTP mirror)
+  brain_url: "http://localhost:8003"    # City Brain base URL
+auth:
+  token_env: "GUARDIAN_TOKEN"           # bearer token City Brain must send
+scoring:
+  untrusted_at_or_below: 0.5
+  quarantine_below: 0.3
+  release_at_or_above: 0.8
+  recovery_per_clean_reading: 0.02
+  penalties:
+    CROSS_SENSOR_CONTRADICTION: 0.25
+    FROZEN_VALUE: 0.2
+    IMPLAUSIBLE_RATE: 0.3
+    OUT_OF_RANGE: 0.5
+    SLOW_DRIFT: 0.25            # steady gap against peers or backup that range, rate and cross-sensor checks do not see
+    BACKUP_DISAGREEMENT: 0.4    # two redundant sensors disagree and this one moved away from its own history
+peers:
+  min_peers: 3            # need this many healthy peers for a cross-sensor verdict
+  freshness_s: 5          # peer reading must be this recent
+  pair_freshness_s: 15    # a backup's last reading may be this old (seconds) for the backup-pair check
+  min_pair_readings: 1    # a declared backup (redundant twin sensor) counts after this many clean readings
+  min_peer_readings: 3    # a brand-new device cannot vote as a peer until it has sent this many readings (anti fake-device injection)
+drift:
+  enabled: true
+  alpha: 0.2          # smoothing of the gap between a sensor and its reference (peer median, else backup)
+  tol_ratio: 0.4      # drift tolerance = cross_tol x this (a type can set drift_tol itself)
+  samples: 4          # readings in a row above the tolerance before SLOW_DRIFT is raised
+state:
+  path: logs/guardian-state.json   # trust state is saved here and restored at start (GUARDIAN_STATE_PATH overrides, empty = off)
+  save_every_s: 5
+seconds_per_tick: 1.0       # only for partners that send sim_tick: how many seconds one tick lasts (CONFIRM WITH THE TWIN TEAM)
+min_rate_interval_s: 0.25   # the rate-of-change check is skipped when two readings are closer than this (flood limiter covers it)
+frozen_window: 5          # identical readings in a row that count as frozen
+sensor_types:
+  water_level:  { min: 0, max: 400,  max_rate: 15,  expect_noise: true, cross_tol: 40, stale_after_s: 5 }
+  power_load:   { min: 0, max: 2000, max_rate: 200, expect_noise: true, cross_tol: 300, stale_after_s: 5 }
+  air_quality:  { min: 0, max: 500,  max_rate: 60,  expect_noise: true, cross_tol: 80, stale_after_s: 5 }
+  traffic_camera: { min: 0, max: 100, max_rate: 100, expect_noise: false, cross_tol: 60, stale_after_s: 5 }
+default: { min: -1.0e9, max: 1.0e9, max_rate: 1.0e9, expect_noise: false, cross_tol: 1.0e9 }
+
+# ---- Adapters (interoperability layer) ------------------------------------
+# Format adapter: turns any partner payload (JSON, XML, JSON string holding XML) into one
+# canonical Observation. Pick the partner profile per endpoint: POST /ingest/<partner>.
+adapters:
+  default:
+    type_by_prefix: { "WL-": water_level, "PL-": power_load, "AQ-": air_quality, "CAM-": traffic_camera }
+  partners:
+    camelcase_demo:                       # example: a Twin that sends camelCase fields, water level in metres
+      field_map: { sensorId: device_id, reading: value, time: timestamp, area: zone }
+      unit_conversions:
+        water_level: { factor: 100, unit: cm }
+
+# ---- Containment (Guardian -> Twin tools) ----------------------------------
+# The Twin team has not fixed tool names or paths yet, so they are configuration, not code.
+containment:
+  token_env: "GUARDIAN_CONTAINMENT_TOKEN"   # separate from the verdict-API token City Brain uses
+  timeout_s: 2.0
+  retries: 1
+  paths:
+    quarantine_device: /tools/quarantine_device
+    isolate_sensor: /tools/isolate_sensor
+    rollback_reading: /tools/rollback_reading
+
+# ---- Pull mode (optional): poll the Twin instead of waiting for pushes -----
+polling:
+  url: ""            # for example http://localhost:8001/readings ; empty = push only
+  interval_s: 1.0
+
+# ---- Security limits (anti-abuse) -------------------------------------------
+security:
+  max_body_bytes: 65536          # larger request bodies are refused with 413 (before any parsing)
+  max_future_skew_s: 5           # a timestamp further ahead of the clock is refused: FUTURE_TIMESTAMP (null = check off)
+  rate_limit:
+    window_s: 1.0
+    max_messages: 20             # per device per window; the rest are refused: MESSAGE_FLOOD (null = limiter off)
+  registry:
+    mode: open                   # open = any well-formed id | prefix = only allowed_prefixes | strict = only allowed_ids
+    allowed_prefixes: ["WL-", "PL-", "AQ-", "CAM-"]
+    allowed_ids: []              # fill with the Twin's real device list, then set mode: strict (best protection against fake devices)
+    max_devices: 1000            # hard cap on tracked devices (memory)
+    max_devices_per_zone: 50
+  max_verdicts: 50000            # oldest verdicts are dropped beyond this (memory)
+  max_pending_containment: 200   # queued Twin calls kept for retry

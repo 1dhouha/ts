@@ -13,6 +13,14 @@ services:
     restart: unless-stopped
 
   # twin:                                # merge day: the Twin team's image
+
+  guardian:
+    build: ./guardian
+    ports: ["8002:8002"]
+    environment:
+      GUARDIAN_TOKEN: ${GUARDIAN_TOKEN:-demo-guardian-token-change-me-0123456789}
+    volumes: [guardian-logs:/app/logs]
+    restart: unless-stopped
   #   build: ./twin
   #   ports: ["8765:8765", "8000:8000"]
   # guardian:                            # merge day: the Guardian team's image
@@ -23,3 +31,4 @@ services:
 
 volumes:
   brain-data:
+  guardian-logs:

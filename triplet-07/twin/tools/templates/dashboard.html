@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twin Interface Test Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f172a; color: #e2e8f0; padding: 20px; }
+        .container { max-width: 1400px; margin: 0 auto; }
+        h1 { color: #38bdf8; margin-bottom: 10px; }
+        .subtitle { color: #94a3b8; margin-bottom: 30px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; }
+        .card { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 20px; }
+        .card h2 { color: #38bdf8; margin-bottom: 15px; font-size: 1.3em; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; color: #cbd5e1; }
+        input, select, textarea { width: 100%; padding: 8px; background: #0f172a; border: 1px solid #475569; color: #e2e8f0; border-radius: 4px; }
+        button { background: #0284c7; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; margin-right: 5px; }
+        button:hover { background: #0369a1; }
+        button.danger { background: #dc2626; }
+        button.danger:hover { background: #b91c1c; }
+        button.success { background: #059669; }
+        button.success:hover { background: #047857; }
+        .response { background: #0f172a; border: 1px solid #475569; padding: 15px; border-radius: 4px; margin-top: 10px; overflow-x: auto; max-height: 400px; overflow-y: auto; }
+        pre { color: #a5f3fc; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌐 Twin Interface Test Dashboard</h1>
+        <p class="subtitle">Test Auth, Permissions, Facade, REST API - All C-Side Components</p>
+        
+        <div class="grid">
+            <div class="card">
+                <h2>🔐 Authentication Test</h2>
+                <div class="form-group">
+                    <label>Token</label>
+                    <input type="password" id="authToken" autocomplete="off" placeholder="Enter Bearer token">
+                </div>
+                <button onclick="testHealth()">Test Health</button>
+                <button onclick="testAuth()">Test Auth</button>
+                <div class="response" id="authResp"></div>
+            </div>
+            
+            <div class="card">
+                <h2>📡 Sensor Readings</h2>
+                <div class="form-group">
+                    <label>Token</label>
+                    <input type="password" id="sensorToken" autocomplete="off" placeholder="Enter Bearer token">
+                </div>
+                <div class="form-group">
+                    <label>Zone ID (optional)</label>
+                    <select id="sensorZone">
+                        <option value="">All Zones</option>
+                        <option value="PRT">PRT</option>
+                        <option value="DTN">DTN</option>
+                        <option value="IND">IND</option>
+                        <option value="RES">RES</option>
+                        <option value="HSP">HSP</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Sensor ID (optional)</label>
+                    <input type="text" id="sensorId" placeholder="e.g., PRT-WLV-01">
+                </div>
+                <button onclick="getSensors()">Get Sensors</button>
+                <div class="response" id="sensorResp"></div>
+            </div>
+            
+            <div class="card">
+                <h2>🏙️ City State</h2>
+                <div class="form-group">
+                    <label>Token</label>
+                    <input type="password" id="stateToken" autocomplete="off" placeholder="Enter Bearer token">
+                </div>
+                <div class="form-group">
+                    <label>Zone ID (optional)</label>
+                    <select id="stateZone">
+                        <option value="">All Zones</option>
+                        <option value="PRT">PRT</option>
+                        <option value="DTN">DTN</option>
+                        <option value="IND">IND</option>
+                        <option value="RES">RES</option>
+                        <option value="HSP">HSP</option>
+                    </select>
+                </div>
+                <button onclick="getState()">Get State</button>
+                <div class="response" id="stateResp"></div>
+            </div>
+            
+            <div class="card">
+                <h2>📜 Events</h2>
+                <div class="form-group">
+                    <label>Token</label>
+                    <input type="password" id="eventToken" autocomplete="off" placeholder="Enter Bearer token">
+                </div>
+                <div class="form-group">
+                    <label>Sequence</label>
+                    <input type="number" id="eventSeq" value="0">
+                </div>
+                <button onclick="getEvents()">Get Events</button>
+                <div class="response" id="eventResp"></div>
+            </div>
+            
+            <div class="card">
+                <h2>🎮 Actuator Commands</h2>
+                <div class="form-group">
+                    <label>Token (Brain/Operator)</label>
+                    <input type="password" id="cmdToken" autocomplete="off" placeholder="Enter Bearer token">
+                </div>
+                <div class="form-group">
+                    <label>Device ID</label>
+                    <input type="text" id="cmdDevice" value="V-12" placeholder="e.g., V-12, P-01, PRT-PMP-01">
+                </div>
+                <div class="form-group">
+                    <label>Command</label>
+                    <input type="text" id="cmdCommand" value="set_opening" placeholder="set_opening, start, stop">
+                </div>
+                <div class="form-group">
+                    <label>Params (JSON)</label>
+                    <textarea id="cmdParams" rows="3">{"open_pct": 50.0}</textarea>
+                </div>
+                <div class="form-group">
+                    <label>Request ID</label>
+                    <input type="text" id="cmdReqId" value="req-123">
+                </div>
+                <button onclick="sendCommand()">Send Command</button>
+                <div class="response" id="cmdResp"></div>
+            </div>
+            
+            <div class="card">
+                <h2>🔒 Quarantine (Guardian)</h2>
+                <div class="form-group">
+                    <label>Token (Guardian/Operator)</label>
+                    <input type="password" id="qToken" autocomplete="off" placeholder="Enter Bearer token">
+                </div>
+                <div class="form-group">
+                    <label>Device ID</label>
+                    <input type="text" id="qDevice" value="V-12">
+                </div>
+                <div class="form-group">
+                    <label>Reason</label>
+                    <input type="text" id="qReason" value="Suspicious activity detected">
+                </div>
+                <button class="danger" onclick="isolateDevice()">Isolate Device</button>
+                <button class="success" onclick="restoreDevice()">Restore Device</button>
+                <div class="response" id="qResp"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        async function apiCall(url, options = {}) {
+            const res = await fetch(url, options);
+            const data = await res.json();
+            return data;
+        }
+
+        function authHeaders(token, includeContentType = false) {
+            return {
+                ...(includeContentType ? {'Content-Type': 'application/json'} : {}),
+                'Authorization': `Bearer ${token}`
+            };
+        }
+        
+        async function testHealth() {
+            const data = await apiCall('/api/health');
+            document.getElementById('authResp').innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+        }
+        
+        async function testAuth() {
+            const token = document.getElementById('authToken').value;
+            const data = await apiCall('/api/sensors', {
+                headers: authHeaders(token)
+            });
+            document.getElementById('authResp').innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+        }
+        
+        async function getSensors() {
+            const token = document.getElementById('sensorToken').value;
+            const zone = document.getElementById('sensorZone').value;
+            const sid = document.getElementById('sensorId').value;
+            const query = new URLSearchParams();
+            if (zone) query.set('zone_id', zone);
+            if (sid) query.set('sensor_id', sid);
+            const suffix = query.toString();
+            const url = `/api/sensors${suffix ? `?${suffix}` : ''}`;
+            const data = await apiCall(url, {headers: authHeaders(token)});
+            document.getElementById('sensorResp').innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+        }
+        
+        async function getState() {
+            const token = document.getElementById('stateToken').value;
+            const zone = document.getElementById('stateZone').value;
+            const query = zone ? `?zone_id=${encodeURIComponent(zone)}` : '';
+            const data = await apiCall(`/api/state${query}`, {
+                headers: authHeaders(token)
+            });
+            document.getElementById('stateResp').innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+        }
+        
+        async function getEvents() {
+            const token = document.getElementById('eventToken').value;
+            const seq = document.getElementById('eventSeq').value;
+            const data = await apiCall(`/api/events?seq=${encodeURIComponent(seq)}`, {
+                headers: authHeaders(token)
+            });
+            document.getElementById('eventResp').innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+        }
+        
+        async function sendCommand() {
+            const token = document.getElementById('cmdToken').value;
+            const device = document.getElementById('cmdDevice').value;
+            const command = document.getElementById('cmdCommand').value;
+            const params = JSON.parse(document.getElementById('cmdParams').value);
+            const reqId = document.getElementById('cmdReqId').value;
+            const data = await apiCall('/api/commands', {
+                method: 'POST',
+                headers: authHeaders(token, true),
+                body: JSON.stringify({device_id: device, command: command, params: params, request_id: reqId})
+            });
+            document.getElementById('cmdResp').innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+        }
+        
+        async function isolateDevice() {
+            const token = document.getElementById('qToken').value;
+            const device = document.getElementById('qDevice').value;
+            const reason = document.getElementById('qReason').value;
+            const data = await apiCall('/api/isolate', {
+                method: 'POST',
+                headers: authHeaders(token, true),
+                body: JSON.stringify({device_id: device, reason: reason})
+            });
+            document.getElementById('qResp').innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+        }
+        
+        async function restoreDevice() {
+            const token = document.getElementById('qToken').value;
+            const device = document.getElementById('qDevice').value;
+            const data = await apiCall('/api/restore', {
+                method: 'POST',
+                headers: authHeaders(token, true),
+                body: JSON.stringify({device_id: device})
+            });
+            document.getElementById('qResp').innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+        }
+    </script>
+</body>
+</html>

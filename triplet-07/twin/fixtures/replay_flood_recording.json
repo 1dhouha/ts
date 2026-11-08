@@ -1,0 +1,490 @@
+{
+  "format_version": "pa-replay-0.1",
+  "model_profile": "pa-core-09-v1",
+  "python_version": "3.12.14",
+  "numeric_profile": "binary64-exact-v1",
+  "randomness": "none",
+  "header": {
+    "initial_context": {
+      "run_id": "r-flood",
+      "tick": 0,
+      "sim_time_ms": 0,
+      "revision": 0,
+      "model_version": "pa-model-0.2-draft",
+      "catalog_version": "pa-catalog-0.1-draft",
+      "contract_version": "pa-internal-0.2-draft"
+    },
+    "initial_config": {
+      "model_version": "pa-model-0.2-draft",
+      "catalog_version": "pa-catalog-0.1-draft",
+      "contract_version": "pa-internal-0.2-draft",
+      "parameters": {
+        "step_ms": 1000,
+        "basin_area_m2": 2000.0,
+        "basin_capacity_m3": 6000.0,
+        "surface_area_m2": 1000.0,
+        "catchment_area_m2": 20000.0,
+        "runoff_fraction": 1.0,
+        "inlet_max_m3_s": 0.6,
+        "gravity_max_m3_s": 0.2,
+        "pump_max_m3_s": 1.2,
+        "river_allow_below_m": 2.0,
+        "hospital_kw": 50.0,
+        "urban_kw": 80.0,
+        "plant_kw": 100.0,
+        "signal_kw": 0.1,
+        "pump_kw": 10.0,
+        "feeder_rated_kw": {
+          "F-ESS": 100.0,
+          "F-URBAN": 120.0,
+          "F-IND": 150.0
+        },
+        "road_length_m": {
+          "R-LOW": 300.0,
+          "R-HIGH": 500.0,
+          "R-LINK": 400.0,
+          "R-DOWN": 200.0,
+          "R-IND": 600.0
+        },
+        "free_speed_m_s": {
+          "R-LOW": 10.0,
+          "R-HIGH": 10.0,
+          "R-LINK": 10.0,
+          "R-DOWN": 10.0,
+          "R-IND": 10.0
+        },
+        "road_base_capacity_veh_s": {
+          "R-LOW": 0.5,
+          "R-HIGH": 0.5,
+          "R-LINK": 0.5,
+          "R-DOWN": 0.5,
+          "R-IND": 0.5
+        },
+        "flood_close_depth_m": {
+          "R-LOW": 0.2,
+          "R-HIGH": 0.2,
+          "R-LINK": 0.2,
+          "R-DOWN": 0.2,
+          "R-IND": 0.2
+        },
+        "deck_offset_m": {
+          "R-LOW": 0.0,
+          "R-HIGH": 0.8,
+          "R-LINK": 0.0,
+          "R-DOWN": 0.0,
+          "R-IND": 0.0
+        },
+        "signal_capacity_multiplier": {
+          "normal": 1.0,
+          "priority": 1.5,
+          "stop": 0.0,
+          "unpowered": 0.0
+        },
+        "air_decay_per_s": 0.01,
+        "plant_source_ug_m3_s": {
+          "Z-DOWNTOWN": 0.0,
+          "Z-RESIDENTIAL": 0.05,
+          "Z-INDUSTRIAL": 0.2,
+          "Z-RIVER": 0.0,
+          "Z-HEALTH": 0.0
+        }
+      },
+      "initial_physical": {
+        "water": {
+          "basin_volume_m3": 6000,
+          "surface_volume_m3": 199.4,
+          "rain_mm_h": 36,
+          "river_level_m": 1.0,
+          "outfall_blocked": false
+        },
+        "valve": {
+          "effective_opening_fraction": 1
+        },
+        "pump": {
+          "effective_enabled": true
+        },
+        "source": {
+          "source_available": true
+        },
+        "feeders": {
+          "F-ESS": {
+            "effective_closed": true
+          },
+          "F-URBAN": {
+            "effective_closed": true
+          },
+          "F-IND": {
+            "effective_closed": true
+          }
+        },
+        "roads": {
+          "R-LOW": {
+            "queue_vehicles": 10.0,
+            "arrival_rate_veh_s": 0.2,
+            "obstruction_fraction": 0.0
+          },
+          "R-HIGH": {
+            "queue_vehicles": 10.0,
+            "arrival_rate_veh_s": 0.2,
+            "obstruction_fraction": 0.0
+          },
+          "R-LINK": {
+            "queue_vehicles": 10.0,
+            "arrival_rate_veh_s": 0.2,
+            "obstruction_fraction": 0.0
+          },
+          "R-DOWN": {
+            "queue_vehicles": 10.0,
+            "arrival_rate_veh_s": 0.2,
+            "obstruction_fraction": 0.0
+          },
+          "R-IND": {
+            "queue_vehicles": 10.0,
+            "arrival_rate_veh_s": 0.2,
+            "obstruction_fraction": 0.0
+          }
+        },
+        "signals": {
+          "J-D1": {
+            "effective_mode": "normal"
+          },
+          "J-D2": {
+            "effective_mode": "normal"
+          }
+        },
+        "responders": {
+          "AMB-01": {
+            "status": "available",
+            "at_node_id": "J-H1",
+            "mission_ref": null,
+            "destination_node_id": null,
+            "route_road_ids": [],
+            "edge_index": 0,
+            "edge_remaining_s": 0.0
+          },
+          "AMB-02": {
+            "status": "available",
+            "at_node_id": "J-H1",
+            "mission_ref": null,
+            "destination_node_id": null,
+            "route_road_ids": [],
+            "edge_index": 0,
+            "edge_remaining_s": 0.0
+          },
+          "POL-01": {
+            "status": "available",
+            "at_node_id": "J-H1",
+            "mission_ref": null,
+            "destination_node_id": null,
+            "route_road_ids": [],
+            "edge_index": 0,
+            "edge_remaining_s": 0.0
+          }
+        },
+        "air": {
+          "Z-DOWNTOWN": {
+            "pm25_ug_m3": 10.0,
+            "external_source_ug_m3_s": 0.0
+          },
+          "Z-RESIDENTIAL": {
+            "pm25_ug_m3": 10.0,
+            "external_source_ug_m3_s": 0.0
+          },
+          "Z-INDUSTRIAL": {
+            "pm25_ug_m3": 10.0,
+            "external_source_ug_m3_s": 0.0
+          },
+          "Z-RIVER": {
+            "pm25_ug_m3": 10.0,
+            "external_source_ug_m3_s": 0.0
+          },
+          "Z-HEALTH": {
+            "pm25_ug_m3": 10.0,
+            "external_source_ug_m3_s": 0.0
+          }
+        }
+      }
+    },
+    "config_digest": "aeb94629bd1d37455239c523aa56245f32eed7996e2ead3c596c2d4d3646209f",
+    "catalog_digest": "7965b9e7b95c86b1bfdab3e3378be0de7c6cf9a57b63d3d0f83b97d354e44f66"
+  },
+  "records": [
+    {
+      "record_index": 0,
+      "context": {
+        "run_id": "r-flood",
+        "tick": 0,
+        "sim_time_ms": 0,
+        "revision": 1,
+        "model_version": "pa-model-0.2-draft",
+        "catalog_version": "pa-catalog-0.1-draft",
+        "contract_version": "pa-internal-0.2-draft"
+      },
+      "transition_id": "tr-0000000001",
+      "cause": "EFFECT",
+      "input": {
+        "contract_version": "pa-internal-0.2-draft",
+        "run_id": "r-flood",
+        "effect_id": "e-0",
+        "expected_revision": 0,
+        "source": "B_ACTUATOR",
+        "correlation_id": "cmd-17",
+        "effect": {
+          "tag": "reserve_responder",
+          "target_id": "AMB-01",
+          "mission_ref": "m-1",
+          "destination_node_id": "J-D1",
+          "route_road_ids": [
+            "R-LOW"
+          ]
+        }
+      },
+      "before_digest": "9cffce5145957377b315f5ba570c555dd1a0596f17484d2243606ef048c2c854",
+      "after_digest": "c1e458f04fe341730dfe2f4e531e55abdbbb67ee78f5e3b84e96ab935708e0da",
+      "effect_id": "e-0",
+      "sequence": 0
+    },
+    {
+      "record_index": 1,
+      "context": {
+        "run_id": "r-flood",
+        "tick": 1,
+        "sim_time_ms": 1000,
+        "revision": 2,
+        "model_version": "pa-model-0.2-draft",
+        "catalog_version": "pa-catalog-0.1-draft",
+        "contract_version": "pa-internal-0.2-draft"
+      },
+      "transition_id": "tr-0000000002",
+      "cause": "STEP",
+      "input": {
+        "run_id": "r-flood",
+        "expected_revision": 1,
+        "duration_ms": 1000
+      },
+      "before_digest": "c1e458f04fe341730dfe2f4e531e55abdbbb67ee78f5e3b84e96ab935708e0da",
+      "after_digest": "ae40434c0d5f61ff61ce4435e382b174503ecd67fa88e43aec1d2acef5c81263",
+      "effect_id": null,
+      "sequence": null
+    },
+    {
+      "record_index": 2,
+      "context": {
+        "run_id": "r-flood",
+        "tick": 1,
+        "sim_time_ms": 1000,
+        "revision": 3,
+        "model_version": "pa-model-0.2-draft",
+        "catalog_version": "pa-catalog-0.1-draft",
+        "contract_version": "pa-internal-0.2-draft"
+      },
+      "transition_id": "tr-0000000003",
+      "cause": "EFFECT",
+      "input": {
+        "contract_version": "pa-internal-0.2-draft",
+        "run_id": "r-flood",
+        "effect_id": "e-2",
+        "expected_revision": 2,
+        "source": "B_ACTUATOR",
+        "correlation_id": "cmd-17",
+        "effect": {
+          "tag": "feeder_position",
+          "target_id": "F-ESS",
+          "closed": false
+        }
+      },
+      "before_digest": "ae40434c0d5f61ff61ce4435e382b174503ecd67fa88e43aec1d2acef5c81263",
+      "after_digest": "9431c530df791cfb607a3675fb7cedb03c7c74371e2af323a6b74100321dd424",
+      "effect_id": "e-2",
+      "sequence": 1
+    },
+    {
+      "record_index": 3,
+      "context": {
+        "run_id": "r-flood",
+        "tick": 2,
+        "sim_time_ms": 2000,
+        "revision": 4,
+        "model_version": "pa-model-0.2-draft",
+        "catalog_version": "pa-catalog-0.1-draft",
+        "contract_version": "pa-internal-0.2-draft"
+      },
+      "transition_id": "tr-0000000004",
+      "cause": "STEP",
+      "input": {
+        "run_id": "r-flood",
+        "expected_revision": 3,
+        "duration_ms": 1000
+      },
+      "before_digest": "9431c530df791cfb607a3675fb7cedb03c7c74371e2af323a6b74100321dd424",
+      "after_digest": "8bf94eda79f8c280f08f51fde12afe7c95c1d60828e6195d6a0f18adf45215fe",
+      "effect_id": null,
+      "sequence": null
+    },
+    {
+      "record_index": 4,
+      "context": {
+        "run_id": "r-flood",
+        "tick": 3,
+        "sim_time_ms": 3000,
+        "revision": 5,
+        "model_version": "pa-model-0.2-draft",
+        "catalog_version": "pa-catalog-0.1-draft",
+        "contract_version": "pa-internal-0.2-draft"
+      },
+      "transition_id": "tr-0000000005",
+      "cause": "STEP",
+      "input": {
+        "run_id": "r-flood",
+        "expected_revision": 4,
+        "duration_ms": 1000
+      },
+      "before_digest": "8bf94eda79f8c280f08f51fde12afe7c95c1d60828e6195d6a0f18adf45215fe",
+      "after_digest": "03e58d9708179b6c327b3a433581e442e898c12d36ee0715dbfcd73c800c1ed5",
+      "effect_id": null,
+      "sequence": null
+    },
+    {
+      "record_index": 5,
+      "context": {
+        "run_id": "r-flood",
+        "tick": 3,
+        "sim_time_ms": 3000,
+        "revision": 6,
+        "model_version": "pa-model-0.2-draft",
+        "catalog_version": "pa-catalog-0.1-draft",
+        "contract_version": "pa-internal-0.2-draft"
+      },
+      "transition_id": "tr-0000000006",
+      "cause": "EFFECT",
+      "input": {
+        "contract_version": "pa-internal-0.2-draft",
+        "run_id": "r-flood",
+        "effect_id": "e-5",
+        "expected_revision": 5,
+        "source": "B_SCENARIO",
+        "correlation_id": "cmd-17",
+        "effect": {
+          "tag": "road_driver",
+          "target_id": "R-LINK",
+          "arrival_rate_veh_s": 0.2,
+          "obstruction_fraction": 1.0
+        }
+      },
+      "before_digest": "03e58d9708179b6c327b3a433581e442e898c12d36ee0715dbfcd73c800c1ed5",
+      "after_digest": "dc0ec83f98f5bb36be299156f5dc0de93910746046012253aa1acad877abd09d",
+      "effect_id": "e-5",
+      "sequence": 2
+    },
+    {
+      "record_index": 6,
+      "context": {
+        "run_id": "r-flood",
+        "tick": 4,
+        "sim_time_ms": 4000,
+        "revision": 7,
+        "model_version": "pa-model-0.2-draft",
+        "catalog_version": "pa-catalog-0.1-draft",
+        "contract_version": "pa-internal-0.2-draft"
+      },
+      "transition_id": "tr-0000000007",
+      "cause": "STEP",
+      "input": {
+        "run_id": "r-flood",
+        "expected_revision": 6,
+        "duration_ms": 1000
+      },
+      "before_digest": "dc0ec83f98f5bb36be299156f5dc0de93910746046012253aa1acad877abd09d",
+      "after_digest": "f3ee2d9a22e9c57456fab97ed9dfd2cfc344d943436b445ae2b6bf0a2a97d085",
+      "effect_id": null,
+      "sequence": null
+    },
+    {
+      "record_index": 7,
+      "context": {
+        "run_id": "r-flood",
+        "tick": 4,
+        "sim_time_ms": 4000,
+        "revision": 8,
+        "model_version": "pa-model-0.2-draft",
+        "catalog_version": "pa-catalog-0.1-draft",
+        "contract_version": "pa-internal-0.2-draft"
+      },
+      "transition_id": "tr-0000000008",
+      "cause": "EFFECT",
+      "input": {
+        "contract_version": "pa-internal-0.2-draft",
+        "run_id": "r-flood",
+        "effect_id": "e-7",
+        "expected_revision": 7,
+        "source": "B_ACTUATOR",
+        "correlation_id": "cmd-17",
+        "effect": {
+          "tag": "feeder_position",
+          "target_id": "F-ESS",
+          "closed": true
+        }
+      },
+      "before_digest": "f3ee2d9a22e9c57456fab97ed9dfd2cfc344d943436b445ae2b6bf0a2a97d085",
+      "after_digest": "5a9d2485a4f65ec0849b1ed4985ed0a32563bef1639991ef7c76544286d3e3d6",
+      "effect_id": "e-7",
+      "sequence": 3
+    },
+    {
+      "record_index": 8,
+      "context": {
+        "run_id": "r-flood",
+        "tick": 5,
+        "sim_time_ms": 5000,
+        "revision": 9,
+        "model_version": "pa-model-0.2-draft",
+        "catalog_version": "pa-catalog-0.1-draft",
+        "contract_version": "pa-internal-0.2-draft"
+      },
+      "transition_id": "tr-0000000009",
+      "cause": "STEP",
+      "input": {
+        "run_id": "r-flood",
+        "expected_revision": 8,
+        "duration_ms": 1000
+      },
+      "before_digest": "5a9d2485a4f65ec0849b1ed4985ed0a32563bef1639991ef7c76544286d3e3d6",
+      "after_digest": "e4a86a2042a8c158acbf3b9a1e431aaaf9190a5bc1cffd2b9196ec0c4b921826",
+      "effect_id": null,
+      "sequence": null
+    },
+    {
+      "record_index": 9,
+      "context": {
+        "run_id": "r-flood",
+        "tick": 6,
+        "sim_time_ms": 6000,
+        "revision": 10,
+        "model_version": "pa-model-0.2-draft",
+        "catalog_version": "pa-catalog-0.1-draft",
+        "contract_version": "pa-internal-0.2-draft"
+      },
+      "transition_id": "tr-0000000010",
+      "cause": "STEP",
+      "input": {
+        "run_id": "r-flood",
+        "expected_revision": 9,
+        "duration_ms": 1000
+      },
+      "before_digest": "e4a86a2042a8c158acbf3b9a1e431aaaf9190a5bc1cffd2b9196ec0c4b921826",
+      "after_digest": "684421915c77fcf37af178f6d9953aec5fadb185085bd0e50bbcd5a9cc570b92",
+      "effect_id": null,
+      "sequence": null
+    }
+  ],
+  "final_context": {
+    "run_id": "r-flood",
+    "tick": 6,
+    "sim_time_ms": 6000,
+    "revision": 10,
+    "model_version": "pa-model-0.2-draft",
+    "catalog_version": "pa-catalog-0.1-draft",
+    "contract_version": "pa-internal-0.2-draft"
+  },
+  "final_digest": "684421915c77fcf37af178f6d9953aec5fadb185085bd0e50bbcd5a9cc570b92"
+}

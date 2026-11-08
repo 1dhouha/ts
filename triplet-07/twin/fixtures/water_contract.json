@@ -1,0 +1,13 @@
+{
+  "profile": "pa-water-phase06-0.1-provisional",
+  "visibility": "Private A/B checkpoint; never public truth or Guardian labels",
+  "units": "Storage/step balance m3, levels m, rain mm/h, flow m3/s, step 1s",
+  "agreement": "Supervisor-approved provisional; actual B/C conformance unverified",
+  "cases": [
+    {"name": "F01 low-road flood", "initial": {}, "expected": {"surface_m3": 200.0, "pump_out_m3": 0.0, "low_flooded": true}},
+    {"name": "F02 powered drainage", "initial": {"pump": true}, "expected": {"surface_m3": 198.8, "pump_out_m3": 1.2, "low_flooded": false}},
+    {"name": "F03 missing essential supply", "initial": {"pump": true, "ess": false}, "expected": {"surface_m3": 200.0, "pump_out_m3": 0.0, "low_flooded": true}},
+    {"name": "F04 blocked outfall", "initial": {"pump": true, "blocked": true}, "expected": {"surface_m3": 200.2, "pump_out_m3": 0.0, "low_flooded": true}},
+    {"name": "F05 actual valve closed, rain continues", "initial": {"valve": 0.0}, "expected": {"surface_m3": 199.4, "pump_out_m3": 0.0, "low_flooded": false}}
+  ]
+}
