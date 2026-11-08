@@ -1,19 +1,19 @@
 {
   "ID": "T5",
-  "Name": "Fake flood at the port",
+  "Name": "Fake flood through PRT-WLV-02 (linked to PRT-PMP-02)",
   "Layers involved": ["Twin", "Guardian", "City Brain"],
-  "Description": "The port water level sensor reports 180 cm while the true physical level remains normal at 40 cm.",
+  "Description": "The backup port water level sensor PRT-WLV-02 reports 180 cm while its simulated input and corroborating PRT-WLV-01 reading remain at 40 cm. PRT-WLV-02 is linked to PRT-PMP-02.",
   "Trigger": "python scenarios/run.py --scenario t5",
-  "Expected: Twin": "At tick 5, PRT-WLV-01 reports 180.0 while actual_value remains 40.0. It continues to report its actual simulated input; if quarantined, registry status becomes RESTRICTED.",
-  "Expected: Guardian": "The deterministic scenario adapter marks the inconsistent reading UNTRUSTED at the same simulation tick (within the 10-second target), then quarantines PRT-WLV-01.",
-  "Expected: Brain": "Checks the UNTRUSTED verdict, refuses the flood response, and records the reason. No pump or valve command is dispatched.",
-  "How to verify": "Follow the shared correlation_id from Twin reading to Guardian verdict, Brain refusal, and actuator NOT_DISPATCHED event in the live terminal timeline and logs/t5-*.log.",
+  "Expected: Twin": "At tick 5, PRT-WLV-02 reports 180.0 while actual_value remains 40.0; PRT-WLV-01 remains the corroborating 40.0 backup. PRT-WLV-02 is linked to PRT-PMP-02, so a Brain command to that pump is rejected while this sensor evidence is untrusted.",
+  "Expected: Guardian": "Guardian reviews the inconsistent PRT-WLV-02 reading and may isolate that sensor through its normal containment call. This does not quarantine PRT-PMP-02 itself.",
+  "Expected: Brain": "Checks the Guardian verdict and Twin safety response. The untrusted sensor evidence blocks a PRT-PMP-02 command unless a valid linked backup reading is supplied; no actuator effect is assumed.",
+  "How to verify": "Follow the shared correlation_id for PRT-WLV-02 through its Guardian verdict and any Brain command attempt. Confirm Twin records sensor quarantine separately from any PRT-PMP-02 command rejection or applied effect.",
   "duration_ticks": 40,
   "triggers": [
     {
       "sim_tick": 5,
       "action": "INJECT_FAULT",
-      "target_device_id": "PRT-WLV-01",
+      "target_device_id": "PRT-WLV-02",
       "fault_type": "FALSE_READING",
       "parameters": {
         "fixed_value": 180.0
@@ -22,14 +22,15 @@
     {
       "sim_tick": 5,
       "action": "CLEAR_FAULT",
-      "target_device_id": "PRT-WLV-01",
+      "target_device_id": "PRT-WLV-02",
       "after_scenario": true
     }
   ],
   "fixture": {
     "seed": 1405,
-    "sensor_id": "PRT-WLV-01",
+    "sensor_id": "PRT-WLV-02",
+    "backup_sensor_id": "PRT-WLV-01",
     "ground_truth_value": 40.0,
-    "actuator_id": "PRT-PMP-01"
+    "actuator_id": "PRT-PMP-02"
   }
 }

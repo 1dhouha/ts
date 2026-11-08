@@ -169,7 +169,7 @@ class Campaign:
         actions = []
         if scenario_id == 'SCN-01':
             actions.append(self.brain_command(
-                facade, city, scenario, 'PRT-PMP-01', 'set_speed',
+                facade, city, scenario, 'PRT-PMP-02', 'set_speed',
                 {'speed_pct': 80}, f'{scenario_id.lower()}-spoofed-command',
             ))
         elif scenario_id == 'SCN-02':
@@ -183,12 +183,12 @@ class Campaign:
             ))
         elif scenario_id == 'SCN-03':
             actions.append(self.brain_command(
-                facade, city, scenario, 'IND-VLV-01', 'set_opening',
-                {'open_pct': 25}, f'{scenario_id.lower()}-no-backup',
+                facade, city, scenario, 'DTN-TLT-01', 'set_mode',
+                {'mode': 'priority'}, f'{scenario_id.lower()}-no-traffic-backup',
             ))
             actions.append(self.brain_command(
-                facade, city, scenario, 'IND-VLV-01', 'set_opening',
-                {'open_pct': 25}, f'{scenario_id.lower()}-valid-backup',
+                facade, city, scenario, 'DTN-TLT-01', 'set_mode',
+                {'mode': 'priority'}, f'{scenario_id.lower()}-unrelated-industrial-backup',
                 source_sensor_id='IND-TMP-02',
             ))
         elif scenario_id == 'SCN-04':
@@ -249,7 +249,7 @@ class Campaign:
                     )
                 ]
                 expected_effect = scenario_id in (
-                    'SCN-02', 'SCN-03', 'SCN-05', 'SCN-06',
+                    'SCN-02', 'SCN-05', 'SCN-06',
                 )
                 effect_applied = after['revision'] > before['revision']
                 outcomes = [
@@ -304,6 +304,21 @@ class Campaign:
                     bool(command_events),
                     'Local controlled Brain-role command calls exercise TwinFacade; not external Brain service calls.',
                 )
+                if scenario_id == 'SCN-03':
+                    rejection_reasons = [
+                        row.get('error', {}).get('details', {}).get('reason')
+                        for row in actions
+                    ]
+                    self.check(
+                        checks, 'scenario_expected_safe_rejections',
+                        rejection_reasons == [
+                            'SCENARIO_GUARDIAN_PENDING', 'SCENARIO_GUARDIAN_PENDING',
+                        ],
+                        f'actual_rejection_reasons={rejection_reasons}; '
+                        'DTN-TLT-01 is supported and linked to frozen DTN-TRF-01, '
+                        'which has no registered backup; unrelated IND-TMP-02 '
+                        'cannot clear the traffic safety gate.',
+                    )
                 self.check(
                     checks, 'expected_effect_semantics',
                     effect_applied == expected_effect,

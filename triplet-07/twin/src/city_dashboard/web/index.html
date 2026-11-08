@@ -1,23 +1,392 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Convergence City · Operations</title><link rel="stylesheet" href="/styles.css"></head>
-<body><header class="masthead"><div><p class="eyebrow">TWIN / OPERATOR WORKSPACE</p><h1>CONVERGENCE CITY</h1><p>One city. Connected infrastructure.</p></div><div><strong id="connection" role="status">DISCONNECTED</strong><p id="visibility">No frame loaded.</p></div></header>
-<main><details class="connection-panel" open><summary>Session & connection</summary>
-<form id="login"><label for="secret">Dashboard passphrase · private operator access</label><div class="row"><input id="secret" type="password" minlength="16" maxlength="256" autocomplete="off" required><button type="submit">Connect operator</button></div></form>
-<p id="auth-state" role="status" aria-live="polite">Operator session not connected.</p><p class="muted">Reported observations are not Guardian trust verdicts. Operator controls act on the shared simulation.</p></details>
-<div class="status-bar"><div class="row"><button id="report" type="button">Connect reported view</button><button id="logout" type="button">Disconnect / sign out</button></div><span id="identity">Waiting for connection.</span><strong id="clock">—</strong></div>
-<section id="operator-controls" hidden><h2>Operator controls</h2>
-<div class="row"><button id="start">Start / resume</button><button id="pause">Pause city</button><button id="stop">Stop city</button><button id="step">Step 1 second</button><label>Wall speed <select id="speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="5">5×</option><option value="10">10×</option></select></label><button id="set-speed">Set speed</button><button id="reset-city">Reset city</button></div>
-<div class="row"><label for="scenario-select">Existing scenario</label><select id="scenario-select"><option value="t5">T5 / SCN-01 · Fake flood</option><option value="scn-02">SCN-02 · Real flash flood</option><option value="scn-03">SCN-03 · Sensor malfunction</option><option value="scn-04">SCN-04 · Quarantined actuator</option><option value="scn-05">SCN-05 · Stress and spoofing</option><option value="scn-06">SCN-06 · Communication failure and recovery</option></select><button id="scenario-start">Run scenario</button></div><p id="scenario-status" role="status" aria-live="polite">No scenario started.</p>
-<details id="incident-drawer"><summary>Incidents, traffic, devices & schedules</summary><p class="muted">Private local administration. Pause for physical changes; this does not implement Brain decisions or Guardian approval.</p><div class="control-grid"><div><label for="traffic-profile">Traffic demand</label><select id="traffic-profile"><option value="normal">Normal</option><option value="morning_rush">Morning rush</option><option value="evening_rush">Evening rush</option><option value="low">Low</option><option value="surge">Surge</option><option value="congestion">Congestion</option><option value="time_of_day">Time of day</option></select><button id="set-traffic">Apply traffic</button></div>
-<div><label for="incident-kind">Physical incident / recovery</label><select id="incident-kind"><option>accident</option><option>partial_block</option><option>road_clear</option><option>power_outage</option><option>power_restore</option><option>heavy_rain</option><option>rain_clear</option><option>pollution</option><option>pollution_clear</option><option>pump_on</option><option>pump_off</option></select><label for="road-target">Road target</label><select id="road-target"><option>R-LOW</option><option>R-HIGH</option><option>R-DOWN</option><option>R-LINK</option><option>R-IND</option></select><button id="apply-incident">Apply incident</button></div>
-<div><label for="preset">Scheduled preset</label><select id="preset"><option>combined_crisis</option><option>recovery</option><option>normal</option></select><button id="preset-go">Schedule preset</button></div></div>
-<div class="row"><label>Actuator <select id="device-id"><option>A-VALVE-01</option><option>A-PUMP-01</option><option>A-SIG-01</option><option>A-SIG-02</option><option>A-SW-ESS</option><option>A-SW-URBAN</option><option>A-SW-IND</option></select></label><label>Requested value (JSON)<input id="device-value" value="1"></label><button id="device-apply">Apply device request</button></div><p class="muted">Valve:0–1 fraction; pump/grid switch:true/false; signal:"normal", "priority", "stop". Advanced device effective/available arguments demonstrate partial execution and failure. Dispatch uses explicit incident route arguments.</p><details><summary>Advanced local commands · validated JSON arguments</summary><p>Schedule: {"action_id":"a1","due_tick":20,"operation":"power_restore","params":{}}. Cancel: {"action_id":"a1"}. Device: {"device_id":"A-VALVE-01","requested":1,"effective":0.3,"available":true}. Dispatch uses incident operation dispatch with target, mission, destination and route; no automatic routing.</p><form id="advanced-command"><label for="command-kind">Command kind</label><select id="command-kind"><option>device</option><option>schedule</option><option>cancel</option><option>incident</option></select><label for="command-args">Arguments JSON</label><textarea id="command-args" rows="3">{"device_id":"A-VALVE-01","requested":1}</textarea><button id="advanced-submit">Submit advanced command</button></form></details>
-</details><p id="command-result" role="status" aria-live="polite">No command submitted.</p><button id="retry-command" disabled>Retry same delivery</button></section>
-<div class="workspace"><aside><details class="side-drawer" open><summary>Infrastructure metrics</summary><div id="metrics">Physical state requires operator access.</div></details><section><h2>Layers</h2><div id="layers" class="layers"></div><p class="muted">Illustrative geometry; catalog assets and the schematic Port model are selectable. Physical overlays require operator access.</p></section></aside>
-<section class="map-panel"><div class="map-toolbar"><h2>01 / CITY OVERVIEW</h2><div class="row"><button id="zoom-in" aria-label="Zoom in">+</button><button id="zoom-out" aria-label="Zoom out">−</button><button id="fit">Fit city</button></div></div><div id="city-map" aria-label="Interactive isometric city"></div><p class="legend" id="map-help">Keyboard: focus map, arrows pan, +/− zoom, 0 fits; Enter selects focused asset; Escape clears. Cyan: usable road · Red: blocked · Blue: physical flood · Amber: power unavailable</p><p class="muted">Static artwork is illustration. State overlays come from committed frames. Historical values are marked STALE on disconnect. Traffic pulses illustrate usable capacity, not counted vehicles. Responder positions are illustrative along the actual edge, normalized from first observed remaining time; exact geographic positions are not modeled.</p></section>
-<aside><details id="asset-drawer" class="side-drawer" open><summary>Asset inspector</summary><label for="search">Find ID or district</label><input id="search" type="search" placeholder="R-LOW, Health…"><label for="asset-list">City assets & PDF sensors</label><select id="asset-list" size="5" aria-label="City assets"></select><div id="selected" tabindex="0">Select an asset on the map or in the list.</div></details><section><h2>Observation feed</h2><div id="reports">No samples.</div></section></aside></div>
-<section id="sensor-workspace" hidden><h2>Sensor & fault laboratory / PRIVATE</h2><p id="registry-summary"></p><div class="control-grid"><div><label for="sensor-select">Sensor registry</label><select id="sensor-select"></select><pre id="sensor-detail" tabindex="0" aria-label="Private sensor comparison"></pre></div><div><label for="fault-type">Injected fault</label><select id="fault-type"><option>FALSE_READING</option><option>STUCK</option><option>DRIFT</option><option>NOISE</option><option>DELAYED</option><option>DROPOUT</option><option>DEAD</option></select><label for="fault-params">Fault parameters JSON</label><textarea id="fault-params" rows="3">{"value":180}</textarea><div class="row"><button id="inject-fault">Inject fault</button><button id="sensor-clear">Clear fault</button><button id="sensor-repair">Repair sensor</button></div><label for="fault-due">Scheduled fault tick</label><input id="fault-due" type="number" min="0" step="1" value="20"><button id="schedule-fault">Schedule fault</button></div><div><label for="replacement-id">Replacement ID</label><input id="replacement-id" placeholder="DTN-WLV-02" maxlength="96"><button id="sensor-replace">Replace sensor</button><p class="muted">STUCK needs a valid prior sample. DEAD needs repair/replacement; clear rejects it. DELAYED preserves sample time and may warm up with null. Values clamp to hard limits. Backup IDs are relationships, not automatic failover. Only the PDF sensor families are active.</p></div></div><p id="sensor-command-state" role="status"></p></section>
-<section id="history-workspace"><h2>History & local timeline</h2><p id="history-notice" role="status"></p><label for="chart-series">Chart series</label><select id="chart-series"></select><svg id="history-chart" viewBox="0 0 900 160" role="img" aria-label="Sample history chart; numeric values and units below"></svg><p id="chart-caption">No samples.</p><details><summary>Chart samples / last 64 points</summary><table><thead><tr><th scope="col">Sample tick / s</th><th scope="col">Value</th><th scope="col">Unit</th><th scope="col">Delivery sequence</th></tr></thead><tbody id="chart-data"></tbody></table></details><details><summary>Retained timeline / latest first</summary><ol id="timeline"></ol></details><details id="pending-actions"><summary>Local scheduled actions & outcomes</summary><div id="action-rows"></div></details></section>
-<details><summary>Frame diagnostics / JSON</summary><pre id="frame" tabindex="0" aria-label="Current frame JSON">No data.</pre></details>
-</main><footer>PRIVATE OPERATOR WORKSPACE · No Brain policy or Guardian decisions · 16 PDF sensors active · Port has a separate local water model</footer><script type="module" src="/app.js"></script></body></html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07121e">
+  <title>Convergence City · Twin Operations</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/3d/assets/city3d.css">
+  <link rel="stylesheet" href="/redesign.css">
+</head>
+<body>
+  <div id="root"></div>
+  <details id="full-twin-suite" class="full-twin-suite">
+    <summary>More Twin tools · scenario controls, operations map, sensor lab & history</summary>
+  <header class="masthead">
+    <div class="brand-lockup">
+      <div class="brand-mark" aria-hidden="true">T</div>
+      <div>
+        <p class="eyebrow">IEEE TSYP14 · SMART CITY TWIN</p>
+        <h1>CONVERGENCE CITY</h1>
+      </div>
+    </div>
+    <div class="connection-summary">
+      <span class="connection-indicator" aria-hidden="true"></span>
+      <strong id="connection" role="status">DISCONNECTED</strong>
+      <span class="connection-divider"></span>
+      <span id="visibility">No frame loaded.</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="access-card">
+      <div class="access-heading">
+        <div>
+          <p class="eyebrow">TWIN ACCESS</p>
+          <h2>Connect to city operations</h2>
+        </div>
+        <p class="muted">Reported observations are not Guardian trust verdicts. Operator access reveals private simulation diagnostics and controls.</p>
+      </div>
+      <div class="access-actions">
+        <details class="connection-panel" open>
+          <summary>Operator sign-in</summary>
+          <form id="login">
+            <label for="secret">Dashboard passphrase · private operator access</label>
+            <div class="row">
+              <input id="secret" type="password" minlength="16" maxlength="256" autocomplete="off" required>
+              <button type="submit">Connect operator</button>
+            </div>
+          </form>
+          <p id="auth-state" role="status" aria-live="polite">Operator session not connected.</p>
+        </details>
+        <div class="report-access">
+          <span class="access-label">Read-only public projection</span>
+          <button id="report" type="button">Connect reported view</button>
+          <button id="logout" type="button" class="button-quiet">Disconnect / sign out</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="status-bar">
+      <div>
+        <p class="eyebrow">ACTIVE TWIN FRAME</p>
+        <span id="identity">Waiting for connection.</span>
+      </div>
+      <strong id="clock">—</strong>
+    </div>
+
+    <section id="city-3d-panel" class="city-3d-panel" open aria-labelledby="city-3d-heading">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">LIVE CITY MODEL</p>
+          <h2 id="city-3d-heading">Explore the Twin</h2>
+        </div>
+        <span class="model-badge"><span aria-hidden="true"></span> MODEL VIEW · TWIN DATA</span>
+      </div>
+      <p class="section-intro">The 3D model is a visual reference, not a georeferenced map. State summaries are read from the connected Twin frame. Brain and Guardian responses are not inferred.</p>
+      <div class="city-3d-layout">
+        <div class="city-3d-stage">
+          <div id="city-3d-canvas" aria-label="Interactive 3D city model"></div>
+          <div class="viewer-toolbar">
+            <p id="city-3d-model-status" class="model-status" role="status" aria-live="polite">Loading city model…</p>
+            <div class="row">
+              <button id="city-3d-fit" type="button">Fit model</button>
+              <button type="button" data-city-marker="S-WATER-01">Focus S-WATER-01</button>
+              <button type="button" data-city-marker="DTN-VLV-01">Focus DTN-VLV-01</button>
+            </div>
+          </div>
+          <p id="city-3d-selection" class="muted" aria-live="polite">Marker locations are illustrative; exact device coordinates are not modeled.</p>
+        </div>
+        <aside class="city-3d-state" aria-label="Live Twin state summary">
+          <article class="state-card state-card-primary">
+            <p class="eyebrow">SIMULATION</p>
+            <h3>Twin runtime</h3>
+            <strong id="city-3d-runtime">Waiting for a Twin frame</strong>
+            <small>Lifecycle, simulation tick, and revision</small>
+          </article>
+          <article class="state-card">
+            <p class="eyebrow">CITYCORE · PHYSICAL DIAGNOSTIC</p>
+            <h3>Water system</h3>
+            <strong id="city-3d-water">Not available</strong>
+            <small id="city-3d-water-note">Requires an operator frame</small>
+          </article>
+          <article class="state-card">
+            <p class="eyebrow">SENSOR TELEMETRY</p>
+            <h3>S-WATER-01</h3>
+            <strong id="city-3d-sensor">No sample</strong>
+            <small id="city-3d-sensor-note">Reported telemetry; unit comes from the Twin frame.</small>
+          </article>
+          <article class="state-card">
+            <p class="eyebrow">LOCAL ORCHESTRATION</p>
+            <h3>Scheduled work</h3>
+            <strong id="city-3d-actions">Not available</strong>
+            <small>Pending scheduled actions only</small>
+          </article>
+          <article class="state-card partner-card">
+            <div>
+              <p class="eyebrow">EXTERNAL LAYERS</p>
+              <h3>Brain / Guardian</h3>
+            </div>
+            <strong>Not reported</strong>
+            <small>Partner service responses are not included in this Twin frame.</small>
+          </article>
+          <p id="city-3d-frame-status" class="frame-status" role="status" aria-live="polite">Waiting for a Twin frame.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section id="decision-activity" class="decision-activity" aria-labelledby="decision-activity-heading">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">TWIN LAYER · EVENT TIMELINE</p>
+          <h2 id="decision-activity-heading">Twin timeline</h2>
+        </div>
+        <strong id="activity-scenario" role="status" aria-live="polite">No active scenario</strong>
+      </div>
+      <p class="muted">Twin’s record of scenario inputs, sensor and fault changes, command handling, and simulated effects. Partner tabs show actions received by Twin; they do not expose each service’s private internal reasoning.</p>
+      <div class="activity-filters" role="group" aria-label="Filter timeline by layer">
+        <button type="button" data-activity-layer="twin" aria-pressed="true">Twin</button>
+        <button type="button" data-activity-layer="brain" aria-pressed="false">Brain</button>
+        <button type="button" data-activity-layer="guardian" aria-pressed="false">Guardian</button>
+        <button type="button" data-activity-layer="all" aria-pressed="false">All events</button>
+      </div>
+      <ol id="activity-latest" class="jury-trace-list" aria-live="polite"></ol>
+      <details id="activity-more" hidden>
+        <summary id="activity-more-label">Show full activity log</summary>
+        <ol id="activity-archive" class="jury-trace-list"></ol>
+      </details>
+    </section>
+
+    <section id="operator-controls" class="operator-console" hidden>
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">PRIVATE · OPERATOR SESSION</p>
+          <h2>City controls</h2>
+        </div>
+        <span class="operator-badge">AUTHENTICATED WORKSPACE</span>
+      </div>
+      <div class="row lifecycle-controls">
+        <button id="start">Start / resume</button>
+        <button id="pause">Pause city</button>
+        <button id="stop">Stop city</button>
+        <button id="step">Step 1 second</button>
+        <label>Wall speed
+          <select id="speed">
+            <option value="0.5">0.5×</option>
+            <option value="1" selected>1×</option>
+            <option value="5">5×</option>
+            <option value="10">10×</option>
+          </select>
+        </label>
+        <button id="set-speed">Set speed</button>
+        <button id="reset-city" class="button-quiet">Reset city</button>
+      </div>
+      <div class="scenario-launch">
+        <label for="scenario-select">Scenario campaign</label>
+        <select id="scenario-select">
+          <option value="t5">T5 / SCN-01 · Fake flood</option>
+          <option value="scn-02">SCN-02 · Real flash flood</option>
+          <option value="scn-03">SCN-03 · Sensor malfunction</option>
+          <option value="scn-04">SCN-04 · Quarantined actuator</option>
+          <option value="scn-05">SCN-05 · Stress and spoofing</option>
+          <option value="scn-06">SCN-06 · Communication failure and recovery</option>
+        </select>
+        <button id="scenario-start">Run scenario</button>
+      </div>
+      <p id="scenario-status" role="status" aria-live="polite">No scenario started.</p>
+
+      <details id="incident-drawer" class="advanced-drawer">
+        <summary>Incidents, devices, traffic & schedules</summary>
+        <p class="muted">Local simulation administration. Pause for physical changes. This does not implement Brain decisions or Guardian approval.</p>
+        <div class="control-grid">
+          <div>
+            <label for="traffic-profile">Traffic demand</label>
+            <select id="traffic-profile">
+              <option value="normal">Normal</option>
+              <option value="morning_rush">Morning rush</option>
+              <option value="evening_rush">Evening rush</option>
+              <option value="low">Low</option>
+              <option value="surge">Surge</option>
+              <option value="congestion">Congestion</option>
+              <option value="time_of_day">Time of day</option>
+            </select>
+            <button id="set-traffic">Apply traffic</button>
+          </div>
+          <div>
+            <label for="incident-kind">Physical incident / recovery</label>
+            <select id="incident-kind">
+              <option>accident</option><option>partial_block</option><option>road_clear</option>
+              <option>power_outage</option><option>power_restore</option><option>heavy_rain</option>
+              <option>rain_clear</option><option>pollution</option><option>pollution_clear</option>
+              <option>pump_on</option><option>pump_off</option>
+            </select>
+            <label for="road-target">Road target</label>
+            <select id="road-target">
+              <option>R-LOW</option><option>R-HIGH</option><option>R-DOWN</option><option>R-LINK</option><option>R-IND</option>
+            </select>
+            <button id="apply-incident">Apply incident</button>
+          </div>
+          <div>
+            <label for="preset">Scheduled preset</label>
+            <select id="preset"><option>combined_crisis</option><option>recovery</option><option>normal</option></select>
+            <button id="preset-go">Schedule preset</button>
+          </div>
+        </div>
+        <div class="row">
+          <label>Actuator
+            <select id="device-id">
+              <option>A-VALVE-01</option><option>A-PUMP-01</option><option>A-SIG-01</option>
+              <option>A-SIG-02</option><option>A-SW-ESS</option><option>A-SW-URBAN</option><option>A-SW-IND</option>
+            </select>
+          </label>
+          <label>Requested value (JSON)<input id="device-value" value="1"></label>
+          <button id="device-apply">Apply device request</button>
+        </div>
+        <p class="muted">Valve: 0–1 fraction; pump/grid switch: true/false; signal: "normal", "priority", or "stop". Dispatch requires explicit incident route arguments.</p>
+        <details>
+          <summary>Advanced local commands · validated JSON</summary>
+          <p>Schedule: {"action_id":"a1","due_tick":20,"operation":"power_restore","params":{}}. Cancel: {"action_id":"a1"}. Device: {"device_id":"A-VALVE-01","requested":1,"effective":0.3,"available":true}.</p>
+          <form id="advanced-command">
+            <label for="command-kind">Command kind</label>
+            <select id="command-kind"><option>device</option><option>schedule</option><option>cancel</option><option>incident</option></select>
+            <label for="command-args">Arguments JSON</label>
+            <textarea id="command-args" rows="3">{"device_id":"A-VALVE-01","requested":1}</textarea>
+            <button id="advanced-submit">Submit advanced command</button>
+          </form>
+        </details>
+      </details>
+      <div class="command-feedback">
+        <p id="command-result" role="status" aria-live="polite">No command submitted.</p>
+        <button id="retry-command" disabled>Retry same delivery</button>
+      </div>
+    </section>
+
+    <section class="operations-section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">CITY SYSTEMS</p>
+          <h2>Operations overview</h2>
+        </div>
+        <p class="muted">Live values are tied to the selected frame and visibility mode.</p>
+      </div>
+      <div class="operations-grid">
+        <article class="information-card">
+          <p class="eyebrow">INFRASTRUCTURE</p>
+          <h3>System metrics</h3>
+          <div id="metrics">Physical state requires operator access.</div>
+        </article>
+        <article class="information-card">
+          <p class="eyebrow">SENSOR OBSERVATIONS</p>
+          <h3>Latest available readings</h3>
+          <div id="reports">No samples.</div>
+        </article>
+        <article class="information-card layer-card">
+          <p class="eyebrow">MAP DISPLAY</p>
+          <h3>Visible layers</h3>
+          <div id="layers" class="layers"></div>
+          <p class="muted">Map geometry is illustrative. Only catalog assets are selectable; physical overlays require operator access.</p>
+        </article>
+      </div>
+    </section>
+
+    <details id="map-workspace" class="secondary-workspace">
+      <summary>Open 2D operations map & asset inspector</summary>
+      <p class="section-intro">The 2D map is an illustrative city view. State overlays come from committed Twin frames; exact geographic positions are not modeled.</p>
+      <div class="workspace">
+        <section class="map-panel">
+          <div class="map-toolbar">
+            <h2>City infrastructure map</h2>
+            <div class="row">
+              <button id="zoom-in" aria-label="Zoom in">+</button>
+              <button id="zoom-out" aria-label="Zoom out">−</button>
+              <button id="fit">Fit city</button>
+            </div>
+          </div>
+          <div id="city-map" aria-label="Interactive isometric city"></div>
+          <p class="legend" id="map-help">Keyboard: focus map, arrows pan, +/− zoom, 0 fits; Enter selects focused asset; Escape clears. Cyan: usable road · Red: blocked · Blue: physical flood · Amber: power unavailable</p>
+          <p class="muted">Historical values are marked STALE on disconnect. Traffic pulses illustrate usable capacity, not counted vehicles. Responder positions are illustrative along the actual edge, normalized from first observed remaining time.</p>
+        </section>
+        <aside>
+          <details id="asset-drawer" class="side-drawer" open>
+            <summary>Asset inspector</summary>
+            <label for="search">Find ID or district</label>
+            <input id="search" type="search" placeholder="R-LOW, Health…">
+            <label for="asset-list">City assets & PDF sensors</label>
+            <select id="asset-list" size="8" aria-label="City assets"></select>
+            <div id="selected" tabindex="0">Select an asset on the map or in the list.</div>
+          </details>
+        </aside>
+      </div>
+    </details>
+
+    <details id="sensor-drawer" class="secondary-workspace">
+      <summary>Private sensor & fault laboratory</summary>
+      <section id="sensor-workspace" hidden>
+        <h2>Sensor registry and fault controls</h2>
+        <p id="registry-summary" class="muted"></p>
+        <div class="control-grid">
+          <div>
+            <label for="sensor-select">Sensor registry</label>
+            <select id="sensor-select"></select>
+            <pre id="sensor-detail" tabindex="0" aria-label="Private sensor comparison"></pre>
+          </div>
+          <div>
+            <label for="fault-type">Injected fault</label>
+            <select id="fault-type"><option>FALSE_READING</option><option>STUCK</option><option>DRIFT</option><option>NOISE</option><option>DELAYED</option><option>DROPOUT</option><option>DEAD</option></select>
+            <label for="fault-params">Fault parameters JSON</label>
+            <textarea id="fault-params" rows="3">{"value":180}</textarea>
+            <div class="row">
+              <button id="inject-fault">Inject fault</button>
+              <button id="sensor-clear">Clear fault</button>
+              <button id="sensor-repair">Repair sensor</button>
+            </div>
+            <label for="fault-due">Scheduled fault tick</label>
+            <input id="fault-due" type="number" min="0" step="1" value="20">
+            <button id="schedule-fault">Schedule fault</button>
+          </div>
+          <div>
+            <label for="replacement-id">Replacement ID</label>
+            <input id="replacement-id" placeholder="DTN-WLV-02" maxlength="96">
+            <button id="sensor-replace">Replace sensor</button>
+            <p class="muted">STUCK needs a valid prior sample. DEAD needs repair/replacement; clear rejects it. DELAYED preserves sample time and may warm up with null. Values clamp to hard limits. Backup IDs are relationships, not automatic failover. Only the PDF sensor families are active.</p>
+          </div>
+        </div>
+        <p id="sensor-command-state" role="status" aria-live="polite"></p>
+      </section>
+    </details>
+
+    <section id="history-workspace" class="history-workspace">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">OBSERVABILITY</p>
+          <h2>History & event timeline</h2>
+        </div>
+      </div>
+      <p id="history-notice" role="status" class="muted"></p>
+      <label for="chart-series">Chart series</label>
+      <select id="chart-series"></select>
+      <svg id="history-chart" viewBox="0 0 900 160" role="img" aria-label="Sample history chart; numeric values and units below"></svg>
+      <p id="chart-caption">No samples.</p>
+      <details>
+        <summary>Chart samples · last 64 points</summary>
+        <table>
+          <thead><tr><th scope="col">Sample tick / s</th><th scope="col">Value</th><th scope="col">Unit</th><th scope="col">Delivery sequence</th></tr></thead>
+          <tbody id="chart-data"></tbody>
+        </table>
+      </details>
+      <details>
+        <summary>Retained timeline · latest first</summary>
+        <ol id="timeline"></ol>
+      </details>
+      <details id="pending-actions">
+        <summary>Local scheduled actions & outcomes</summary>
+        <div id="action-rows"></div>
+      </details>
+    </section>
+
+    <details class="diagnostics-drawer">
+      <summary>Technical diagnostics · current Twin frame JSON</summary>
+      <pre id="frame" tabindex="0" aria-label="Current frame JSON">No data.</pre>
+    </details>
+  </main>
+
+  <footer>
+    <span>LOCAL DIGITAL TWIN · SIMULATED CITY EFFECTS</span>
+    <span>No Brain policy or Guardian decisions · Five physical districts · 16 PDF sensors active · PRT equipment remains unbound · Port has a separate local water model</span>
+  </footer>
+  </details>
+  <script type="module" src="/city3d-loader.js"></script>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

@@ -1,34 +1,82 @@
-# Phase 1: each layer runs alone. `docker compose up brain` starts the City Brain with its
-# built-in Twin and Guardian simulators (R1): http://localhost:8300/city
-# The twin and guardian services stay commented out until the team decides to merge.
+# Jury/demo credentials let a fresh clone start with one command. These fixed
+# credentials are for this loopback-only Compose stack; use private secrets for deployment.
 services:
-  brain:
-    build: ./brain
-    ports: ["8300:8300"]
-    env_file: [.env.example]
+  twin:
+    build: ./twin
+    ports:
+      - "127.0.0.1:8000:8000"
     environment:
-      SIMULATOR: "true"
-      BRAIN_DATA_DIR: /app/data
-    volumes: [brain-data:/app/data]      # offline vault survives restarts
+      PORT: "8000"
+      TWIN_TOKEN_BRAIN: ${TWIN_TOKEN_BRAIN:-jury-local-twin-brain-7F3a9D2c6B8e1A4f}
+      TWIN_TOKEN_GUARDIAN: ${TWIN_TOKEN_GUARDIAN:-jury-local-twin-guardian-8C4e2A7f9D1b6G3h}
+      TWIN_TOKEN_OPERATOR: ${TWIN_TOKEN_OPERATOR:-jury-local-twin-operator-5H2c8E4a1G7d9B3f}
+      TWIN_TOKEN_EVALUATOR: ${TWIN_TOKEN_EVALUATOR:-jury-local-twin-evaluator-6J3d9F5b2H8e1C4g}
+      TWIN_DASHBOARD_SECRET: ${TWIN_DASHBOARD_SECRET:-jury-city-dashboard-2026}
+      TWIN_ALLOWED_HOSTS: twin,localhost,127.0.0.1
+    volumes:
+      - twin-logs:/app/logs
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health/ready', timeout=3).read()"]
+      interval: 10s
+      timeout: 5s
+      start_period: 30s
+      retries: 5
     restart: unless-stopped
-
-  # twin:                                # merge day: the Twin team's image
 
   guardian:
     build: ./guardian
-    ports: ["8002:8002"]
+    ports:
+      - "127.0.0.1:8002:8002"
     environment:
-      GUARDIAN_TOKEN: ${GUARDIAN_TOKEN:-demo-guardian-token-change-me-0123456789}
-    volumes: [guardian-logs:/app/logs]
+      GUARDIAN_PROFILE: twin
+      GUARDIAN_TOKEN: ${GUARDIAN_TOKEN:-jury-local-guardian-admin-4K8m2P6r9T3w7X1z}
+      GUARDIAN_TOKEN_BRAIN: ${GUARDIAN_TOKEN_BRAIN:-jury-local-guardian-brain-read-5L9n3Q7s1U4x8Y2a}
+      GUARDIAN_TOKEN_TIMELINE: ${GUARDIAN_TOKEN_TIMELINE:-jury-local-guardian-timeline-write-6M1p4R8t2V5y9Z3b}
+      TWIN_TOKEN_GUARDIAN: ${TWIN_TOKEN_GUARDIAN:-jury-local-twin-guardian-8C4e2A7f9D1b6G3h}
+      TWIN_URL: http://twin:8000
+      GUARDIAN_STATE_PATH: /app/state/guardian-state.json
+    volumes:
+      - guardian-logs:/app/logs
+      - guardian-state:/app/state
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8002/health', timeout=3).read()"]
+      interval: 10s
+      timeout: 5s
+      start_period: 15s
+      retries: 5
+    depends_on:
+      twin:
+        condition: service_healthy
     restart: unless-stopped
-  #   build: ./twin
-  #   ports: ["8765:8765", "8000:8000"]
-  # guardian:                            # merge day: the Guardian team's image
-  #   build: ./guardian
-  #   ports: ["8002:8002"]
-  #   environment: {GUARDIAN_PROFILE: twin}
-  # ...then set on brain: SIMULATOR=false, TWIN_URL=http://twin:8000, GUARDIAN_URL=http://guardian:8002
+
+  brain:
+    build: ./brain
+    ports:
+      - "127.0.0.1:8300:8300"
+    environment:
+      PORT: "8300"
+      SIMULATOR: "false"
+      MOCK_MODE: "false"
+      TWIN_TRANSPORT: rest
+      TWIN_URL: http://twin:8000
+      TWIN_TOKEN_BRAIN: ${TWIN_TOKEN_BRAIN:-jury-local-twin-brain-7F3a9D2c6B8e1A4f}
+      TWIN_POLL_INTERVAL_S: "1.0"
+      GUARDIAN_URL: http://guardian:8002
+      GUARDIAN_MODE: lookup
+      GUARDIAN_TOKEN_BRAIN: ${GUARDIAN_TOKEN_BRAIN:-jury-local-guardian-brain-read-5L9n3Q7s1U4x8Y2a}
+      GUARDIAN_TIMELINE_TOKEN: ${GUARDIAN_TOKEN_TIMELINE:-jury-local-guardian-timeline-write-6M1p4R8t2V5y9Z3b}
+      BRAIN_DATA_DIR: /app/data
+    volumes:
+      - brain-data:/app/data
+    depends_on:
+      twin:
+        condition: service_healthy
+      guardian:
+        condition: service_healthy
+    restart: unless-stopped
 
 volumes:
   brain-data:
   guardian-logs:
+  guardian-state:
+  twin-logs:

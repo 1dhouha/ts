@@ -141,6 +141,35 @@ class TwinFacadeTests(unittest.TestCase):
         self.assertTrue(cmd_ok_resp["ok"])
         self.assertEqual(cmd_ok_resp["data"]["status"], "APPLIED")
 
+    def test_guardian_sensor_quarantine_preserves_observation_for_partner_review(self):
+        """Quarantine blocks effects without hiding telemetry needed for recovery."""
+        sensor_id = "PRT-WLV-01"
+        self.city.sensor_fault(sensor_id, "FALSE_READING", {"value": 180.0})
+        for _ in range(5):
+            self.city.step()
+
+        isolated = self.facade.isolate_device(
+            token=self.guardian_token,
+            device_id=sensor_id,
+            reason="spoofed scenario observation",
+        )
+        self.assertTrue(isolated["ok"])
+
+        response = self.facade.get_sensor_readings(
+            token=self.brain_token, sensor_id=sensor_id
+        )
+        self.assertTrue(response["ok"], response)
+        reading = response["data"]["readings"][0]
+        self.assertEqual(reading["reported_value"], 180.0)
+        self.assertEqual(reading["status"], "OK")
+        self.assertTrue(reading["available"])
+        self.assertNotIn("actual_value", reading)
+
+        restored = self.facade.restore_device(
+            token=self.guardian_token, device_id=sensor_id
+        )
+        self.assertTrue(restored["ok"])
+
     # --------------------------------------------------------------------------
     # 4. Tests for Permissions Separation
     # --------------------------------------------------------------------------
@@ -190,10 +219,14 @@ class TwinFacadeTests(unittest.TestCase):
         self.assertIsNotNone(translate("PRT-PMP-02", "set_speed", {"speed_pct": 30, "extra": 1})[1])
         self.assertIsNotNone(translate("PRT-PMP-02", "explode", {})[1])
 
-        valve, err = translate("IND-VLV-01", "set_opening", {"open_pct": 25})
+        valve, err = translate("V-12", "set_opening", {"open_pct": 25})
         self.assertIsNone(err)
         self.assertEqual(valve["target_id"], "V-12")
         self.assertEqual(valve["opening_fraction"], 0.25)
+        self.assertEqual(
+            translate("IND-VLV-01", "set_opening", {"open_pct": 25})[1],
+            "UNSUPPORTED_DEVICE",
+        )
         self.assertIsNotNone(translate("IND-VLV-01", "set_opening", {"open_pct": 101})[1])
         self.assertIsNotNone(translate("IND-VLV-01", "set_opening", {"open_pct": "wide"})[1])
         self.assertIsNotNone(translate("IND-VLV-01", "open", {})[1])

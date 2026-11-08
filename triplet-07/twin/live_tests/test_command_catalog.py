@@ -22,10 +22,18 @@ class CommandTranslationTests(unittest.TestCase):
         self.assertEqual(caught.exception.code, code)
 
     def test_pump_and_valve_commands_validate_values_and_shapes(self):
-        self.assertEqual(build_command_effect('A-PUMP-01', 'start', {'speed_pct': 35}), {
-            'tag': 'pump_speed', 'target_id': 'P-03', 'speed_fraction': .35})
-        self.assertEqual(build_command_effect('PRT-PMP-01', 'STOP', {}), {
-            'tag': 'pump_speed', 'target_id': 'P-03', 'speed_fraction': 0.0})
+        for device, command, params, expected in (
+            ('A-PUMP-01', 'set_speed', {'speed_pct': 0}, 0.0),
+            ('A-PUMP-01', 'set_speed', {'speed_pct': 50}, 0.5),
+            ('PRT-PMP-01', 'set_speed', {'speed_pct': 80}, 0.8),
+            ('PRT-PMP-01', 'start', {'speed_pct': 100}, 1.0),
+            ('PRT-PMP-01', 'STOP', {}, 0.0),
+        ):
+            with self.subTest(device=device, command=command, params=params):
+                effect = build_command_effect(device, command, params)
+                self.assertEqual(effect, {
+                    'tag': 'pump_speed', 'target_id': 'P-03',
+                    'speed_fraction': expected})
         self.assertEqual(build_command_effect('A-VALVE-01', 'set_opening', {'open_pct': 25}), {
             'tag': 'valve_position', 'target_id': 'V-12', 'opening_fraction': .25})
         invalid_cases = (
@@ -97,6 +105,8 @@ class CommandTranslationTests(unittest.TestCase):
         self.assertEqual((effect['opening_fraction'], actual), (.3, .3))
         effect, actual = build_legacy_command_effect('A-PUMP-01', True, False)
         self.assertEqual((effect['speed_fraction'], actual), (0.0, False))
+        effect, actual = build_legacy_command_effect('A-PUMP-01', False, True)
+        self.assertEqual((effect['speed_fraction'], actual), (1.0, True))
         self.assertEqual(build_legacy_command_effect('A-SIG-02', 'normal', 'stop')[0]['mode'], 'stop')
         self.assertTrue(build_legacy_command_effect('A-SW-URBAN', False, True)[0]['closed'])
         for args in (
@@ -135,6 +145,27 @@ class DeviceCatalogTests(unittest.TestCase):
         self.assertFalse(catalog.supported_sensor('unknown'))
         self.assertIsNone(catalog.sensor_row('unknown'))
         self.assertIs(catalog.actuator('A-PUMP-01'), catalog.actuator('P-03'))
+        self.assertEqual(catalog.actuator('PRT-PMP-01').effect_tag, 'pump_speed')
+        self.assertEqual(catalog.actuator('PRT-PMP-02').effect_tag, 'pump_speed')
+        self.assertEqual(catalog.actuator('A-PUMP-01').effect_tag, 'pump_speed')
+        self.assertEqual(
+            catalog.actuator('DTN-TLT-01').sensor_ids, ('DTN-TRF-01',)
+        )
+        self.assertEqual(
+            catalog.actuator('DTN-TLT-02').sensor_ids,
+            ('DTN-TRF-02', 'RES-TRF-01'),
+        )
+        self.assertEqual(
+            catalog.actuator('F-URBAN').sensor_ids,
+            ('PRT-WLV-01', 'PRT-WLV-02', 'PRT-FLW-01', 'PRT-PRS-01',
+             'RES-WLV-01', 'RES-PRS-01', 'RES-FLW-01'),
+        )
+        self.assertEqual(
+            catalog.sensor('RES-TRF-01').linked_device_ids, ('DTN-TLT-02',)
+        )
+        self.assertFalse(catalog.actuator('IND-VLV-01').supported)
+        self.assertTrue(catalog.actuator('DTN-VLV-01').supported)
+        self.assertFalse(catalog.actuator('RES-VLV-01').supported)
         self.assertIsNone(catalog.actuator_row('unknown'))
         self.assertFalse(catalog.actuator('RES-TLT-01').supported)
         self.assert_error('SENSOR_NOT_FOUND', lambda: catalog.sensor('unknown'))
@@ -158,6 +189,10 @@ class DeviceCatalogTests(unittest.TestCase):
         self.assert_error('UNSUPPORTED_COMMAND', lambda: catalog.command_effect('A-SIG-01', 'go', 'stop'))
         self.assert_error('INVALID_ARGUMENT', lambda: catalog.command_effect('A-SW-ESS', True, 1))
         self.assert_error('UNSUPPORTED_COMMAND', lambda: catalog.command_effect('AMB-01', True, False))
+        self.assert_error(
+            'UNSUPPORTED_DEVICE',
+            lambda: build_command_effect('IND-VLV-01', 'set_opening', {'open_pct': 25}),
+        )
 
     def test_bad_sensor_registry_and_duplicate_actuator_alias_are_rejected(self):
         duplicate_sensor = json.loads(json.dumps(self.payload))

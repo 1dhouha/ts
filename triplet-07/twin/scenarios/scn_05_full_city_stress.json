@@ -1,14 +1,14 @@
 {
   "ID": "SCN-05",
-  "Name": "Concurrent real emergency and spoofing attack",
+  "Name": "Seeded traffic and local air-quality fixtures",
   "Layers involved": ["Twin", "Guardian", "City Brain"],
-  "Description": "A genuine Downtown traffic accident requires emergency routing while a scenario-local Residential air-quality feed is spoofed in the same simulation tick.",
+  "Description": "At tick 5, the scenario seeds a traffic sensor value and emits a scenario-local air-quality fixture. It does not create a CityCore road obstruction or provide a registered air-quality sensor reading.",
   "Trigger": "python scenarios/run.py --scenario scn-05",
-  "Expected: Twin": "At tick 5, DTN-TRF-01 reports authentic congestion while the isolated scenario-local RES-AIR-TEST-01 feed reports spoofed air quality. RES-AIR-TEST-01 is a test fixture, not a seeded hardware device.",
-  "Expected: Guardian": "Validates the authentic traffic anomaly and marks the spoofed air-quality fixture UNTRUSTED, isolating that fixture only.",
-  "Expected: Brain": "Dispatches a priority corridor signal for Downtown and suppresses a response to the quarantined air-quality alarm.",
-  "How to verify": "Compare both same-tick correlation chains and their independent outcomes in logs/scn-05-*.log: trusted traffic to signal command; spoofed air feed to quarantine and no air-response dispatch.",
-  "duration_ticks": 2,
+  "Expected: Twin": "At tick 5, DTN-TRF-01 receives the scenario-seeded value 105.0. RES-AIR-TEST-01 is emitted only as a local fixture and is not a registered sensor. Neither value establishes a physical accident or air-quality measurement.",
+  "Expected: Guardian": "No external Guardian service is connected or invoked by these fixtures.",
+  "Expected: Brain": "No external Brain service is connected or invoked. A separate local Brain-role traffic test may command a signal and verify subsequent CityCore departure feedback.",
+  "How to verify": "Run python scenarios/run.py --scenario scn-05 and inspect fixture labeling. Verify physical traffic causality separately with the deterministic demand/road/signal tests; do not treat the seeded 105.0 value as CityCore congestion.",
+  "duration_ticks": 40,
   "triggers": [
     {
       "sim_tick": 5,

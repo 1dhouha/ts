@@ -1,6 +1,6 @@
 # Integration · how the three layers connect
 
-> **Status: not merged.** Each layer runs alone. This page is the plan for merge day. Nothing below is active until the team decides.
+> **Status: T5 spoof rejection and the SCN-05 trusted traffic dispatch were verified in isolated three-service Compose runs.** SCN-03/04/06 did not complete their described autonomous cross-layer workflows; details are in `twin/docs/KNOWN_LIMITATIONS.md`.
 
 ## Data flow
 | Step | From → To | Protocol | Message |
@@ -17,7 +17,7 @@ Shared geography: the Brain uses the Twin's catalog of 16 sensors and the Twin's
 | Service | Port |
 |---|---|
 | City Brain (and its simulators at `/sim/*`) | 8300 |
-| Twin dashboard / MCP | 8765 / 8000 |
+| Twin dashboard and REST/MCP API | 8000 (`/` dashboard, `/api/v1/*` REST, `/mcp/` MCP) |
 | Guardian | 8002 |
 
 ## Switching the Brain to the real partners (config only)
@@ -31,9 +31,17 @@ GUARDIAN_TOKEN_BRAIN=<Guardian read token>  GUARDIAN_TIMELINE_TOKEN=<Guardian ti
 ```
 Details and the Twin prerequisite (its sensor-physics fix) are in `brain/INTEGRATION.md`.
 
+The local jury Compose stack starts with demo credentials and binds its ports to loopback.
+For the authenticated Twin dashboard, use passphrase `jury-city-dashboard-2026`. For any
+deployment beyond this local demo, override the credentials with fresh values in a private,
+uncommitted `.env` file. The Twin serves its dashboard on the same LiveCity owner as REST
+and MCP; its scenario control starts scenarios in that runtime.
+
 ## Merge-day checklist
 1. `GET /api/contract` on the Brain shows the partner URLs and `mock_mode: false`.
 2. The Brain header shows Twin and Guardian connected, with the Twin's run id.
 3. Rerun T5 and SCN-02 … SCN-06 from the Twin side and compare each one with "Expected: Brain" in `TESTBOOK.md`.
 4. Wrong-token drill: a wrong `TWIN_TOKEN_BRAIN` must give `NOT_AUTHORIZED`.
 5. Signature drill: the Twin team decides whether to verify `X-CityBrain-*` signatures (the Brain already sends them).
+
+T5 and the SCN-05 traffic command have been exercised end to end in isolated Compose stacks. The SCN-05 air fixture is not a registered sensor. Other scenarios still need separate checks against `TESTBOOK.md`.

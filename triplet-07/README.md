@@ -4,7 +4,7 @@ A city made of three layers, built by three teams:
 
 | Layer | Folder | Role | Status in this repo |
 |---|---|---|---|
-| **Twin** | `twin/` | simulates the city: 16 sensors, actuators, roads, PM2.5 | placeholder (the Twin team's repo `CS-TSYP-TWIN-LAYER`) |
+| **Twin** | twin/ | local city simulation and interface boundary | source copied from CS-TSYP-TWIN-LAYER; partner integration not verified |
 | **Guardian** | `guardian/` | judges every reading TRUSTED or UNTRUSTED and quarantines bad devices | placeholder (the Guardian team's repo `guardian_layer`) |
 | **City Brain** | `brain/` | decides what to do and commands the Twin's actuators | **complete; runs alone** |
 
@@ -12,7 +12,7 @@ A city made of three layers, built by three teams:
  Twin ──readings──▶ Guardian ──verdict──▶ City Brain ──signed command──▶ Twin actuators
    └──────────────────── readings (polled) ──────▶┘
 ```
-**Invariant:** no actuator command leaves the Brain without a TRUSTED Guardian verdict, apart from operator-confirmed emergency calls.
+**Intended invariant, not verified end to end:** Brain actuator requests should follow Guardian policy before reaching Twin controls.
 
 ## Quick start: City Brain alone (R1)
 ```bash
@@ -20,6 +20,19 @@ cd brain && pip install -r requirements.txt && python run_local.py    # http://1
 python scenarios/run.py --all                                           # from the repo root: 13 scenarios, logs in logs/
 ```
 On Windows, double-click `brain/SETUP_AND_RUN.cmd`, then `RUN_ALL_SCENARIOS.cmd`. With Docker: `docker compose up brain`.
+
+## Jury demo: full project with Docker
+Install and start Docker Desktop, clone this repository, then run this from `triplet-07/`:
+
+```powershell
+docker compose up --build
+```
+
+Compose builds and starts Twin, Guardian, and City Brain without a separate `.env` setup.
+Open the Twin dashboard at `http://localhost:8000` (passphrase: `jury-city-dashboard-2026`),
+City Brain at `http://localhost:8300`, and Guardian at `http://localhost:8002`.
+The built-in demo credentials are for this local loopback-only stack; deployments should
+override them with private credentials.
 
 ## The three Phase 1 rules
 | Rule | Where |

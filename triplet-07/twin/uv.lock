@@ -356,6 +356,7 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "fastapi" },
+    { name = "httpx" },
     { name = "mcp" },
     { name = "uvicorn" },
 ]
@@ -363,6 +364,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "fastapi", specifier = ">=0.116,<1" },
+    { name = "httpx", specifier = ">=0.27,<1" },
     { name = "mcp", specifier = ">=1.16,<2" },
     { name = "uvicorn", specifier = ">=0.35,<1" },
 ]

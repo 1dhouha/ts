@@ -144,7 +144,7 @@ class DurableIdempotencyTests(unittest.TestCase):
 
     def test_interrupted_request_is_not_replayed_after_restart(self):
         city = self.city()
-        city._effect = lambda effect, *, persist=True: (_ for _ in ()).throw(
+        city._effect = lambda effect, *, persist=True, correlation_id=None: (_ for _ in ()).throw(
             RuntimeError("simulated interruption after durable intent")
         )
         with self.assertRaisesRegex(RuntimeError, "simulated interruption"):

@@ -12,6 +12,7 @@ from uuid import uuid4
 from fastapi import APIRouter, Depends, FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+import httpx
 from starlette.middleware import Middleware
 from starlette.middleware.trustedhost import TrustedHostMiddleware
 from starlette.responses import JSONResponse, Response
@@ -19,6 +20,7 @@ from starlette.routing import Mount
 from starlette.types import ASGIApp, Receive, Scope, Send
 
 from city_live.runtime import LiveCity
+from city_dashboard.server import ASSETS, DashboardBridge
 from twin_interface.auth import (
     CREDENTIAL_FIELD_NAMES,
     DEFAULT_TOKENS,
@@ -222,6 +224,40 @@ def _build_rest_router() -> APIRouter:
             status = 403
         return JSONResponse(response, status_code=status)
 
+    route_docs = {
+        "/api/v1/sensors": {
+            "parameters": [
+                {"name": name, "in": "query", "required": False,
+                 "schema": {"type": "string"}}
+                for name in ("zone_id", "sensor_id", "sensor_type")
+            ],
+        },
+        "/api/v1/events": {
+            "parameters": [{
+                "name": "seq", "in": "query", "required": False,
+                "schema": {"type": "integer", "minimum": 0},
+            }],
+        },
+        "/api/v1/commands": {
+            "requestBody": {
+                "required": True,
+                "content": {"application/json": {"schema": {
+                    "type": "object",
+                    "required": ["device_id", "command", "request_id"],
+                    "properties": {
+                        "device_id": {"type": "string"},
+                        "command": {"type": "string"},
+                        "request_id": {"type": "string"},
+                        "params": {"type": "object", "additionalProperties": True},
+                        "context": {"type": "object", "additionalProperties": True},
+                    },
+                }}},
+            },
+            "responses": {"200": {"content": {"application/json": {"schema": {
+                "type": "object", "properties": {"ok": {"type": "boolean"}},
+            }}}}},
+        },
+    }
     for path, methods, name in (
         ("/api/v1/sensors", ["GET"], "get_sensor_readings"),
         ("/api/v1/state", ["GET"], "get_city_state"),
@@ -237,6 +273,7 @@ def _build_rest_router() -> APIRouter:
             methods=methods,
             name=name,
             operation_id=name,
+            openapi_extra=route_docs.get(path),
         )
     return router
 
@@ -263,10 +300,16 @@ def create_app(
             expose_headers=["MCP-Session-Id", "MCP-Protocol-Version"],
         ))
 
+    dashboard_paths = set(ASSETS) | {
+        "/api/report/frame", "/api/operator/frame", "/api/operator/command",
+        "/api/operator/scenario", "/api/session", "/api/logout",
+    }
+
     @asynccontextmanager
     async def lifespan(app: FastAPI):
         city = None
         logger = None
+        dashboard = None
         mount: Mount | None = None
         try:
             run_id, port, allowed_hosts, allowed_origins, log_dir = _load_runtime_settings()
@@ -278,6 +321,10 @@ def create_app(
             logger = ScenarioLogger("twin", run_id, log_dir=log_dir)
             event_store = EventStore()
             facade = facade_factory(city, event_store=event_store, scenario_logger=logger)
+            dashboard_secret = os.environ.get("TWIN_DASHBOARD_SECRET", "")
+            if dashboard_secret:
+                dashboard = DashboardBridge(city, dashboard_secret, port=0)
+                dashboard.start()
             transport_security = TransportSecuritySettings(
                 enable_dns_rebinding_protection=True,
                 allowed_hosts=[
@@ -301,6 +348,7 @@ def create_app(
             app.state.scenario_logger = logger
             app.state.mcp_server = mcp
             app.state.mcp_asgi = mcp_asgi
+            app.state.dashboard_bridge = dashboard
             mount = Mount(MCP_MOUNT_PATH, app=mcp_asgi, name="mcp-streamable-http")
             app.router.routes.append(mount)
             city.start()
@@ -308,6 +356,8 @@ def create_app(
                 yield
         finally:
             try:
+                if dashboard is not None:
+                    dashboard.close(close_owner=False)
                 if city is not None:
                     city.close()
             finally:
@@ -319,7 +369,7 @@ def create_app(
                         app.router.routes.remove(mount)
                     for name in (
                         "city", "facade", "event_store", "scenario_logger",
-                        "mcp_server", "mcp_asgi",
+                        "mcp_server", "mcp_asgi", "dashboard_bridge",
                     ):
                         if hasattr(app.state, name):
                             delattr(app.state, name)
@@ -331,6 +381,61 @@ def create_app(
         middleware=middleware,
     )
     app.include_router(_build_rest_router())
+
+    @app.middleware("http")
+    async def dashboard_proxy(request: Request, call_next):
+        bridge = getattr(request.app.state, "dashboard_bridge", None)
+        path = request.url.path
+        if bridge is None or path not in dashboard_paths:
+            return await call_next(request)
+        if request.url.query:
+            return JSONResponse({"ok": False, "error": {"code": "INVALID_ARGUMENT"}}, status_code=400)
+
+        # The dashboard bridge remains loopback-only. This proxy exposes only
+        # its fixed assets and operator endpoints on the Twin's validated host.
+        host = request.headers.get("host", "")
+        host_name = host.rsplit(":", 1)[0].strip("[]").casefold()
+        if host_name not in {value.casefold() for value in configured_hosts}:
+            return await call_next(request)
+        origin = request.headers.get("origin")
+        if request.method == "POST":
+            expected_origin = f"{request.url.scheme}://{host}"
+            if not origin or origin != expected_origin or (
+                configured_origins and origin not in configured_origins
+            ):
+                return JSONResponse({"ok": False, "error": {"code": "ORIGIN_REJECTED"}}, status_code=403)
+        if request.method not in {"GET", "POST"}:
+            return JSONResponse({"ok": False, "error": {"code": "METHOD_NOT_ALLOWED"}}, status_code=405)
+
+        headers = {
+            "host": f"127.0.0.1:{bridge.port}",
+            "sec-fetch-site": "same-origin",
+            "x-forwarded-proto": request.url.scheme,
+        }
+        if origin:
+            headers["origin"] = bridge.url
+        if cookie := request.headers.get("cookie"):
+            headers["cookie"] = cookie
+        if content_type := request.headers.get("content-type"):
+            headers["content-type"] = content_type
+        body = await request.body() if request.method == "POST" else None
+        try:
+            async with httpx.AsyncClient(timeout=4.0, trust_env=False) as client:
+                upstream = await client.request(
+                    request.method, f"{bridge.url}{path}", headers=headers, content=body
+                )
+        except httpx.HTTPError:
+            return JSONResponse({"ok": False, "error": {"code": "DASHBOARD_UNAVAILABLE"}}, status_code=503)
+        response_headers = {
+            key: value for key, value in upstream.headers.items()
+            if key.lower() in {
+                "content-type", "cache-control", "referrer-policy",
+                "x-content-type-options", "content-security-policy",
+            }
+        }
+        if set_cookie := upstream.headers.get("set-cookie"):
+            response_headers["set-cookie"] = set_cookie
+        return Response(upstream.content, status_code=upstream.status_code, headers=response_headers)
 
     @app.get("/health/live", include_in_schema=False)
     async def liveness():

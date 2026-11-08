@@ -34,6 +34,7 @@ class Scenario:
     duration_ticks: int
     triggers: tuple
     fixture: dict
+    description: str = ''
 
 
 def _aliases(scenario_id, path):
@@ -65,10 +66,24 @@ def load_scenarios():
         )
         scenario = Scenario(data["ID"], data["Name"],
                             int(data.get("duration_ticks", 1)), triggers,
-                            dict(data.get("fixture", {})))
+                            dict(data.get("fixture", {})), data.get("Description", ""))
         for alias in _aliases(scenario.scenario_id, path):
             result[alias] = scenario
     return result
+
+
+def scenario_catalog():
+    unique = {item.scenario_id: item for item in load_scenarios().values()}
+    return [
+        {
+            'scenario_id': item.scenario_id,
+            'name': item.name,
+            'description': item.description,
+            'duration_ticks': item.duration_ticks,
+            'trigger_count': len(item.triggers),
+        }
+        for item in sorted(unique.values(), key=lambda row: row.scenario_id)
+    ]
 
 
 def scenario(name):
@@ -194,8 +209,9 @@ class ScenarioRunner:
         s = self.scenario
         sensors = self.city._sensors
         if s.scenario_id == "T5":
-            sensors.set_scenario_input("T5", "PRT-WLV-01", 40.0)
-            sensors.force_sample("PRT-WLV-01", self.start_tick + 1)
+            sensor_id = s.fixture["sensor_id"]
+            sensors.set_scenario_input("T5", sensor_id, s.fixture["ground_truth_value"])
+            sensors.force_sample(sensor_id, self.start_tick + 1)
         elif s.scenario_id == "SCN-03":
             sensors.set_scenario_input(
                 s.scenario_id, "DTN-TRF-01", s.fixture["traffic_before_fault"]
@@ -455,11 +471,19 @@ class ScenarioRunner:
     def command_started(self, device_id, command, request_id, role, context):
         scenario = self.scenario
         supplied = context if type(context) is dict else {}
-        if 'scenario_id' in supplied or 'correlation_id' in supplied:
+        has_scenario_context = (
+            'scenario_id' in supplied or 'scenario_correlation_id' in supplied
+        )
+        if has_scenario_context:
+            requested_scenario_id = supplied.get('scenario_id')
+            requested_scenario_correlation = supplied.get(
+                'scenario_correlation_id',
+                supplied.get('correlation_id') if 'scenario_id' in supplied else None,
+            )
             if (
                 scenario is None
-                or supplied.get('scenario_id') != scenario.scenario_id
-                or supplied.get('correlation_id') != self.correlation_id
+                or requested_scenario_id not in (None, scenario.scenario_id)
+                or requested_scenario_correlation not in (None, self.correlation_id)
             ):
                 raise LiveError('SCENARIO_CONTEXT_STALE')
         if scenario is None:
@@ -486,10 +510,7 @@ class ScenarioRunner:
                 continue
         if device_id not in related_devices:
             return None
-        scenario_id = supplied.get('scenario_id', scenario.scenario_id)
-        correlation_id = supplied.get('correlation_id', self.correlation_id)
-        if scenario_id != scenario.scenario_id or correlation_id != self.correlation_id:
-            return None
+        correlation_id = self.correlation_id
         if role != 'brain':
             return None
         self.partner_call_guard('brain', device_id, command, request_id)

@@ -27,6 +27,7 @@ class Actuator:
     supported: bool
     physical_id: str | None
     aliases: tuple
+    sensor_ids: tuple
     backup_ids: tuple
     commands: tuple
 
@@ -50,6 +51,7 @@ class DeviceCatalog:
                 row["device_id"], row["zone_id"], row["core_zone_id"], row["type"],
                 row["family"], row["effect_tag"], row["target_id"], bool(row["supported"]),
                 row["physical_id"], tuple(row.get("aliases", ())),
+                tuple(row.get("sensor_ids", ())),
                 tuple(row.get("backup_ids", ())), tuple(row.get("commands", ())),
             )
             for row in payload["actuators"]
@@ -93,8 +95,8 @@ class DeviceCatalog:
         if row.family == "pump":
             if type(requested) is not bool or type(actual) is not bool:
                 raise LiveError("INVALID_ARGUMENT")
-            return ({"tag": "pump_enable", "target_id": row.target_id,
-                     "enabled": actual}, actual)
+            return ({"tag": "pump_speed", "target_id": row.target_id,
+                     "speed_fraction": 1.0 if actual else 0.0}, actual)
         if row.family == "valve":
             numeric(requested, 0, 1)
             numeric(actual, 0, 1)
