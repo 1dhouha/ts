@@ -1,0 +1,13 @@
+{
+  "contract_version": "pa-internal-0.2-draft",
+  "model_version": "pa-model-0.2-draft",
+  "visibility": "PRIVATE_A_B_EVALUATOR_ONLY",
+  "cases": [
+    {"setup": {}, "expected_low_queue": 9.7, "expected_access": true},
+    {"setup": {"surface": 200}, "expected_low_queue": 10.2, "expected_access": true},
+    {"setup": {"surface": 1000}, "expected_low_queue": 10.2, "expected_access": false},
+    {"setup": {"surface": 200, "obstructions": {"R-LINK": 1}}, "expected_low_queue": 10.2, "expected_access": false},
+    {"setup": {"modes": {"J-D1": "priority"}}, "expected_low_queue": 9.45, "expected_access": true},
+    {"setup": {"urban": false}, "expected_low_queue": 10.2, "expected_access": false}
+  ]
+}

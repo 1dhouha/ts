@@ -1,0 +1,40 @@
+{
+  "ID": "SCN-06",
+  "Name": "Inter-Layer Communication Failure and Recovery",
+  "Layers involved": ["Twin", "Guardian", "City Brain"],
+  "Description": "Controlled, deterministic loss and restoration of the Brain-facing and Guardian-facing inbound Twin interfaces. This scenario injects local availability state; it does not disconnect or probe external partner services.",
+  "Trigger": "python scenarios/run.py --scenario scn-06",
+  "Expected: Twin": "Reports the controlled baseline and channel transitions, rejects Brain commands and Guardian isolate/restore calls while their respective channel is unavailable, blocks operator actuator commands and quarantine restoration while Guardian is unavailable, and applies no actuator effect during the outage. The current architecture has no durable pending-command queue; delayed requests are evaluated afresh after recovery.",
+  "Expected: Guardian": "No Guardian decision is fabricated. The local Guardian role boundary is blocked during the injected outage; quarantine remains unchanged.",
+  "Expected: Brain": "No Brain decision is fabricated. The local Brain role boundary is blocked during the injected outage; commands submitted while unavailable are rejected rather than queued.",
+  "How to verify": "Follow PARTNER_CHANNEL_AVAILABLE, PARTNER_CHANNEL_UNAVAILABLE, PARTNER_CHANNEL_RECOVERED, PARTNER_REQUEST_BLOCKED, and the post-recovery command events under one correlation_id in the SCN-06 event history and evidence report.",
+  "duration_ticks": 1,
+  "triggers": [
+    {
+      "sim_tick": 1,
+      "action": "PARTNER_UNAVAILABLE",
+      "target_device_id": "brain"
+    },
+    {
+      "sim_tick": 2,
+      "action": "PARTNER_UNAVAILABLE",
+      "target_device_id": "guardian"
+    },
+    {
+      "sim_tick": 3,
+      "action": "PARTNER_RECOVERED",
+      "target_device_id": "brain"
+    },
+    {
+      "sim_tick": 4,
+      "action": "PARTNER_RECOVERED",
+      "target_device_id": "guardian"
+    }
+  ],
+  "fixture": {
+    "communication_failure_mode": "controlled_scenario_injection",
+    "external_connection_probed": false,
+    "actuator_id": "PRT-PMP-01",
+    "reconciliation": "no_pending_command_queue"
+  }
+}

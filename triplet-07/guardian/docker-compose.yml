@@ -1,0 +1,30 @@
+# One command starts Guardian with its live timeline:   docker compose up --build
+# Then open http://localhost:8002/timeline?token=<your token>
+#
+# Authentication fails closed: Guardian refuses to start unless GUARDIAN_TOKEN is set
+# (copy .env.example to .env and edit it) or you explicitly choose GUARDIAN_DEMO=1 (no auth, local demo only).
+#
+# Against the real Twin: set GUARDIAN_PROFILE=twin, TWIN_TOKEN_GUARDIAN and TWIN_URL in .env (see INTEGRATION_TWIN.md).
+services:
+  guardian:
+    build: .
+    ports: ["8002:8002"]
+    environment:
+      GUARDIAN_TOKEN: ${GUARDIAN_TOKEN:-}
+      GUARDIAN_TOKEN_BRAIN: ${GUARDIAN_TOKEN_BRAIN:-}
+      GUARDIAN_TOKEN_TWIN: ${GUARDIAN_TOKEN_TWIN:-}
+      GUARDIAN_TOKEN_TIMELINE: ${GUARDIAN_TOKEN_TIMELINE:-}
+      GUARDIAN_DEMO: ${GUARDIAN_DEMO:-}
+      GUARDIAN_PROFILE: ${GUARDIAN_PROFILE:-}
+      TWIN_TOKEN_GUARDIAN: ${TWIN_TOKEN_GUARDIAN:-}
+      TWIN_URL: ${TWIN_URL:-}
+      GUARDIAN_CONTAINMENT_TOKEN: ${GUARDIAN_CONTAINMENT_TOKEN:-}
+    volumes:
+      - ./logs:/app/logs
+      - ./config.yaml:/app/config.yaml:ro
+      - ./config.twin.yaml:/app/config.twin.yaml:ro
+    read_only: true            # the container cannot change its own code
+    tmpfs: ["/tmp"]
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges:true"]
+    restart: unless-stopped

@@ -1,0 +1,19 @@
+services:
+  twin:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: twin-layer:local
+    restart: unless-stopped
+    env_file:
+      - ${TWIN_ENV_FILE:?Set TWIN_ENV_FILE to the path of your private environment file}
+    environment:
+      PORT: "8000"
+      TWIN_LOG_DIR: /app/logs
+    ports:
+      - "${TWIN_PUBLISH_PORT:-8000}:8000"
+    volumes:
+      - twin-layer-logs:/app/logs
+
+volumes:
+  twin-layer-logs:

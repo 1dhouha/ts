@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: cs-tsyp-twin-layer
+    runtime: docker
+    region: frankfurt
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    autoDeployTrigger: "off"
+    healthCheckPath: /health/ready
+    envVars:
+      - key: PORT
+        value: "10000"
+      - key: TWIN_LOG_DIR
+        value: /app/logs
+      - key: TWIN_ALLOWED_HOSTS
+        fromService:
+          type: web
+          name: cs-tsyp-twin-layer
+          envVarKey: RENDER_EXTERNAL_HOSTNAME
+      - key: TWIN_TOKEN_BRAIN
+        generateValue: true
+      - key: TWIN_TOKEN_GUARDIAN
+        generateValue: true
+      - key: TWIN_TOKEN_OPERATOR
+        generateValue: true
+      - key: TWIN_TOKEN_EVALUATOR
+        generateValue: true
+      - key: TWIN_DASHBOARD_SECRET
+        generateValue: true
+      - key: TWIN_DASHBOARD_COOKIE_SECURE
+        value: "true"

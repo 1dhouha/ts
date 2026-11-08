@@ -1,0 +1,48 @@
+{
+  "profile_version": "pa-read-phase02-0.1-provisional",
+  "agreement_status": "supervisor-approved provisional subset; B/C unverified",
+  "capabilities": [
+    "read_topology",
+    "read_metadata",
+    "read_private"
+  ],
+  "context_fields": [
+    "run_id",
+    "tick",
+    "sim_time_ms",
+    "revision",
+    "model_version",
+    "catalog_version",
+    "contract_version"
+  ],
+  "sensor_families": {
+    "traffic_camera": [
+      "S-CAM-01",
+      "S-CAM-02",
+      "S-CAM-03",
+      "S-CAM-04"
+    ],
+    "water_level": [
+      "S-WATER-01",
+      "S-WATER-02",
+      "S-WATER-03"
+    ],
+    "power_load": [
+      "S-POWER-ESS",
+      "S-POWER-URBAN",
+      "S-POWER-IND"
+    ],
+    "air_quality": [
+      "S-AIR-IND",
+      "S-AIR-RES"
+    ],
+    "emergency_call": [
+      "S-CALL-01"
+    ]
+  },
+  "inventory_counts": {
+    "entities": 35,
+    "devices": 21,
+    "relationships": 36
+  }
+}

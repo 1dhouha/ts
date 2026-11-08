@@ -1,0 +1,61 @@
+{
+  "visibility": "PRIVATE_A_B_EVALUATOR_ONLY",
+  "randomness": "none",
+  "cases": [
+    {
+      "name": "normal",
+      "checkpoints": {
+        "3": {
+          "surface": 0,
+          "basin": 5799.4,
+          "low_queue": 9.1,
+          "access": true,
+          "hospital_powered": true,
+          "status": "available",
+          "remaining": 0
+        }
+      }
+    },
+    {
+      "name": "flood",
+      "checkpoints": {
+        "1": {
+          "surface": 198.8,
+          "basin": 6000,
+          "low_queue": 9.7,
+          "access": true,
+          "hospital_powered": true,
+          "status": "enroute",
+          "remaining": 49
+        },
+        "3": {
+          "surface": 200,
+          "basin": 6000,
+          "low_queue": 9.6,
+          "access": true,
+          "hospital_powered": false,
+          "status": "blocked",
+          "remaining": 48
+        },
+        "4": {
+          "surface": 200.6,
+          "basin": 6000,
+          "low_queue": 9.8,
+          "access": false,
+          "hospital_powered": false,
+          "status": "blocked",
+          "remaining": 48
+        },
+        "6": {
+          "surface": 199.4,
+          "basin": 6000,
+          "low_queue": 9.7,
+          "access": true,
+          "hospital_powered": true,
+          "status": "enroute",
+          "remaining": 47
+        }
+      }
+    }
+  ]
+}

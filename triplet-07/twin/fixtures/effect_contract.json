@@ -1,0 +1,32 @@
+{
+  "profile": "pa-effects-phase04-0.1-provisional",
+  "contract_version": "pa-internal-0.2-draft",
+  "agreement": "Supervisor-approved provisional; actual B/C compatibility unverified",
+  "timing": "Immediate at current tick; B owns delays. APPLIED is a physical commit, not command success.",
+  "identity": "Retry the entire original request unchanged; cmd-17 movement ordinal 1 maps to eff-17-1. Retained until reset, not durable across restart.",
+  "private": "Requests, receipts and transition records are private A/B composition data, never C public output.",
+  "examples": [
+    {
+      "request": {
+        "contract_version": "pa-internal-0.2-draft",
+        "run_id": "r-test",
+        "effect_id": "eff-17-1",
+        "expected_revision": 0,
+        "source": "B_ACTUATOR",
+        "correlation_id": "cmd-17",
+        "effect": {"tag": "valve_position", "target_id": "V-12", "opening_fraction": 0.25}
+      }
+    },
+    {
+      "request": {
+        "contract_version": "pa-internal-0.2-draft",
+        "run_id": "r-test",
+        "effect_id": "driver-1",
+        "expected_revision": 1,
+        "source": "B_SCENARIO",
+        "correlation_id": null,
+        "effect": {"tag": "road_driver", "target_id": "R-LOW", "arrival_rate_veh_s": 0.5, "obstruction_fraction": 1.0}
+      }
+    }
+  ]
+}
